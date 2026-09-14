@@ -3,7 +3,7 @@ from pathlib import Path
 import joblib
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from sqlalchemy import inspect
+from sqlalchemy import inspect, text
 from app.sql_validator import validate_sql
 from app.database import engine
 from app.sql_generator import generate_sql
@@ -171,7 +171,10 @@ def generate_sql_endpoint(request: QueryRequest):
     )
 
     # 4. Validate generated SQL
-    is_valid, validation_message = validate_sql(sql)
+    is_valid, validation_message = validate_sql(
+    sql,
+    schema
+)
 
     if not is_valid:
         raise HTTPException(
@@ -186,4 +189,94 @@ def generate_sql_endpoint(request: QueryRequest):
         "confidence": round(float(confidence), 4),
         "sql": sql,
         "validation": validation_message
+    }
+    # ==========================================
+# EXECUTE QUERY
+# ==========================================
+
+@app.post("/query")
+def execute_query(request: QueryRequest):
+
+    question = request.question.strip()
+
+    if not question:
+        raise HTTPException(
+            status_code=400,
+            detail="Question cannot be empty."
+        )
+
+    # 1. Predict intent
+    intent = intent_model.predict([question])[0]
+
+    confidence = intent_model.predict_proba([question]).max()
+
+    # 2. Get real database schema
+    inspector = inspect(engine)
+
+    schema = {}
+
+    for table in inspector.get_table_names():
+
+        columns = inspector.get_columns(table)
+
+        schema[table] = [
+            {
+                "name": column["name"],
+                "type": str(column["type"]),
+                "nullable": column["nullable"]
+            }
+            for column in columns
+        ]
+
+    # 3. Generate SQL using Gemini
+    sql = generate_sql_with_gemini(
+        question=question,
+        intent=intent,
+        schema=schema
+    )
+
+    # 4. Validate SQL
+    is_valid, validation_message = validate_sql(
+    sql,
+    schema
+)
+
+    if not is_valid:
+        raise HTTPException(
+            status_code=400,
+            detail=validation_message
+        )
+
+    # 5. Execute SQL
+    try:
+
+        with engine.connect() as connection:
+
+            result = connection.execute(text(sql))
+
+            rows = result.fetchmany(100)
+
+            columns = list(result.keys())
+
+        data = [
+            dict(zip(columns, row))
+            for row in rows
+        ]
+
+    except Exception as e:
+
+        raise HTTPException(
+            status_code=400,
+            detail=f"SQL execution failed: {str(e)}"
+        )
+
+    # 6. Return result
+    return {
+        "question": question,
+        "intent": intent,
+        "confidence": round(float(confidence), 4),
+        "sql": sql,
+        "validation": validation_message,
+        "row_count": len(data),
+        "data": data
     }
