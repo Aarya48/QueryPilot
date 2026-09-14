@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.env
+
+# Large datasets
+database/data/*.csv
+
+# ML model
+ml/*.pkl
+
+# Node
+node_modules/
+dist/
+
+# IDE
+.vscode/
+.idea/
