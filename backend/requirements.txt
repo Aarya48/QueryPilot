@@ -1,7 +1,11 @@
 fastapi
-uvicorn[standard]
-python-dotenv
+uvicorn
+pandas
 sqlalchemy
 pymysql
-pandas
+python-dotenv
+python-multipart
 scikit-learn
+joblib
+sqlglot
+google-genai
