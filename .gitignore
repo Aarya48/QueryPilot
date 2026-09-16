@@ -15,6 +15,7 @@ QUICKSTART.md
 node_modules/
 dist/
 ml/final_text_to_sql_model/
+ml/final_text_to_sql_model.zip
 # IDE
 .vscode/
 .idea/
