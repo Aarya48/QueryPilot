@@ -1,0 +1,1 @@
+ml/final_text_to_sql_model/model.safetensors filter=lfs diff=lfs merge=lfs -text
