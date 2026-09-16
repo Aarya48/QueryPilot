@@ -99,7 +99,7 @@ def csv_to_table(file_path: str, table_name: str):
         ]
 
         # Convert data types intelligently
-        df = df.infer_objects(cache=True)
+        df = df.infer_objects()
 
         # Create table
         df.to_sql(

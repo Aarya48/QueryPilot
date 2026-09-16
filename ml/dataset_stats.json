@@ -1,0 +1,12 @@
+{
+  "total_examples": 8012,
+  "avg_question_length": 70.58137793310036,
+  "min_question_length": 16,
+  "max_question_length": 224,
+  "avg_sql_length": 106.78407388916625,
+  "min_sql_length": 18,
+  "max_sql_length": 557,
+  "train_examples": 6409,
+  "val_examples": 801,
+  "test_examples": 802
+}

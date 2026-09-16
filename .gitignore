@@ -9,7 +9,8 @@ database/data/*.csv
 
 # ML model
 ml/*.pkl
-
+PROJECT_STRUCTURE.md
+QUICKSTART.md
 # Node
 node_modules/
 dist/

@@ -8,9 +8,9 @@ from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from pydantic import BaseModel
 from sqlalchemy import inspect, text
 import hashlib
+import sys
 
 from app.database import engine
-from app.gemini_sql_generator import generate_sql_with_gemini
 from app.sql_validator import validate_sql
 from app.upload_handler import (
     csv_to_table,
@@ -21,13 +21,50 @@ from app.upload_handler import (
 from app.upload_handler import get_table_schema
 
 # ==========================================
-# PATHS & ML MODEL
+# PATHS & ML MODELS
 # ==========================================
 
 BASE_DIR = Path(__file__).resolve().parents[2]
-MODEL_PATH = BASE_DIR / "ml" / "intent_classifier.pkl"
+INTENT_MODEL_PATH = BASE_DIR / "ml" / "intent_classifier.pkl"
+TEXT_TO_SQL_MODEL_DIR = BASE_DIR / "ml" / "final_text_to_sql_model"
 
-intent_model = joblib.load(MODEL_PATH)
+# Add ml directory to path for imports
+sys.path.insert(0, str(BASE_DIR / "ml"))
+
+# Initialize ML models
+sql_generator = None
+intent_model = None
+generate_sql_with_gemini = None
+
+try:
+    from text_to_sql_generator import TextToSQLGenerator
+    sql_generator = TextToSQLGenerator(model_dir=TEXT_TO_SQL_MODEL_DIR)
+    print("[INIT] [OK] Text-to-SQL ML model loaded successfully from", TEXT_TO_SQL_MODEL_DIR)
+except FileNotFoundError as e:
+    print(f"[WARN] Text-to-SQL model not found: {e}")
+    print("[WARN] Falling back to Gemini API for SQL generation")
+except Exception as e:
+    print(f"[ERROR] Unexpected error loading Text-to-SQL model: {e}")
+    print("[WARN] Falling back to Gemini API")
+
+# Load Gemini API fallback
+try:
+    from app.gemini_sql_generator import generate_sql_with_gemini
+    print("[INIT] [OK] Gemini API fallback available")
+except Exception as e:
+    print(f"[WARN] Gemini API not available: {e}")
+
+# Load intent classifier
+try:
+    if not INTENT_MODEL_PATH.exists():
+        print(f"[WARN] ✗ Intent classifier not found at {INTENT_MODEL_PATH}")
+        print("[HINT] Intent classification will be skipped")
+    else:
+        intent_model = joblib.load(str(INTENT_MODEL_PATH))
+        print(f"[INIT] ✓ Intent classifier loaded successfully")
+except Exception as e:
+    print(f"[WARN] ✗ Failed to load intent classifier: {e}")
+    print("[HINT] Intent classification will be unavailable")
 
 # ==========================================
 # CACHING & OPTIMIZATION
@@ -171,14 +208,26 @@ def predict_intent(request: QueryRequest):
     if not question:
         raise HTTPException(status_code=400, detail="Question cannot be empty.")
 
-    intent = intent_model.predict([question])[0]
-    confidence = intent_model.predict_proba([question]).max()
+    if not intent_model:
+        raise HTTPException(
+            status_code=503,
+            detail="Intent classifier is not available. Please check your configuration."
+        )
 
-    return {
-        "question": question,
-        "intent": intent,
-        "confidence": round(float(confidence), 4)
-    }
+    try:
+        intent = intent_model.predict([question])[0]
+        confidence = intent_model.predict_proba([question]).max()
+
+        return {
+            "question": question,
+            "intent": intent,
+            "confidence": round(float(confidence), 4)
+        }
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error predicting intent: {str(e)}"
+        )
 
 
 @app.get("/schema")
@@ -280,18 +329,33 @@ def generate_sql_endpoint(request: QueryRequest):
     # INTENT PREDICTION
     # ------------------------------------------
 
-    intent = intent_model.predict([question])[0]
+    intent = None
+    if intent_model:
+        try:
+            intent = intent_model.predict([question])[0]
+        except Exception as e:
+            print(f"[WARN] Intent prediction failed: {e}")
 
     # ------------------------------------------
-    # GEMINI SQL GENERATION (with relationships)
+    # SQL GENERATION (LOCAL ML MODEL OR GEMINI FALLBACK)
     # ------------------------------------------
 
-    sql = generate_sql_with_gemini(
-        question=question,
-        intent=intent,
-        schema=schema,
-        relationships=relationships
-    )
+    if sql_generator:
+        # Use local fine-tuned T5 model
+        sql = sql_generator.generate(question, schema)
+    elif generate_sql_with_gemini:
+        # Fallback to Gemini API if ML model not available
+        sql = generate_sql_with_gemini(
+            question=question,
+            intent=intent,
+            schema=schema,
+            relationships=relationships
+        )
+    else:
+        raise HTTPException(
+            status_code=503,
+            detail="SQL generation unavailable. Neither ML model nor Gemini API is available."
+        )
 
     # ------------------------------------------
     # VALIDATE SQL
@@ -351,21 +415,40 @@ def execute_query(request: QueryRequest):
     # ------------------------------------------
     # INTENT PREDICTION
     # ------------------------------------------
-    intent = intent_model.predict([question])[0]
-    confidence = intent_model.predict_proba([question]).max()
+    intent = None
+    confidence = 0.0
+
+    if intent_model:
+        try:
+            intent = intent_model.predict([question])[0]
+            confidence = intent_model.predict_proba([question]).max()
+        except Exception as e:
+            print(f"[WARN] Intent prediction failed: {e}")
+    else:
+        print("[WARN] Intent classifier not available")
 
     # ------------------------------------------
-    # GET SQL (from cache or generate)
+    # GET SQL (from cache or generate with ML model)
     # ------------------------------------------
     if use_cache:
         sql = cached_sql
     else:
-        sql = generate_sql_with_gemini(
-            question=question,
-            intent=intent,
-            schema=schema,
-            relationships=relationships
-        )
+        if sql_generator:
+            # Use local fine-tuned T5 model
+            sql = sql_generator.generate(question, schema)
+        elif generate_sql_with_gemini:
+            # Fallback to Gemini API if ML model not available
+            sql = generate_sql_with_gemini(
+                question=question,
+                intent=intent,
+                schema=schema,
+                relationships=relationships
+            )
+        else:
+            raise HTTPException(
+                status_code=503,
+                detail="SQL generation unavailable. Neither ML model nor Gemini API is available."
+            )
         _set_cached_sql(question, sql, request.session_id)
 
     # ------------------------------------------

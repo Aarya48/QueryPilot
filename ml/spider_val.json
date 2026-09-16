@@ -1,0 +1,3206 @@
+[
+  {
+    "input": "text2sql: Which order's shipment tracking number is \"3452\"? Give me the id of the order.",
+    "target": "SELECT order_id FROM shipments WHERE shipment_tracking_number = \"3452\""
+  },
+  {
+    "input": "text2sql: How many Bangladeshi artists are listed?",
+    "target": "SELECT count(*) FROM artist WHERE country = \"Bangladesh\""
+  },
+  {
+    "input": "text2sql: What is the average fee for a CSU campus in the year of 1996?",
+    "target": "SELECT avg(campusfee) FROM csu_fees WHERE YEAR = 1996"
+  },
+  {
+    "input": "text2sql: List the company name and rank for all companies in the decreasing order of their sales.",
+    "target": "SELECT company , rank FROM company ORDER BY Sales_billion DESC"
+  },
+  {
+    "input": "text2sql: List name, dates active, and number of deaths for all storms with at least 1 death.",
+    "target": "SELECT name , dates_active , number_deaths FROM storm WHERE number_deaths >= 1"
+  },
+  {
+    "input": "text2sql: What is average age of male for different job title?",
+    "target": "SELECT avg(age) , job FROM Person WHERE gender = 'male' GROUP BY job"
+  },
+  {
+    "input": "text2sql: Find all 200 meter and 300 meter results of swimmers with nationality \"Australia\".",
+    "target": "SELECT meter_200 , meter_300 FROM swimmer WHERE nationality = 'Australia'"
+  },
+  {
+    "input": "text2sql: How many kids stay in the room DAMIEN TRACHSEL checked in on Sep 21, 2010?",
+    "target": "SELECT Kids FROM Reservations WHERE CheckIn = \"2010-09-21\" AND FirstName = \"DAMIEN\" AND LastName = \"TRACHSEL\""
+  },
+  {
+    "input": "text2sql: Which authors belong to the institution \"Google\"? Show the first names and last names.",
+    "target": "SELECT DISTINCT t1.fname , t1.lname FROM authors AS t1 JOIN authorship AS t2 ON t1.authid = t2.authid JOIN inst AS t3 ON t2.instid = t3.instid WHERE t3.name = \"Google\""
+  },
+  {
+    "input": "text2sql: Return the names of gymnasts who did not grow up in Santo Domingo.",
+    "target": "SELECT T2.Name FROM gymnast AS T1 JOIN people AS T2 ON T1.Gymnast_ID = T2.People_ID WHERE T2.Hometown != \"Santo Domingo\""
+  },
+  {
+    "input": "text2sql: What are the names of customers who have taken out more than one loan?",
+    "target": "SELECT T1.cust_name FROM customer AS T1 JOIN loan AS T2 ON T1.cust_id = T2.cust_id GROUP BY T1.cust_name HAVING count(*) > 1"
+  },
+  {
+    "input": "text2sql: Find the titles of all movies not reviewed by Chris Jackson.",
+    "target": "SELECT DISTINCT title FROM Movie EXCEPT SELECT T2.title FROM Rating AS T1 JOIN Movie AS T2 ON T1.mID = T2.mID JOIN Reviewer AS T3 ON T1.rID = T3.rID WHERE T3.name = 'Chris Jackson'"
+  },
+  {
+    "input": "text2sql: Find the name and address of the department that has the highest number of students.",
+    "target": "SELECT T2.dept_name , T2.dept_address FROM student AS T1 JOIN department AS T2 ON T1.dept_code = T2.dept_code GROUP BY T1.dept_code ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Which distinct source system code includes the substring 'en'?",
+    "target": "SELECT DISTINCT source_system_code FROM cmi_cross_references WHERE source_system_code LIKE '%en%'"
+  },
+  {
+    "input": "text2sql: What are the names of students who haven't taken any Biology courses?",
+    "target": "SELECT name FROM student WHERE id NOT IN (SELECT T1.id FROM takes AS T1 JOIN course AS T2 ON T1.course_id = T2.course_id WHERE T2.dept_name = 'Biology')"
+  },
+  {
+    "input": "text2sql: What are the titles of films and corresponding types of market estimations?",
+    "target": "SELECT T1.Title , T2.Type FROM film AS T1 JOIN film_market_estimation AS T2 ON T1.Film_ID = T2.Film_ID"
+  },
+  {
+    "input": "text2sql: Return the names of cities that have a population between 160000 and 900000 .",
+    "target": "select name from city where population between 160000 and 900000"
+  },
+  {
+    "input": "text2sql: Sort the customer names in alphabetical order.",
+    "target": "SELECT customer_details FROM customers ORDER BY customer_details"
+  },
+  {
+    "input": "text2sql: Show the first and last name of all the faculty members who participated in some activity, together with the number of activities they participated in.",
+    "target": "SELECT T1.fname , T1.lname , count(*) , T1.FacID FROM Faculty AS T1 JOIN Faculty_participates_in AS T2 ON T1.facID = T2.facID GROUP BY T1.FacID"
+  },
+  {
+    "input": "text2sql: display the employee number and job id for all employees whose salary is smaller than any salary of those employees whose job title is MK_MAN.",
+    "target": "SELECT employee_id , job_id FROM employees WHERE salary < ( SELECT min(salary) FROM employees WHERE job_id = 'MK_MAN' )"
+  },
+  {
+    "input": "text2sql: What are the average score and average staff number of all shops?",
+    "target": "SELECT avg(num_of_staff) , avg(score) FROM shop"
+  },
+  {
+    "input": "text2sql: List the description of the outcomes for all projects.",
+    "target": "SELECT T1.outcome_description FROM Research_outcomes AS T1 JOIN Project_outcomes AS T2 ON T1.outcome_code = T2.outcome_code"
+  },
+  {
+    "input": "text2sql: Find the wineries that have at least four wines.",
+    "target": "SELECT Winery FROM WINE GROUP BY Winery HAVING count(*) >= 4"
+  },
+  {
+    "input": "text2sql: List the names of products that are not in any event.",
+    "target": "SELECT Product_Name FROM Products WHERE Product_ID NOT IN (SELECT Product_ID FROM Products_in_Events)"
+  },
+  {
+    "input": "text2sql: What are the names and seatings for all tracks opened after 2000, ordered by seating?",
+    "target": "SELECT name , seating FROM track WHERE year_opened > 2000 ORDER BY seating"
+  },
+  {
+    "input": "text2sql: What are the names of the employees who never received any evaluation?",
+    "target": "SELECT name FROM employee WHERE Employee_ID NOT IN (SELECT Employee_ID FROM evaluation)"
+  },
+  {
+    "input": "text2sql: List the total points of gymnasts in descending order of floor exercise points.",
+    "target": "SELECT Total_Points FROM gymnast ORDER BY Floor_Exercise_Points DESC"
+  },
+  {
+    "input": "text2sql: Who are the players from UCLA?",
+    "target": "SELECT Player FROM match_season WHERE College = \"UCLA\""
+  },
+  {
+    "input": "text2sql: How many bookings do we have?",
+    "target": "SELECT count(*) FROM BOOKINGS"
+  },
+  {
+    "input": "text2sql: What are the names and years released for the movies with the top 3 highest ratings?",
+    "target": "SELECT T2.title , T2.year FROM Rating AS T1 JOIN Movie AS T2 ON T1.mID = T2.mID ORDER BY T1.stars DESC LIMIT 3"
+  },
+  {
+    "input": "text2sql: What is the maximum and mininum number of stars a rating can receive?",
+    "target": "SELECT max(stars) , min(stars) FROM Rating"
+  },
+  {
+    "input": "text2sql: Which catalog contents have length below 3 or above 5? Find the catalog entry names.",
+    "target": "SELECT catalog_entry_name FROM catalog_contents WHERE LENGTH < 3 OR width > 5"
+  },
+  {
+    "input": "text2sql: Return the founded year for the school with the largest enrollment.",
+    "target": "SELECT founded FROM university ORDER BY enrollment DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Find the states where have some college students in tryout.",
+    "target": "SELECT DISTINCT state FROM college AS T1 JOIN tryout AS T2 ON T1.cName = T2.cName"
+  },
+  {
+    "input": "text2sql: How many teachers are there?",
+    "target": "SELECT count(*) FROM teacher"
+  },
+  {
+    "input": "text2sql: Return the distinct customer details.",
+    "target": "SELECT DISTINCT customer_details FROM Customers"
+  },
+  {
+    "input": "text2sql: List the names of all songs that have 4 minute duration or are in English.",
+    "target": "SELECT T2.song_name FROM files AS T1 JOIN song AS T2 ON T1.f_id = T2.f_id WHERE T1.duration LIKE \"4:%\" UNION SELECT song_name FROM song WHERE languages = \"english\""
+  },
+  {
+    "input": "text2sql: How many counties are there in total?",
+    "target": "SELECT count(*) FROM county"
+  },
+  {
+    "input": "text2sql: Find the number of web accelerators used for each Operating system.",
+    "target": "SELECT Operating_system , count(*) FROM web_client_accelerator GROUP BY Operating_system"
+  },
+  {
+    "input": "text2sql: Show the names of players and names of their coaches in descending order of the votes of players.",
+    "target": "SELECT T3.Player_name , T2.coach_name FROM player_coach AS T1 JOIN coach AS T2 ON T1.Coach_ID = T2.Coach_ID JOIN player AS T3 ON T1.Player_ID = T3.Player_ID ORDER BY T3.Votes DESC"
+  },
+  {
+    "input": "text2sql: Find the number of students taught by the teacher KAWA GORDON.",
+    "target": "SELECT count(*) FROM list AS T1 JOIN teachers AS T2 ON T1.classroom = T2.classroom WHERE T2.firstname = \"KAWA\" AND T2.lastname = \"GORDON\""
+  },
+  {
+    "input": "text2sql: Show the publishers that have publications with price higher than 10000000 and publications with price lower than 5000000.",
+    "target": "SELECT Publisher FROM publication WHERE Price > 10000000 INTERSECT SELECT Publisher FROM publication WHERE Price < 5000000"
+  },
+  {
+    "input": "text2sql: List all students' first names and last names who majored in 600.",
+    "target": "SELECT Fname , Lname FROM Student WHERE Major = 600"
+  },
+  {
+    "input": "text2sql: What are the first names of the teachers who teach grade 1?",
+    "target": "SELECT DISTINCT T2.firstname FROM list AS T1 JOIN teachers AS T2 ON T1.classroom = T2.classroom WHERE grade = 1"
+  },
+  {
+    "input": "text2sql: What are the years, titles, and publishers for all books, ordered by year descending?",
+    "target": "SELECT YEAR , book_title , publisher FROM book_club ORDER BY YEAR DESC"
+  },
+  {
+    "input": "text2sql: Find the names of students who have taken any course in the fall semester of year 2003.",
+    "target": "SELECT name FROM student WHERE id IN (SELECT id FROM takes WHERE semester = 'Fall' AND YEAR = 2003)"
+  },
+  {
+    "input": "text2sql: Which employee has showed up in most circulation history documents. List the employee's name and the number of drafts and copies.",
+    "target": "SELECT Employees.employee_name , count(*) FROM Employees JOIN Circulation_History ON Circulation_History.employee_id = Employees.employee_id GROUP BY Circulation_History.document_id , Circulation_History.draft_number , Circulation_History.copy_number ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: What is the name and capacity of the dorm with the fewest amount of amenities?",
+    "target": "SELECT T1.dorm_name , T1.student_capacity FROM dorm AS T1 JOIN has_amenity AS T2 ON T1.dormid = T2.dormid JOIN dorm_amenity AS T3 ON T2.amenid = T3.amenid GROUP BY T2.dormid ORDER BY count(*) LIMIT 1"
+  },
+  {
+    "input": "text2sql: How many furniture components are there in total?",
+    "target": "SELECT sum(num_of_component) FROM furniture"
+  },
+  {
+    "input": "text2sql: What are the product id and product type of the cheapest product?",
+    "target": "SELECT product_id , product_type_code FROM products ORDER BY product_price LIMIT 1"
+  },
+  {
+    "input": "text2sql: What are the names of everybody who has exactly one friend?",
+    "target": "SELECT name FROM PersonFriend GROUP BY name HAVING count(*) = 1"
+  },
+  {
+    "input": "text2sql: Find the name of medication used on the patient who stays in room 111?",
+    "target": "SELECT T4.name FROM stay AS T1 JOIN patient AS T2 ON T1.Patient = T2.SSN JOIN Prescribes AS T3 ON T3.Patient = T2.SSN JOIN Medication AS T4 ON T3.Medication = T4.Code WHERE room = 111"
+  },
+  {
+    "input": "text2sql: How many tasks are there in total?",
+    "target": "SELECT count(*) FROM Tasks"
+  },
+  {
+    "input": "text2sql: What are the names of all people, ordered by their date of birth?",
+    "target": "SELECT name FROM people ORDER BY date_of_birth"
+  },
+  {
+    "input": "text2sql: Which model saves the most gasoline? That is to say, have the maximum miles per gallon.",
+    "target": "SELECT T1.Model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId = T2.Id ORDER BY T2.mpg DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Find the description and credit for the course QM-261?",
+    "target": "SELECT crs_credit , crs_description FROM course WHERE crs_code = 'QM-261'"
+  },
+  {
+    "input": "text2sql: What are the different names for each station that has ever had 7 bikes available?",
+    "target": "SELECT DISTINCT T1.name FROM station AS T1 JOIN status AS T2 ON T1.id = T2.station_id WHERE T2.bikes_available = 7"
+  },
+  {
+    "input": "text2sql: How many budgets are above 3000 in year 2001 or before?",
+    "target": "SELECT count(*) FROM budget WHERE budgeted > 3000 AND YEAR <= 2001"
+  },
+  {
+    "input": "text2sql: How many students have cat allergies?",
+    "target": "SELECT count(*) FROM Has_allergy WHERE Allergy = \"Cat\""
+  },
+  {
+    "input": "text2sql: What are the distinct buildings with capacities of greater than 50?",
+    "target": "SELECT DISTINCT building FROM classroom WHERE capacity > 50"
+  },
+  {
+    "input": "text2sql: What are the last names of students studying major 50?",
+    "target": "SELECT LName FROM STUDENT WHERE Major = 50"
+  },
+  {
+    "input": "text2sql: Count the number of submissions.",
+    "target": "SELECT count(*) FROM submission"
+  },
+  {
+    "input": "text2sql: Show the manager name for gas stations belonging to the ExxonMobil company.",
+    "target": "SELECT T3.manager_name FROM station_company AS T1 JOIN company AS T2 ON T1.company_id = T2.company_id JOIN gas_station AS T3 ON T1.station_id = T3.station_id WHERE T2.company = 'ExxonMobil'"
+  },
+  {
+    "input": "text2sql: Find out 5 customers who most recently purchased something. List customers' first and last name.",
+    "target": "SELECT T1.first_name , T1.last_name FROM customers AS T1 JOIN invoices AS T2 ON T2.customer_id = T1.id ORDER BY T2.invoice_date DESC LIMIT 5"
+  },
+  {
+    "input": "text2sql: Show publishers with a book published in 1989 and a book in 1990.",
+    "target": "SELECT publisher FROM book_club WHERE YEAR = 1989 INTERSECT SELECT publisher FROM book_club WHERE YEAR = 1990"
+  },
+  {
+    "input": "text2sql: How many architects haven't built a mill before year 1850?",
+    "target": "SELECT count(*) FROM architect WHERE id NOT IN ( SELECT architect_id FROM mill WHERE built_year < 1850 )"
+  },
+  {
+    "input": "text2sql: What are the ages of all of Zach's friends who are in the longest relationship?",
+    "target": "SELECT T1.age FROM Person AS T1 JOIN PersonFriend AS T2 ON T1.name = T2.friend WHERE T2.name = 'Zach' AND T2.year = (SELECT max(YEAR) FROM PersonFriend WHERE name = 'Zach')"
+  },
+  {
+    "input": "text2sql: How many type of jobs do they have?",
+    "target": "SELECT count(DISTINCT job) FROM Person"
+  },
+  {
+    "input": "text2sql: Find the name of the swimmer who has the most records.",
+    "target": "SELECT t1.name FROM swimmer AS t1 JOIN record AS t2 ON t1.id = t2.swimmer_id GROUP BY t2.swimmer_id ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Show the number of transactions with transaction type code \"SALE\" for different investors if it is larger than 0.",
+    "target": "SELECT investor_id , COUNT(*) FROM TRANSACTIONS WHERE transaction_type_code = \"SALE\" GROUP BY investor_id"
+  },
+  {
+    "input": "text2sql: Please list the countries and years of film market estimations.",
+    "target": "SELECT T2.Country , T1.Year FROM film_market_estimation AS T1 JOIN market AS T2 ON T1.Market_ID = T2.Market_ID"
+  },
+  {
+    "input": "text2sql: Show the status shared by cities with population bigger than 1500 and smaller than 500.",
+    "target": "SELECT Status FROM city WHERE Population > 1500 INTERSECT SELECT Status FROM city WHERE Population < 500"
+  },
+  {
+    "input": "text2sql: What is the total amount of settlement made for all the settlements?",
+    "target": "SELECT sum(Amount_Settled) FROM Settlements"
+  },
+  {
+    "input": "text2sql: Find the id and weight of all pets whose age is older than 1.",
+    "target": "SELECT petid , weight FROM pets WHERE pet_age > 1"
+  },
+  {
+    "input": "text2sql: List the file size and format for all songs that have resolution lower than 800.",
+    "target": "SELECT DISTINCT T1.file_size , T1.formats FROM files AS T1 JOIN song AS T2 ON T1.f_id = T2.f_id WHERE T2.resolution < 800"
+  },
+  {
+    "input": "text2sql: Find the number of departments in each school.",
+    "target": "SELECT count(DISTINCT dept_name) , school_code FROM department GROUP BY school_code"
+  },
+  {
+    "input": "text2sql: Please list the location and the winning aircraft name.",
+    "target": "SELECT T2.Location , T1.Aircraft FROM aircraft AS T1 JOIN MATCH AS T2 ON T1.Aircraft_ID = T2.Winning_Aircraft"
+  },
+  {
+    "input": "text2sql: what is id of students who registered some courses but the least number of courses in these students?",
+    "target": "SELECT student_id FROM student_course_registrations GROUP BY student_id ORDER BY count(*) LIMIT 1"
+  },
+  {
+    "input": "text2sql: How many courses in total are listed?",
+    "target": "SELECT count(*) FROM Courses"
+  },
+  {
+    "input": "text2sql: What is the average access count of documents that have the least common structure?",
+    "target": "SELECT avg(access_count) FROM documents GROUP BY document_structure_code ORDER BY count(*) ASC LIMIT 1"
+  },
+  {
+    "input": "text2sql: List the top 10 customers by total gross sales. List customers' first and last name and total gross sales.",
+    "target": "SELECT T1.first_name , T1.last_name , SUM(T2.total) FROM customers AS T1 JOIN invoices AS T2 ON T2.customer_id = T1.id GROUP BY T1.id ORDER BY SUM(T2.total) DESC LIMIT 10"
+  },
+  {
+    "input": "text2sql: List the distinct carriers of phones with memories bigger than 32.",
+    "target": "SELECT DISTINCT Carrier FROM phone WHERE Memory_in_G > 32"
+  },
+  {
+    "input": "text2sql: Find the minimum salary for the departments whose average salary is above the average payment of all instructors.",
+    "target": "SELECT min(salary) , dept_name FROM instructor GROUP BY dept_name HAVING avg(salary) > (SELECT avg(salary) FROM instructor)"
+  },
+  {
+    "input": "text2sql: Which winery is the wine that has the highest score from?",
+    "target": "SELECT Winery FROM WINE ORDER BY SCORE LIMIT 1"
+  },
+  {
+    "input": "text2sql: What are all the employee ids and the names of the countries in which they work?",
+    "target": "SELECT T1.employee_id , T4.country_name FROM employees AS T1 JOIN departments AS T2 ON T1.department_id = T2.department_id JOIN locations AS T3 ON T2.location_id = T3.location_id JOIN countries AS T4 ON T3.country_id = T4.country_id"
+  },
+  {
+    "input": "text2sql: List all the possible ways to get to attractions, together with the number of attractions accessible by these methods.",
+    "target": "SELECT How_to_Get_There , COUNT(*) FROM Tourist_Attractions GROUP BY How_to_Get_There"
+  },
+  {
+    "input": "text2sql: Please show different software platforms and the corresponding number of devices using each.",
+    "target": "SELECT Software_Platform , COUNT(*) FROM device GROUP BY Software_Platform"
+  },
+  {
+    "input": "text2sql: Show the company name with the number of gas station.",
+    "target": "SELECT T2.company , count(*) FROM station_company AS T1 JOIN company AS T2 ON T1.company_id = T2.company_id GROUP BY T1.company_id"
+  },
+  {
+    "input": "text2sql: What are the names of cities in Europe for which English is not the official language?",
+    "target": "SELECT DISTINCT T2.Name FROM country AS T1 JOIN city AS T2 ON T2.CountryCode = T1.Code WHERE T1.Continent = 'Europe' AND T1.Name NOT IN (SELECT T3.Name FROM country AS T3 JOIN countrylanguage AS T4 ON T3.Code = T4.CountryCode WHERE T4.IsOfficial = 'T' AND T4.Language = 'English')"
+  },
+  {
+    "input": "text2sql: What are the maximum and minimum week on top of all volumes?",
+    "target": "SELECT max(Weeks_on_Top) , min(Weeks_on_Top) FROM volume"
+  },
+  {
+    "input": "text2sql: Show first name, last name, age for all female students. Their sex is F.",
+    "target": "SELECT Fname , Lname , Age FROM Student WHERE Sex = 'F'"
+  },
+  {
+    "input": "text2sql: When did the web accelerator 'CACHEbox' and browser 'Internet Explorer' become compatible?",
+    "target": "SELECT T1.compatible_since_year FROM accelerator_compatible_browser AS T1 JOIN browser AS T2 ON T1.browser_id = T2.id JOIN web_client_accelerator AS T3 ON T1.accelerator_id = T3.id WHERE T3.name = 'CACHEbox' AND T2.name = 'Internet Explorer'"
+  },
+  {
+    "input": "text2sql: With which kind of payment method were the least number of payments processed?",
+    "target": "SELECT Payment_Method_Code FROM Payments GROUP BY Payment_Method_Code ORDER BY count(*) ASC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Which program was launched most recently? Return the program name.",
+    "target": "SELECT name FROM program ORDER BY launch DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: What are the dates that had the top 5 cloud cover rates? Also tell me the cloud cover rate.",
+    "target": "SELECT date , cloud_cover FROM weather ORDER BY cloud_cover DESC LIMIT 5"
+  },
+  {
+    "input": "text2sql: Give the first name and job id for all employees in the Finance department.",
+    "target": "SELECT T1.first_name , T1.job_id FROM employees AS T1 JOIN departments AS T2 ON T1.department_id = T2.department_id WHERE T2.department_name = 'Finance'"
+  },
+  {
+    "input": "text2sql: What are the ids of the students who registered course statistics by order of registration date?",
+    "target": "SELECT T2.student_id FROM courses AS T1 JOIN student_course_registrations AS T2 ON T1.course_id = T2.course_id WHERE T1.course_name = \"statistics\" ORDER BY T2.registration_date"
+  },
+  {
+    "input": "text2sql: What are the names and enrollment numbers for colleges that have more than 10000 enrolled and are located in Louisiana?",
+    "target": "SELECT cName , enr FROM College WHERE enr > 10000 AND state = \"LA\""
+  },
+  {
+    "input": "text2sql: Show the range that has the most number of mountains.",
+    "target": "SELECT Range FROM mountain GROUP BY Range ORDER BY COUNT(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Find the number of students for each department.",
+    "target": "SELECT count(*) , dept_code FROM student GROUP BY dept_code"
+  },
+  {
+    "input": "text2sql: What is the school code of the accounting department?",
+    "target": "SELECT school_code FROM department WHERE dept_name = \"Accounting\""
+  },
+  {
+    "input": "text2sql: Whare the names, friends, and ages of all people who are older than the average age of a person?",
+    "target": "SELECT DISTINCT T2.name , T2.friend , T1.age FROM Person AS T1 JOIN PersonFriend AS T2 ON T1.name = T2.friend WHERE T1.age > (SELECT avg(age) FROM person)"
+  },
+  {
+    "input": "text2sql: What is the genre name of the film HUNGER ROOF?",
+    "target": "SELECT T1.name FROM category AS T1 JOIN film_category AS T2 ON T1.category_id = T2.category_id JOIN film AS T3 ON T2.film_id = T3.film_id WHERE T3.title = 'HUNGER ROOF'"
+  },
+  {
+    "input": "text2sql: Count the number of tracks that are part of the rock genre.",
+    "target": "SELECT COUNT(*) FROM GENRE AS T1 JOIN TRACK AS T2 ON T1.GenreId = T2.GenreId WHERE T1.Name = \"Rock\""
+  },
+  {
+    "input": "text2sql: What is the number of cities in the United States with more than 3 airports?",
+    "target": "SELECT city FROM airports WHERE country = 'United States' GROUP BY city HAVING count(*) > 3"
+  },
+  {
+    "input": "text2sql: Retrieve the country that has published the most papers.",
+    "target": "SELECT t1.country FROM inst AS t1 JOIN authorship AS t2 ON t1.instid = t2.instid JOIN papers AS t3 ON t2.paperid = t3.paperid GROUP BY t1.country ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Display all the information about the department Marketing.",
+    "target": "SELECT * FROM departments WHERE department_name = 'Marketing'"
+  },
+  {
+    "input": "text2sql: Count the number of products.",
+    "target": "SELECT count(*) FROM products"
+  },
+  {
+    "input": "text2sql: How many students does each advisor have?",
+    "target": "SELECT advisor , count(*) FROM Student GROUP BY advisor"
+  },
+  {
+    "input": "text2sql: Which complaint status has more than 3 records on file?",
+    "target": "SELECT complaint_status_code FROM complaints GROUP BY complaint_status_code HAVING count(*) > 3"
+  },
+  {
+    "input": "text2sql: How many schools have some students playing in goalie and mid positions.",
+    "target": "SELECT COUNT(*) FROM (SELECT cName FROM tryout WHERE pPos = 'goalie' INTERSECT SELECT cName FROM tryout WHERE pPos = 'mid')"
+  },
+  {
+    "input": "text2sql: When was the document named \"Marry CV\" stored? Give me the date.",
+    "target": "SELECT date_stored FROM All_documents WHERE Document_name = \"Marry CV\""
+  },
+  {
+    "input": "text2sql: How many students have had at least one \"B\" grade?",
+    "target": "SELECT COUNT(DISTINCT StuID) FROM ENROLLED_IN WHERE Grade = \"B\""
+  },
+  {
+    "input": "text2sql: Count the number of distinct delegates who are from counties with population above 50000.",
+    "target": "SELECT count(DISTINCT T2.Delegate) FROM county AS T1 JOIN election AS T2 ON T1.County_id = T2.District WHERE T1.Population > 50000"
+  },
+  {
+    "input": "text2sql: Return the countries of the mountains that have a height larger than 5000.",
+    "target": "SELECT Country FROM mountain WHERE Height > 5000"
+  },
+  {
+    "input": "text2sql: Find the last name of the author with first name \"Amal\".",
+    "target": "SELECT lname FROM authors WHERE fname = \"Amal\""
+  },
+  {
+    "input": "text2sql: Find the number of professors in accounting department.",
+    "target": "SELECT count(*) FROM professor AS T1 JOIN department AS T2 ON T1.dept_code = T2.dept_code WHERE DEPT_NAME = \"Accounting\""
+  },
+  {
+    "input": "text2sql: Find the name of the customer who made the order of the largest amount of goods.",
+    "target": "SELECT t1.customer_name FROM customers AS t1 JOIN customer_orders AS t2 ON t1.customer_id = t2.customer_id JOIN order_items AS t3 ON t2.order_id = t3.order_id WHERE t3.order_quantity = ( SELECT max(order_quantity) FROM order_items)"
+  },
+  {
+    "input": "text2sql: How many candidates are there?",
+    "target": "SELECT count(*) FROM candidate"
+  },
+  {
+    "input": "text2sql: Return the number of airports.",
+    "target": "SELECT count(*) FROM AIRPORTS"
+  },
+  {
+    "input": "text2sql: What is the customer first, last name and id with least number of accounts.",
+    "target": "SELECT T2.customer_first_name , T2.customer_last_name , T1.customer_id FROM Accounts AS T1 JOIN Customers AS T2 ON T1.customer_id = T2.customer_id GROUP BY T1.customer_id ORDER BY count(*) ASC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Return all reviewer names and movie names together in a single list.",
+    "target": "SELECT name FROM Reviewer UNION SELECT title FROM Movie"
+  },
+  {
+    "input": "text2sql: List the document ids of documents with the status done and type Paper, which not shipped by the shipping agent named USPS.",
+    "target": "SELECT document_id FROM Documents WHERE document_status_code = \"done\" AND document_type_code = \"Paper\" EXCEPT SELECT document_id FROM Documents JOIN Ref_Shipping_Agents ON Documents.shipping_agent_code = Ref_Shipping_Agents.shipping_agent_code WHERE Ref_Shipping_Agents.shipping_agent_name = \"USPS\""
+  },
+  {
+    "input": "text2sql: Find the first name and age of students who are living in the dorms that do not have amenity TV Lounge.",
+    "target": "SELECT T1.fname , T1.age FROM student AS T1 JOIN lives_in AS T2 ON T1.stuid = T2.stuid WHERE T2.dormid NOT IN (SELECT T3.dormid FROM has_amenity AS T3 JOIN dorm_amenity AS T4 ON T3.amenid = T4.amenid WHERE T4.amenity_name = 'TV Lounge')"
+  },
+  {
+    "input": "text2sql: What is the title, credit value, and department name for courses with more than one prerequisite?",
+    "target": "SELECT T1.title , T1.credits , T1.dept_name FROM course AS T1 JOIN prereq AS T2 ON T1.course_id = T2.course_id GROUP BY T2.course_id HAVING count(*) > 1"
+  },
+  {
+    "input": "text2sql: Give me the name of each club.",
+    "target": "SELECT clubname FROM club"
+  },
+  {
+    "input": "text2sql: What are the different names of all the races in reverse alphabetical order?",
+    "target": "SELECT DISTINCT name FROM races ORDER BY name DESC"
+  },
+  {
+    "input": "text2sql: Give the average number of cities within markets that had a low market estimation larger than 10000?",
+    "target": "SELECT avg(T2.Number_cities) FROM film_market_estimation AS T1 JOIN market AS T2 ON T1.Market_ID = T2.Market_ID WHERE T1.Low_Estimate > 10000"
+  },
+  {
+    "input": "text2sql: What are the names of companies whose headquarters are not \"USA\"?",
+    "target": "SELECT name FROM Companies WHERE Headquarters != 'USA'"
+  },
+  {
+    "input": "text2sql: What type of game is Call of Destiny?",
+    "target": "SELECT gtype FROM Video_games WHERE gname = \"Call of Destiny\""
+  },
+  {
+    "input": "text2sql: How many order items correspond to each order id?",
+    "target": "SELECT order_id , count(*) FROM Order_items GROUP BY order_id"
+  },
+  {
+    "input": "text2sql: What are the names of all the different reviewers who rates Gone with the Wind?",
+    "target": "SELECT DISTINCT T3.name FROM Rating AS T1 JOIN Movie AS T2 ON T1.mID = T2.mID JOIN Reviewer AS T3 ON T1.rID = T3.rID WHERE T2.title = 'Gone with the Wind'"
+  },
+  {
+    "input": "text2sql: Give me the average and minimum price (in Euro) of the products.",
+    "target": "SELECT avg(price_in_euros) , min(price_in_euros) FROM catalog_contents"
+  },
+  {
+    "input": "text2sql: List the industry shared by the most companies.",
+    "target": "SELECT Industry FROM Companies GROUP BY Industry ORDER BY COUNT(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: List all company names with a book published by Alyson.",
+    "target": "SELECT T1.company_name FROM culture_company AS T1 JOIN book_club AS T2 ON T1.book_club_id = T2.book_club_id WHERE T2.publisher = 'Alyson'"
+  },
+  {
+    "input": "text2sql: Show the description for role name \"Proof Reader\".",
+    "target": "SELECT role_description FROM ROLES WHERE role_name = \"Proof Reader\""
+  },
+  {
+    "input": "text2sql: how many schools exist in total?",
+    "target": "SELECT count(DISTINCT school_code) FROM department"
+  },
+  {
+    "input": "text2sql: Find the id of students who do not have a cat pet.",
+    "target": "SELECT stuid FROM student EXCEPT SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid = T2.stuid JOIN pets AS T3 ON T3.petid = T2.petid WHERE T3.pettype = 'cat'"
+  },
+  {
+    "input": "text2sql: Which student has enrolled for the most times in any program? List the id, first name, middle name, last name, the number of enrollments and student id.",
+    "target": "SELECT T1.student_id , T1.first_name , T1.middle_name , T1.last_name , count(*) , T1.student_id FROM Students AS T1 JOIN Student_Enrolment AS T2 ON T1.student_id = T2.student_id GROUP BY T1.student_id ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: What are the flight numbers for the aircraft Airbus A340-300?",
+    "target": "SELECT T1.flno FROM Flight AS T1 JOIN Aircraft AS T2 ON T1.aid = T2.aid WHERE T2.name = \"Airbus A340-300\""
+  },
+  {
+    "input": "text2sql: For each product that has problems, find the number of problems reported after 1986-11-13 and the product id?",
+    "target": "SELECT count(*) , T2.product_id FROM problems AS T1 JOIN product AS T2 ON T1.product_id = T2.product_id WHERE T1.date_problem_reported > \"1986-11-13\" GROUP BY T2.product_id"
+  },
+  {
+    "input": "text2sql: Who are the players that have names containing the letter a?",
+    "target": "SELECT DISTINCT pName FROM Player WHERE pName LIKE '%a%'"
+  },
+  {
+    "input": "text2sql: How many distinct currency codes are there for all drama workshop groups?",
+    "target": "SELECT count(DISTINCT Currency_Code) FROM Drama_Workshop_Groups"
+  },
+  {
+    "input": "text2sql: What are the names of all of Bob's friends?",
+    "target": "SELECT T1.name FROM Person AS T1 JOIN PersonFriend AS T2 ON T1.name = T2.name WHERE T2.friend = 'Bob'"
+  },
+  {
+    "input": "text2sql: How many adults stay in the room CONRAD SELBIG checked in on Oct 23, 2010?",
+    "target": "SELECT Adults FROM Reservations WHERE CheckIn = \"2010-10-23\" AND FirstName = \"CONRAD\" AND LastName = \"SELBIG\""
+  },
+  {
+    "input": "text2sql: Give the maximum and minimum gradepoints for students living in NYC?",
+    "target": "SELECT max(T2.gradepoint) , min(T2.gradepoint) FROM ENROLLED_IN AS T1 JOIN GRADECONVERSION AS T2 JOIN STUDENT AS T3 ON T1.Grade = T2.lettergrade AND T1.StuID = T3.StuID WHERE T3.city_code = \"NYC\""
+  },
+  {
+    "input": "text2sql: Return the first names and last names of employees who earn more than 30000 in salary.",
+    "target": "SELECT fname , lname FROM employee WHERE salary > 30000"
+  },
+  {
+    "input": "text2sql: What cities do students live in?",
+    "target": "SELECT DISTINCT city_code FROM Student"
+  },
+  {
+    "input": "text2sql: How many distinct parties are there for representatives?",
+    "target": "SELECT count(DISTINCT Party) FROM representative"
+  },
+  {
+    "input": "text2sql: What are the ids of the students who either registered or attended a course?",
+    "target": "SELECT student_id FROM student_course_registrations UNION SELECT student_id FROM student_course_attendance"
+  },
+  {
+    "input": "text2sql: Which club has the most members majoring in \"600\"?",
+    "target": "SELECT t1.clubname FROM club AS t1 JOIN member_of_club AS t2 ON t1.clubid = t2.clubid JOIN student AS t3 ON t2.stuid = t3.stuid WHERE t3.major = \"600\" GROUP BY t1.clubname ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Find the distinct last names of all the students who have president votes and whose advisor is not 2192.",
+    "target": "SELECT DISTINCT T1.LName FROM STUDENT AS T1 JOIN VOTING_RECORD AS T2 ON T1.StuID = PRESIDENT_Vote EXCEPT SELECT DISTINCT LName FROM STUDENT WHERE Advisor = \"2192\""
+  },
+  {
+    "input": "text2sql: When did researchers start and stop working?",
+    "target": "SELECT date_from , date_to FROM Project_Staff WHERE role_code = 'researcher'"
+  },
+  {
+    "input": "text2sql: How many invoices correspond to each order id?",
+    "target": "SELECT order_id , count(*) FROM Invoices GROUP BY order_id"
+  },
+  {
+    "input": "text2sql: Find the names of the swimmers who have both \"win\" and \"loss\" results in the record.",
+    "target": "SELECT t1.name FROM swimmer AS t1 JOIN record AS t2 ON t1.id = t2.swimmer_id WHERE RESULT = 'Win' INTERSECT SELECT t1.name FROM swimmer AS t1 JOIN record AS t2 ON t1.id = t2.swimmer_id WHERE RESULT = 'Loss'"
+  },
+  {
+    "input": "text2sql: Among all the claims, which settlements have a claimed amount that is no more than the average? List the claim start date.",
+    "target": "SELECT Date_Claim_Made FROM Claims WHERE Amount_Settled <= ( SELECT avg(Amount_Settled) FROM Claims )"
+  },
+  {
+    "input": "text2sql: What is the average earnings of poker players?",
+    "target": "SELECT avg(Earnings) FROM poker_player"
+  },
+  {
+    "input": "text2sql: What is the oldest age among the students?",
+    "target": "SELECT max(Age) FROM STUDENT"
+  },
+  {
+    "input": "text2sql: Find the first name of students not enrolled in any course.",
+    "target": "SELECT Fname FROM STUDENT WHERE StuID NOT IN (SELECT StuID FROM ENROLLED_IN)"
+  },
+  {
+    "input": "text2sql: Return the themes of farm competitions, sorted by year ascending.",
+    "target": "SELECT Theme FROM farm_competition ORDER BY YEAR ASC"
+  },
+  {
+    "input": "text2sql: Show ids for all documents with budget types described as 'Government'.",
+    "target": "SELECT T1.document_id FROM Documents_with_expenses AS T1 JOIN Ref_Budget_Codes AS T2 ON T1.Budget_Type_code = T2.Budget_Type_code WHERE T2.budget_type_Description = \"Government\""
+  },
+  {
+    "input": "text2sql: Find the states where have some college students in tryout and their decisions are yes.",
+    "target": "SELECT DISTINCT T1.state FROM college AS T1 JOIN tryout AS T2 ON T1.cName = T2.cName WHERE T2.decision = 'yes'"
+  },
+  {
+    "input": "text2sql: What is the average weight and year for each year?",
+    "target": "SELECT avg(Weight) , YEAR FROM CARS_DATA GROUP BY YEAR"
+  },
+  {
+    "input": "text2sql: What amenities does Smith Hall have in alphabetical order?",
+    "target": "SELECT T3.amenity_name FROM dorm AS T1 JOIN has_amenity AS T2 ON T1.dormid = T2.dormid JOIN dorm_amenity AS T3 ON T2.amenid = T3.amenid WHERE T1.dorm_name = 'Smith Hall' ORDER BY T3.amenity_name"
+  },
+  {
+    "input": "text2sql: What are the task details, task ids, and project ids for the progrects that are detailed as 'omnis' or have at least 3 outcomes?",
+    "target": "SELECT T1.task_details , T1.task_id , T2.project_id FROM Tasks AS T1 JOIN Projects AS T2 ON T1.project_id = T2.project_id WHERE T2.project_details = 'omnis' UNION SELECT T1.task_details , T1.task_id , T2.project_id FROM Tasks AS T1 JOIN Projects AS T2 ON T1.project_id = T2.project_id JOIN Project_outcomes AS T3 ON T2.project_id = T3.project_id GROUP BY T2.project_id HAVING count(*) > 2"
+  },
+  {
+    "input": "text2sql: What are the ids of the problems that are from the product \"voluptatem\" and are reported after 1995?",
+    "target": "SELECT T1.problem_id FROM problems AS T1 JOIN product AS T2 ON T1.product_id = T2.product_id WHERE T2.product_name = \"voluptatem\" AND T1.date_problem_reported > \"1995\""
+  },
+  {
+    "input": "text2sql: What is the number of colleges with a student population greater than 15000?",
+    "target": "SELECT count(*) FROM College WHERE enr > 15000"
+  },
+  {
+    "input": "text2sql: Count the number of friends Kyle has.",
+    "target": "SELECT count(*) FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id = T2.id WHERE T2.name = \"Kyle\""
+  },
+  {
+    "input": "text2sql: What are the bed type and name of all the rooms with traditional decor?",
+    "target": "SELECT roomName , bedType FROM Rooms WHERE decor = \"traditional\""
+  },
+  {
+    "input": "text2sql: What are the names and data types of the characteristics of the 'cumin' product?",
+    "target": "SELECT t3.characteristic_name , t3.characteristic_data_type FROM products AS t1 JOIN product_characteristics AS t2 ON t1.product_id = t2.product_id JOIN CHARACTERISTICS AS t3 ON t2.characteristic_id = t3.characteristic_id WHERE t1.product_name = \"cumin\""
+  },
+  {
+    "input": "text2sql: What is the first and last name of the student participating in the most activities?",
+    "target": "SELECT T1.fname , T1.lname FROM Student AS T1 JOIN Participates_in AS T2 ON T1.StuID = T2.StuID GROUP BY T1.StuID ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: What is the song in the volume with the maximum weeks on top?",
+    "target": "SELECT Song FROM volume ORDER BY Weeks_on_Top DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: List the names of members in ascending alphabetical order.",
+    "target": "SELECT Name FROM member ORDER BY Name ASC"
+  },
+  {
+    "input": "text2sql: In zip code 94107, on which day neither Fog nor Rain was not observed?",
+    "target": "SELECT date FROM weather WHERE zip_code = 94107 AND EVENTS != \"Fog\" AND EVENTS != \"Rain\""
+  },
+  {
+    "input": "text2sql: Find the customer who started a policy most recently.",
+    "target": "SELECT t2.customer_details FROM policies AS t1 JOIN customers AS t2 ON t1.customer_id = t2.customer_id WHERE t1.start_date = (SELECT max(start_date) FROM policies)"
+  },
+  {
+    "input": "text2sql: What are the nationalities and ages of journalists?",
+    "target": "SELECT Nationality , Age FROM journalist"
+  },
+  {
+    "input": "text2sql: Find the names of stadiums that the most swimmers have been to.",
+    "target": "SELECT t3.name FROM record AS t1 JOIN event AS t2 ON t1.event_id = t2.id JOIN stadium AS t3 ON t3.id = t2.stadium_id GROUP BY t2.stadium_id ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: List the age of all music artists.",
+    "target": "SELECT Age FROM artist"
+  },
+  {
+    "input": "text2sql: How many distinct nationalities are there?",
+    "target": "SELECT count(DISTINCT Nationality) FROM people"
+  },
+  {
+    "input": "text2sql: Find the number of manufactures that are based in Tokyo or Beijing.",
+    "target": "SELECT count(*) FROM manufacturers WHERE headquarter = 'Tokyo' OR headquarter = 'Beijing'"
+  },
+  {
+    "input": "text2sql: What is the sname of every sing that does not have any song?",
+    "target": "SELECT Name FROM singer WHERE Singer_ID NOT IN (SELECT Singer_ID FROM song)"
+  },
+  {
+    "input": "text2sql: For each zip code, find the ids of all trips that have a higher average mean temperature above 60?",
+    "target": "SELECT T1.id FROM trip AS T1 JOIN weather AS T2 ON T1.zip_code = T2.zip_code GROUP BY T2.zip_code HAVING avg(T2.mean_temperature_f) > 60"
+  },
+  {
+    "input": "text2sql: Find the names of all wines produced in 2008.",
+    "target": "SELECT Name FROM WINE WHERE YEAR = \"2008\""
+  },
+  {
+    "input": "text2sql: Show different locations and the number of performances at each location.",
+    "target": "SELECT LOCATION , COUNT(*) FROM performance GROUP BY LOCATION"
+  },
+  {
+    "input": "text2sql: What are the arriving date and the departing date of the dogs who have gone through a treatment?",
+    "target": "SELECT DISTINCT T1.date_arrived , T1.date_departed FROM Dogs AS T1 JOIN Treatments AS T2 ON T1.dog_id = T2.dog_id"
+  },
+  {
+    "input": "text2sql: What is the average age of students who are living in the dorm with the largest capacity?",
+    "target": "SELECT avg(T1.age) FROM student AS T1 JOIN lives_in AS T2 ON T1.stuid = T2.stuid JOIN dorm AS T3 ON T3.dormid = T2.dormid WHERE T3.student_capacity = (SELECT max(student_capacity) FROM dorm)"
+  },
+  {
+    "input": "text2sql: How many products are there?",
+    "target": "SELECT count(*) FROM products"
+  },
+  {
+    "input": "text2sql: find the names of people who are taller than 200 or lower than 190.",
+    "target": "SELECT name FROM people WHERE height > 200 OR height < 190"
+  },
+  {
+    "input": "text2sql: What is the list of distinct product names sorted by product id?",
+    "target": "SELECT DISTINCT product_name FROM product ORDER BY product_id"
+  },
+  {
+    "input": "text2sql: Find papers whose second author has last name \"Turon\" and is affiliated with an institution in the country \"USA\".",
+    "target": "SELECT t3.title FROM authors AS t1 JOIN authorship AS t2 ON t1.authid = t2.authid JOIN papers AS t3 ON t2.paperid = t3.paperid JOIN inst AS t4 ON t2.instid = t4.instid WHERE t4.country = \"USA\" AND t2.authorder = 2 AND t1.lname = \"Turon\""
+  },
+  {
+    "input": "text2sql: What is the name of the album that has the track Ball to the Wall?",
+    "target": "SELECT T1.title FROM albums AS T1 JOIN tracks AS T2 ON T1.id = T2.genre_id WHERE T2.name = \"Balls to the Wall\""
+  },
+  {
+    "input": "text2sql: What are the names of the stadiums without any concerts?",
+    "target": "SELECT name FROM stadium WHERE stadium_id NOT IN (SELECT stadium_id FROM concert)"
+  },
+  {
+    "input": "text2sql: List the first and last name for players who participated in all star game in 1998.",
+    "target": "SELECT name_first , name_last FROM player AS T1 JOIN all_star AS T2 ON T1.player_id = T2.player_id WHERE YEAR = 1998"
+  },
+  {
+    "input": "text2sql: What are the ids of the candidates that have an outcome code of Pass?",
+    "target": "SELECT candidate_id FROM candidate_assessments WHERE asessment_outcome_code = \"Pass\""
+  },
+  {
+    "input": "text2sql: What are the first and last names of all the candidates?",
+    "target": "SELECT T2.first_name , T2.last_name FROM candidates AS T1 JOIN people AS T2 ON T1.candidate_id = T2.person_id"
+  },
+  {
+    "input": "text2sql: For each building, show the name of the building and the number of institutions in it.",
+    "target": "SELECT T1.name , count(*) FROM building AS T1 JOIN institution AS T2 ON T1.building_id = T2.building_id GROUP BY T1.building_id"
+  },
+  {
+    "input": "text2sql: What are the names of the stations which serve both \"Ananthapuri Express\" and \"Guruvayur Express\" trains?",
+    "target": "SELECT T2.name FROM train_station AS T1 JOIN station AS T2 ON T1.station_id = T2.station_id JOIN train AS T3 ON T3.train_id = T1.train_id WHERE T3.Name = \"Ananthapuri Express\" INTERSECT SELECT T2.name FROM train_station AS T1 JOIN station AS T2 ON T1.station_id = T2.station_id JOIN train AS T3 ON T3.train_id = T1.train_id WHERE T3.Name = \"Guruvayur Express\""
+  },
+  {
+    "input": "text2sql: From which hometowns did both people older than 23 and younger than 20 come from?",
+    "target": "SELECT Hometown FROM people WHERE Age > 23 INTERSECT SELECT Hometown FROM people WHERE Age < 20"
+  },
+  {
+    "input": "text2sql: How many stadiums does each country have?",
+    "target": "SELECT country , count(*) FROM stadium GROUP BY country"
+  },
+  {
+    "input": "text2sql: Count the number of credit cards that the customer with first name Blanche and last name Huels has.",
+    "target": "SELECT count(*) FROM Customers_cards AS T1 JOIN Customers AS T2 ON T1.customer_id = T2.customer_id WHERE T2.customer_first_name = \"Blanche\" AND T2.customer_last_name = \"Huels\" AND T1.card_type_code = \"Credit\""
+  },
+  {
+    "input": "text2sql: What are the different types of transactions?",
+    "target": "SELECT DISTINCT transaction_type FROM Financial_Transactions"
+  },
+  {
+    "input": "text2sql: Show institution names along with the number of proteins for each institution.",
+    "target": "SELECT T1.institution , count(*) FROM institution AS T1 JOIN protein AS T2 ON T1.institution_id = T2.institution_id GROUP BY T1.institution_id"
+  },
+  {
+    "input": "text2sql: Show the team that have at least two technicians.",
+    "target": "SELECT Team FROM technician GROUP BY Team HAVING COUNT(*) >= 2"
+  },
+  {
+    "input": "text2sql: What instruments did the musician with the last name \"Heilo\" play in \"Badlands\"?",
+    "target": "SELECT T4.instrument FROM Performance AS T1 JOIN Band AS T2 ON T1.bandmate = T2.id JOIN Songs AS T3 ON T3.SongId = T1.SongId JOIN Instruments AS T4 ON T4.songid = T3.songid AND T4.bandmateid = T2.id WHERE T2.lastname = \"Heilo\" AND T3.title = \"Badlands\""
+  },
+  {
+    "input": "text2sql: What are the distinct wineries which produce wines costing between 50 and 100?",
+    "target": "SELECT DISTINCT Winery FROM WINE WHERE Price BETWEEN 50 AND 100"
+  },
+  {
+    "input": "text2sql: Show the student id of the oldest student.",
+    "target": "SELECT StuID FROM Student WHERE age = (SELECT max(age) FROM Student)"
+  },
+  {
+    "input": "text2sql: give me names of all compatible browsers and accelerators in the descending order of compatible year",
+    "target": "SELECT T2.name , T3.name FROM accelerator_compatible_browser AS T1 JOIN browser AS T2 ON T1.browser_id = T2.id JOIN web_client_accelerator AS T3 ON T1.accelerator_id = T3.id ORDER BY T1.compatible_since_year DESC"
+  },
+  {
+    "input": "text2sql: How many songs have used the instrument \"drums\"?",
+    "target": "SELECT count(*) FROM instruments WHERE instrument = \"drums\""
+  },
+  {
+    "input": "text2sql: What are the official languages of the countries of players from Maryland or Duke college?",
+    "target": "SELECT T1.Official_native_language FROM country AS T1 JOIN match_season AS T2 ON T1.Country_id = T2.Country WHERE T2.College = \"Maryland\" OR T2.College = \"Duke\""
+  },
+  {
+    "input": "text2sql: Find names of the document without any images.",
+    "target": "SELECT document_name FROM documents EXCEPT SELECT t1.document_name FROM documents AS t1 JOIN document_sections AS t2 ON t1.document_code = t2.document_code JOIN document_sections_images AS t3 ON t2.section_id = t3.section_id"
+  },
+  {
+    "input": "text2sql: Show the delegates and the names of county they belong to.",
+    "target": "SELECT T2.Delegate , T1.County_name FROM county AS T1 JOIN election AS T2 ON T1.County_id = T2.District"
+  },
+  {
+    "input": "text2sql: What are the full names of customers with the account name 900?",
+    "target": "SELECT T2.customer_first_name , T2.customer_last_name FROM Accounts AS T1 JOIN Customers AS T2 ON T1.customer_id = T2.customer_id WHERE T1.account_name = \"900\""
+  },
+  {
+    "input": "text2sql: Find the white grape used to produce wines with scores above 90.",
+    "target": "SELECT DISTINCT T1.Grape FROM GRAPES AS T1 JOIN WINE AS T2 ON T1.Grape = T2.Grape WHERE T1.Color = \"White\" AND T2.score > 90"
+  },
+  {
+    "input": "text2sql: What is the first, last name, gpa of the youngest one among students whose GPA is above 3?",
+    "target": "SELECT stu_fname , stu_lname , stu_gpa FROM student WHERE stu_gpa > 3 ORDER BY stu_dob DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Find the types of documents with more than 4 documents.",
+    "target": "SELECT document_type_code FROM documents GROUP BY document_type_code HAVING count(*) > 4"
+  },
+  {
+    "input": "text2sql: Find the max, average, and minimum gpa of all students in each department.",
+    "target": "SELECT max(stu_gpa) , avg(stu_gpa) , min(stu_gpa) , dept_code FROM student GROUP BY dept_code"
+  },
+  {
+    "input": "text2sql: What are the number of rooms for each bed type?",
+    "target": "SELECT bedType , count(*) FROM Rooms GROUP BY bedType"
+  },
+  {
+    "input": "text2sql: Find name of the project that needs the least amount of time to finish and the name of scientists who worked on it.",
+    "target": "SELECT T2.name , T3.name FROM assignedto AS T1 JOIN projects AS T2 ON T1.project = T2.code JOIN scientists AS T3 ON T1.scientist = T3.SSN WHERE T2.hours = (SELECT min(hours) FROM projects)"
+  },
+  {
+    "input": "text2sql: What are the medicine and trade names that cannot interact with the enzyme with the product 'Heme'?",
+    "target": "SELECT name , trade_name FROM medicine EXCEPT SELECT T1.name , T1.trade_name FROM medicine AS T1 JOIN medicine_enzyme_interaction AS T2 ON T2.medicine_id = T1.id JOIN enzyme AS T3 ON T3.id = T2.enzyme_id WHERE T3.product = 'Protoporphyrinogen IX'"
+  },
+  {
+    "input": "text2sql: List the cities which have more than 2 airports sorted by the number of airports.",
+    "target": "SELECT city FROM airports GROUP BY city HAVING count(*) > 2 ORDER BY count(*)"
+  },
+  {
+    "input": "text2sql: Count the number of tracks that are of the media type \"AAC audio file\".",
+    "target": "SELECT COUNT(*) FROM MEDIATYPE AS T1 JOIN TRACK AS T2 ON T1.MediaTypeId = T2.MediaTypeId WHERE T1.Name = \"AAC audio file\""
+  },
+  {
+    "input": "text2sql: Find the last names of faculties who are members of computer science department.",
+    "target": "SELECT T2.Lname FROM DEPARTMENT AS T1 JOIN FACULTY AS T2 ON T1.DNO = T3.DNO JOIN MEMBER_OF AS T3 ON T2.FacID = T3.FacID WHERE T1.DName = \"Computer Science\""
+  },
+  {
+    "input": "text2sql: What is the age of student Linda Smith?",
+    "target": "SELECT Age FROM Student WHERE Fname = \"Linda\" AND Lname = \"Smith\""
+  },
+  {
+    "input": "text2sql: Find the number of accounts with a savings balance that is higher than the average savings balance.",
+    "target": "SELECT count(*) FROM savings WHERE balance > (SELECT avg(balance) FROM savings)"
+  },
+  {
+    "input": "text2sql: Find the physician who prescribed the highest dose. What is his or her name?",
+    "target": "SELECT T1.name FROM physician AS T1 JOIN prescribes AS T2 ON T1.employeeid = T2.physician ORDER BY T2.dose DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: What products are available at store named \"Miramichi\"?",
+    "target": "SELECT t1.product FROM product AS t1 JOIN store_product AS t2 ON t1.product_id = t2.product_id JOIN store AS t3 ON t2.store_id = t3.store_id WHERE t3.store_name = \"Miramichi\""
+  },
+  {
+    "input": "text2sql: Find the number of phones for each accreditation type.",
+    "target": "SELECT Accreditation_type , count(*) FROM phone GROUP BY Accreditation_type"
+  },
+  {
+    "input": "text2sql: What are the ids of all students who don't play sports?",
+    "target": "SELECT StuID FROM Student EXCEPT SELECT StuID FROM Sportsinfo"
+  },
+  {
+    "input": "text2sql: Find the number of distinct room types available.",
+    "target": "SELECT count(DISTINCT roomtype) FROM room"
+  },
+  {
+    "input": "text2sql: Which transportation method is used the most often to get to tourist attractions?",
+    "target": "SELECT How_to_Get_There FROM Tourist_Attractions GROUP BY How_to_Get_There ORDER BY COUNT(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: How many users are logged in?",
+    "target": "SELECT count(*) FROM users WHERE user_login = 1"
+  },
+  {
+    "input": "text2sql: What are the names of all games played by Linda Smith?",
+    "target": "SELECT Gname FROM Plays_games AS T1 JOIN Video_games AS T2 ON T1.gameid = T2.gameid JOIN Student AS T3 ON T3.Stuid = T1.Stuid WHERE T3.Lname = \"Smith\" AND T3.Fname = \"Linda\""
+  },
+  {
+    "input": "text2sql: Show me all the restaurants.",
+    "target": "SELECT ResName FROM Restaurant"
+  },
+  {
+    "input": "text2sql: Show the order ids and the number of items in each order.",
+    "target": "SELECT order_id , count(*) FROM Order_items GROUP BY order_id"
+  },
+  {
+    "input": "text2sql: How many matches were played in 2013 or 2016?",
+    "target": "SELECT count(*) FROM matches WHERE YEAR = 2013 OR YEAR = 2016"
+  },
+  {
+    "input": "text2sql: Show the id of the employee named Ebba.",
+    "target": "SELECT employee_ID FROM Employees WHERE employee_name = \"Ebba\""
+  },
+  {
+    "input": "text2sql: Return the id and name of the document with the most paragraphs.",
+    "target": "SELECT T1.document_id , T2.document_name FROM Paragraphs AS T1 JOIN Documents AS T2 ON T1.document_id = T2.document_id GROUP BY T1.document_id ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: What is the famous release date of the artist with the oldest age?",
+    "target": "SELECT Famous_Release_date FROM artist ORDER BY Age DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Which document type is described with the prefix 'Initial'?",
+    "target": "SELECT document_type_code FROM Document_Types WHERE document_description LIKE 'Initial%'"
+  },
+  {
+    "input": "text2sql: Hom many musicians performed in the song \"Flash\"?",
+    "target": "SELECT count(*) FROM performance AS T1 JOIN band AS T2 ON T1.bandmate = T2.id JOIN songs AS T3 ON T3.songid = T1.songid WHERE T3.Title = \"Flash\""
+  },
+  {
+    "input": "text2sql: For each denomination, return the denomination and the count of schools with that denomination.",
+    "target": "SELECT Denomination , COUNT(*) FROM school GROUP BY Denomination"
+  },
+  {
+    "input": "text2sql: How many products have the characteristic named \"hot\"?",
+    "target": "SELECT count(*) FROM products AS t1 JOIN product_characteristics AS t2 ON t1.product_id = t2.product_id JOIN CHARACTERISTICS AS t3 ON t2.characteristic_id = t3.characteristic_id WHERE t3.characteristic_name = \"hot\""
+  },
+  {
+    "input": "text2sql: What are the last names of faculty in building Barton, sorted by last name?",
+    "target": "SELECT Lname FROM FACULTY WHERE Building = \"Barton\" ORDER BY Lname"
+  },
+  {
+    "input": "text2sql: What are the names of the airports in the city of Goroka?",
+    "target": "SELECT name FROM airports WHERE city = 'Goroka'"
+  },
+  {
+    "input": "text2sql: Show different builders of railways, along with the corresponding number of railways using each builder.",
+    "target": "SELECT Builder , COUNT(*) FROM railway GROUP BY Builder"
+  },
+  {
+    "input": "text2sql: Count the number of patients who stayed in room 112.",
+    "target": "SELECT count(patient) FROM stay WHERE room = 112"
+  },
+  {
+    "input": "text2sql: How many clubs does \"Linda Smith\" belong to?",
+    "target": "SELECT count(*) FROM club AS t1 JOIN member_of_club AS t2 ON t1.clubid = t2.clubid JOIN student AS t3 ON t2.stuid = t3.stuid WHERE t3.fname = \"Linda\" AND t3.lname = \"Smith\""
+  },
+  {
+    "input": "text2sql: List the project details of the projects with the research outcome described with the substring 'Published'.",
+    "target": "SELECT T1.project_details FROM Projects AS T1 JOIN Project_outcomes AS T2 ON T1.project_id = T2.project_id JOIN Research_outcomes AS T3 ON T2.outcome_code = T3.outcome_code WHERE T3.outcome_description LIKE '%Published%'"
+  },
+  {
+    "input": "text2sql: Who is the nominee who has been nominated for the most musicals?",
+    "target": "SELECT Nominee FROM musical GROUP BY Nominee ORDER BY COUNT(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: List each birth place along with the number of people from there.",
+    "target": "SELECT Birth_Place , COUNT(*) FROM people GROUP BY Birth_Place"
+  },
+  {
+    "input": "text2sql: How many different positions of players are there?",
+    "target": "SELECT count(DISTINCT POSITION) FROM player"
+  },
+  {
+    "input": "text2sql: What are the minimum and maximum membership amounts for all branches that either opened in 2011 or are located in London?",
+    "target": "SELECT min(membership_amount) , max(membership_amount) FROM branch WHERE open_year = 2011 OR city = 'London'"
+  },
+  {
+    "input": "text2sql: What are the names of all reviewers that have given 3 or 4 stars for reviews?",
+    "target": "SELECT T2.name FROM Rating AS T1 JOIN Reviewer AS T2 ON T1.rID = T2.rID WHERE T1.stars = 3 INTERSECT SELECT T2.name FROM Rating AS T1 JOIN Reviewer AS T2 ON T1.rID = T2.rID WHERE T1.stars = 4"
+  },
+  {
+    "input": "text2sql: What are the template ids of any templates used in more than a single document?",
+    "target": "SELECT template_id FROM Documents GROUP BY template_id HAVING count(*) > 1"
+  },
+  {
+    "input": "text2sql: What is the status code, phone number, and email address of the customer whose last name is Kohler or whose first name is Marina?",
+    "target": "SELECT customer_status_code , cell_mobile_phone_number , email_address FROM Customers WHERE first_name = \"Marina\" OR last_name = \"Kohler\""
+  },
+  {
+    "input": "text2sql: How many vehicle in total?",
+    "target": "SELECT count(*) FROM Vehicles"
+  },
+  {
+    "input": "text2sql: How many dogs have not gone through any treatment?",
+    "target": "SELECT count(*) FROM Dogs WHERE dog_id NOT IN ( SELECT dog_id FROM Treatments )"
+  },
+  {
+    "input": "text2sql: Count the number of distinct artists who have volumes.",
+    "target": "SELECT COUNT(DISTINCT Artist_ID) FROM volume"
+  },
+  {
+    "input": "text2sql: Find the ids of the employees who does not work in those departments where some employees works whose manager id within the range 100 and 200.",
+    "target": "SELECT * FROM employees WHERE department_id NOT IN (SELECT department_id FROM departments WHERE manager_id BETWEEN 100 AND 200)"
+  },
+  {
+    "input": "text2sql: How many products have their color described as 'white' or have a characteristic with the name 'hot'?",
+    "target": "SELECT count(*) FROM products AS t1 JOIN product_characteristics AS t2 ON t1.product_id = t2.product_id JOIN CHARACTERISTICS AS t3 ON t2.characteristic_id = t3.characteristic_id JOIN ref_colors AS t4 ON t1.color_code = t4.color_code WHERE t4.color_description = \"white\" OR t3.characteristic_name = \"hot\""
+  },
+  {
+    "input": "text2sql: What is the name of the shipping agent of the document with id 2?",
+    "target": "SELECT Ref_Shipping_Agents.shipping_agent_name FROM Ref_Shipping_Agents JOIN Documents ON Documents.shipping_agent_code = Ref_Shipping_Agents.shipping_agent_code WHERE Documents.document_id = 2"
+  },
+  {
+    "input": "text2sql: Show the names of festivals that have nominated artworks of type \"Program Talent Show\".",
+    "target": "SELECT T3.Festival_Name FROM nomination AS T1 JOIN artwork AS T2 ON T1.Artwork_ID = T2.Artwork_ID JOIN festival_detail AS T3 ON T1.Festival_ID = T3.Festival_ID WHERE T2.Type = \"Program Talent Show\""
+  },
+  {
+    "input": "text2sql: What are the names of the customers and staff members?",
+    "target": "SELECT customer_details FROM customers UNION SELECT staff_details FROM staff"
+  },
+  {
+    "input": "text2sql: What are the phone numbers of all customers and all staff members?",
+    "target": "SELECT phone_number FROM customers UNION SELECT phone_number FROM staff"
+  },
+  {
+    "input": "text2sql: Find the number of rooms with a king bed.",
+    "target": "SELECT count(*) FROM Rooms WHERE bedType = \"King\""
+  },
+  {
+    "input": "text2sql: Count the number of products in the category 'Seeds'.",
+    "target": "SELECT count(*) FROM products WHERE product_category_code = \"Seeds\""
+  },
+  {
+    "input": "text2sql: What are the first names and ages of all students who are playing both Football and Lacrosse?",
+    "target": "SELECT fname , age FROM Student WHERE StuID IN (SELECT StuID FROM Sportsinfo WHERE SportName = \"Football\" INTERSECT SELECT StuID FROM Sportsinfo WHERE SportName = \"Lacrosse\")"
+  },
+  {
+    "input": "text2sql: Find the number of students who is older than 20 in each dorm.",
+    "target": "SELECT count(*) , T3.dorm_name FROM student AS T1 JOIN lives_in AS T2 ON T1.stuid = T2.stuid JOIN dorm AS T3 ON T3.dormid = T2.dormid WHERE T1.age > 20 GROUP BY T3.dorm_name"
+  },
+  {
+    "input": "text2sql: What are the names of singers ordered by ascending net worth?",
+    "target": "SELECT Name FROM singer ORDER BY Net_Worth_Millions ASC"
+  },
+  {
+    "input": "text2sql: What are the names and damage in millions for storms, ordered by their max speeds descending?",
+    "target": "SELECT name , damage_millions_USD FROM storm ORDER BY max_speed DESC"
+  },
+  {
+    "input": "text2sql: List all restaurant types.",
+    "target": "SELECT ResTypeName FROM Restaurant_Type"
+  },
+  {
+    "input": "text2sql: Find the last name of the staff whose email address contains \"wrau\".",
+    "target": "SELECT last_name FROM staff WHERE email_address LIKE \"%wrau%\""
+  },
+  {
+    "input": "text2sql: What are the names of the technicians that are assigned to repair machines with more point values than 70?",
+    "target": "SELECT T3.Name FROM repair_assignment AS T1 JOIN machine AS T2 ON T1.machine_id = T2.machine_id JOIN technician AS T3 ON T1.technician_ID = T3.technician_ID WHERE T2.value_points > 70"
+  },
+  {
+    "input": "text2sql: List the maximum weight and type for each type of pet.",
+    "target": "SELECT max(weight) , petType FROM pets GROUP BY petType"
+  },
+  {
+    "input": "text2sql: What are the address and phone number of the buildings managed by \"Brenden\"?",
+    "target": "SELECT building_address , building_phone FROM Apartment_Buildings WHERE building_manager = \"Brenden\""
+  },
+  {
+    "input": "text2sql: What are the names of artists that have not had any exhibitions?",
+    "target": "SELECT name FROM artist WHERE artist_id NOT IN (SELECT artist_id FROM exhibition)"
+  },
+  {
+    "input": "text2sql: Return the decor of the room named \"Recluse and defiance\".",
+    "target": "SELECT decor FROM Rooms WHERE roomName = \"Recluse and defiance\""
+  },
+  {
+    "input": "text2sql: What are the id and name of the mountains that have at least 2 photos?",
+    "target": "SELECT T1.id , T1.name FROM mountain AS T1 JOIN photos AS T2 ON T1.id = T2.mountain_id GROUP BY T1.id HAVING count(*) >= 2"
+  },
+  {
+    "input": "text2sql: List all information about customer master index, and sort them by details in descending order.",
+    "target": "SELECT * FROM customer_master_index ORDER BY cmi_details DESC"
+  },
+  {
+    "input": "text2sql: What are the official names of cities, ordered descending by population?",
+    "target": "SELECT Official_Name FROM city ORDER BY Population DESC"
+  },
+  {
+    "input": "text2sql: Count the number of different languages in these films.",
+    "target": "SELECT count(DISTINCT language_id) FROM film"
+  },
+  {
+    "input": "text2sql: Which college has the most authors with submissions?",
+    "target": "SELECT College FROM submission GROUP BY College ORDER BY COUNT(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: What are the city name, id, and number of addresses corresponding to the city with the most addressed?",
+    "target": "SELECT T2.city , count(*) , T1.city_id FROM address AS T1 JOIN city AS T2 ON T1.city_id = T2.city_id GROUP BY T1.city_id ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: List the name and the number of stations for all the cities that have at least 15 stations.",
+    "target": "SELECT city , COUNT(*) FROM station GROUP BY city HAVING COUNT(*) >= 15"
+  },
+  {
+    "input": "text2sql: What is the average and maximum age for each pet type?",
+    "target": "SELECT avg(pet_age) , max(pet_age) , pettype FROM pets GROUP BY pettype"
+  },
+  {
+    "input": "text2sql: How many customers don't have an account?",
+    "target": "SELECT count(*) FROM Customers WHERE customer_id NOT IN (SELECT customer_id FROM Accounts)"
+  },
+  {
+    "input": "text2sql: How much does the most recent treatment cost?",
+    "target": "SELECT cost_of_treatment FROM Treatments ORDER BY date_of_treatment DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: What are the type codes of the policies used by the customer \"Dayana Robel\"?",
+    "target": "SELECT policy_type_code FROM policies AS t1 JOIN customers AS t2 ON t1.customer_id = t2.customer_id WHERE t2.customer_details = \"Dayana Robel\""
+  },
+  {
+    "input": "text2sql: What is the total number of degrees granted after 2000 for each Orange county campus?",
+    "target": "SELECT T1.campus , sum(T2.degrees) FROM campuses AS T1 JOIN degrees AS T2 ON T1.id = T2.campus WHERE T1.county = \"Orange\" AND T2.year >= 2000 GROUP BY T1.campus"
+  },
+  {
+    "input": "text2sql: Find the name of the ships that have more than one captain.",
+    "target": "SELECT t1.name FROM ship AS t1 JOIN captain AS t2 ON t1.ship_id = t2.ship_id GROUP BY t2.ship_id HAVING count(*) > 1"
+  },
+  {
+    "input": "text2sql: Find the name, population and expected life length of asian country with the largest area?",
+    "target": "SELECT Name , Population , LifeExpectancy FROM country WHERE Continent = \"Asia\" ORDER BY SurfaceArea DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Find the name of accounts whose checking balance is higher than corresponding saving balance.",
+    "target": "SELECT T1.name FROM accounts AS T1 JOIN checking AS T2 ON T1.custid = T2.custid JOIN savings AS T3 ON T1.custid = T3.custid WHERE T2.balance > T3.balance"
+  },
+  {
+    "input": "text2sql: Return the name, rate, check in and check out date for the room with the highest rate.",
+    "target": "SELECT T2.roomName , T1.Rate , T1.CheckIn , T1.CheckOut FROM Reservations AS T1 JOIN Rooms AS T2 ON T1.Room = T2.RoomId GROUP BY T1.Room ORDER BY T1.Rate DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Count the number of customers recorded.",
+    "target": "SELECT count(*) FROM CUSTOMERS"
+  },
+  {
+    "input": "text2sql: For every student who is registered for some course, how many courses are they registered for?",
+    "target": "SELECT T1.student_id , count(*) FROM students AS T1 JOIN student_course_registrations AS T2 ON T1.student_id = T2.student_id GROUP BY T1.student_id"
+  },
+  {
+    "input": "text2sql: What are the mascots for schools with enrollments above the average?",
+    "target": "SELECT mascot FROM school WHERE enrollment > (SELECT avg(enrollment) FROM school)"
+  },
+  {
+    "input": "text2sql: What are the population and life expectancies in Brazil?",
+    "target": "SELECT Population , LifeExpectancy FROM country WHERE Name = \"Brazil\""
+  },
+  {
+    "input": "text2sql: Where us the club named \"Tennis Club\" located?",
+    "target": "SELECT clublocation FROM club WHERE clubname = \"Tennis Club\""
+  },
+  {
+    "input": "text2sql: Find the name of the ships that are steered by both a captain with Midshipman rank and a captain with Lieutenant rank.",
+    "target": "SELECT t1.name FROM ship AS t1 JOIN captain AS t2 ON t1.ship_id = t2.ship_id WHERE t2.rank = 'Midshipman' INTERSECT SELECT t1.name FROM ship AS t1 JOIN captain AS t2 ON t1.ship_id = t2.ship_id WHERE t2.rank = 'Lieutenant'"
+  },
+  {
+    "input": "text2sql: Find the number of characteristics that the product \"flax\" has.",
+    "target": "SELECT count(*) FROM products AS t1 JOIN product_characteristics AS t2 ON t1.product_id = t2.product_id JOIN CHARACTERISTICS AS t3 ON t2.characteristic_id = t3.characteristic_id WHERE t1.product_name = \"flax\""
+  },
+  {
+    "input": "text2sql: List the titles of all items in alphabetic order .",
+    "target": "SELECT title FROM item ORDER BY title"
+  },
+  {
+    "input": "text2sql: Count the number of exhibitions that happened in or after 2005.",
+    "target": "SELECT count(*) FROM exhibition WHERE YEAR >= 2005"
+  },
+  {
+    "input": "text2sql: What are the full names and gradepoints for all enrollments?",
+    "target": "SELECT T3.Fname , T3.LName , T2.gradepoint FROM ENROLLED_IN AS T1 JOIN GRADECONVERSION AS T2 JOIN STUDENT AS T3 ON T1.Grade = T2.lettergrade AND T1.StuID = T3.StuID"
+  },
+  {
+    "input": "text2sql: What is the last name of the student who got a grade A in the class with code 10018.",
+    "target": "SELECT T1.stu_lname FROM student AS T1 JOIN enroll AS T2 ON T1.stu_num = T2.stu_num WHERE T2.enroll_grade = 'A' AND T2.class_code = 10018"
+  },
+  {
+    "input": "text2sql: List the number of people injured by perpetrators in ascending order.",
+    "target": "SELECT Injured FROM perpetrator ORDER BY Injured ASC"
+  },
+  {
+    "input": "text2sql: Which products has been complained by the customer who has filed least amount of complaints?",
+    "target": "SELECT DISTINCT t1.product_name FROM products AS t1 JOIN complaints AS t2 ON t1.product_id = t2.product_id JOIN customers AS t3 GROUP BY t3.customer_id ORDER BY count(*) LIMIT 1"
+  },
+  {
+    "input": "text2sql: What are the names and phone numbers for all suppliers, sorted in alphabetical order of their addressed?",
+    "target": "SELECT T1.supplier_name , T1.supplier_phone FROM Suppliers AS T1 JOIN supplier_addresses AS T2 ON T1.supplier_id = T2.supplier_id JOIN addresses AS T3 ON T2.address_id = T3.address_id ORDER BY T3.address_details"
+  },
+  {
+    "input": "text2sql: What is the time of elimination for the wrestler with the most days held?",
+    "target": "SELECT T1.Time FROM elimination AS T1 JOIN wrestler AS T2 ON T1.Wrestler_ID = T2.Wrestler_ID ORDER BY T2.Days_held DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: What are the different government forms and what is the total population of each for government forms that have an average life expectancy greater than 72?",
+    "target": "SELECT sum(Population) , GovernmentForm FROM country GROUP BY GovernmentForm HAVING avg(LifeExpectancy) > 72"
+  },
+  {
+    "input": "text2sql: How many employees have salary between 100000 and 200000?",
+    "target": "SELECT count(*) FROM Employee WHERE salary BETWEEN 100000 AND 200000"
+  },
+  {
+    "input": "text2sql: What is the description of the product named \"Chocolate\"?",
+    "target": "SELECT product_description FROM products WHERE product_name = \"Chocolate\""
+  },
+  {
+    "input": "text2sql: What was the most popular position at tryouts?",
+    "target": "SELECT pPos FROM tryout GROUP BY pPos ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Count the number of people of each sex who have a weight higher than 85.",
+    "target": "SELECT count(*) , sex FROM people WHERE weight > 85 GROUP BY sex"
+  },
+  {
+    "input": "text2sql: What is the count and code of the job with the most employee?",
+    "target": "SELECT emp_jobcode , count(*) FROM employee GROUP BY emp_jobcode ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Which teams had more than 3 eliminations?",
+    "target": "SELECT Team FROM elimination GROUP BY Team HAVING COUNT(*) > 3"
+  },
+  {
+    "input": "text2sql: Find the names of the regions which were affected by the storm that killed the greatest number of people.",
+    "target": "SELECT T2.region_name FROM affected_region AS T1 JOIN region AS T2 ON T1.region_id = T2.region_id JOIN storm AS T3 ON T1.storm_id = T3.storm_id ORDER BY T3.Number_Deaths DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Which shipping agent shipped the most documents? List the shipping agent name and the number of documents.",
+    "target": "SELECT Ref_Shipping_Agents.shipping_agent_name , count(Documents.document_id) FROM Ref_Shipping_Agents JOIN Documents ON Documents.shipping_agent_code = Ref_Shipping_Agents.shipping_agent_code GROUP BY Ref_Shipping_Agents.shipping_agent_code ORDER BY count(Documents.document_id) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Show each premise type and the number of premises in that type.",
+    "target": "SELECT premises_type , count(*) FROM premises GROUP BY premises_type"
+  },
+  {
+    "input": "text2sql: Find the number of activities Mark Giuliano is involved in.",
+    "target": "SELECT count(*) FROM Faculty AS T1 JOIN Faculty_participates_in AS T2 ON T1.facID = T2.facID WHERE T1.fname = \"Mark\" AND T1.lname = \"Giuliano\""
+  },
+  {
+    "input": "text2sql: What are the ids of courses offered in Fall of 2009 but not in Spring of 2010?",
+    "target": "SELECT course_id FROM SECTION WHERE semester = 'Fall' AND YEAR = 2009 EXCEPT SELECT course_id FROM SECTION WHERE semester = 'Spring' AND YEAR = 2010"
+  },
+  {
+    "input": "text2sql: What are the delegate and name of the county they belong to, for each county?",
+    "target": "SELECT T2.Delegate , T1.County_name FROM county AS T1 JOIN election AS T2 ON T1.County_id = T2.District"
+  },
+  {
+    "input": "text2sql: What are the names of all the stores located in Khanewal District?",
+    "target": "SELECT t1.store_name FROM store AS t1 JOIN store_district AS t2 ON t1.store_id = t2.store_id JOIN district AS t3 ON t2.district_id = t3.district_id WHERE t3.district_name = \"Khanewal District\""
+  },
+  {
+    "input": "text2sql: What are the names and capitals of each country?",
+    "target": "SELECT Country_name , Capital FROM country"
+  },
+  {
+    "input": "text2sql: What is the number of states that has some colleges whose enrollment is smaller than the average enrollment?",
+    "target": "SELECT count(DISTINCT state) FROM college WHERE enr < (SELECT avg(enr) FROM college)"
+  },
+  {
+    "input": "text2sql: Find the names of all instructors whose salary is greater than the salary of all instructors in the Biology department.",
+    "target": "SELECT name FROM instructor WHERE salary > (SELECT max(salary) FROM instructor WHERE dept_name = 'Biology')"
+  },
+  {
+    "input": "text2sql: What is the description of the club \"Pen and Paper Gaming\"?",
+    "target": "SELECT clubdesc FROM club WHERE clubname = \"Pen and Paper Gaming\""
+  },
+  {
+    "input": "text2sql: List all the types of forms.",
+    "target": "SELECT DISTINCT form_type_code FROM forms"
+  },
+  {
+    "input": "text2sql: What are the unique names of all race held between 2014 and 2017?",
+    "target": "SELECT DISTINCT name FROM races WHERE YEAR BETWEEN 2014 AND 2017"
+  },
+  {
+    "input": "text2sql: What are the full names and salaries for any employees earning less than 6000?",
+    "target": "SELECT first_name , last_name , salary FROM employees WHERE salary < 6000"
+  },
+  {
+    "input": "text2sql: What are the dates for the documents with both 'GV' type and 'SF' type expenses?",
+    "target": "SELECT T1.document_date FROM Documents AS T1 JOIN Documents_with_Expenses AS T2 ON T1.document_id = T2.document_id WHERE T2.budget_type_code = 'GV' INTERSECT SELECT T1.document_date FROM Documents AS T1 JOIN Documents_with_Expenses AS T2 ON T1.document_id = T2.document_id WHERE T2.budget_type_code = 'SF'"
+  },
+  {
+    "input": "text2sql: What are the amenities in the dorm that a student who has the last name of Smith lives in?",
+    "target": "SELECT T3.amenity_name FROM dorm AS T1 JOIN has_amenity AS T2 ON T1.dormid = T2.dormid JOIN dorm_amenity AS T3 ON T2.amenid = T3.amenid JOIN lives_in AS T4 ON T4.dormid = T1.dormid JOIN student AS T5 ON T5.stuid = T4.stuid WHERE T5.lname = 'Smith'"
+  },
+  {
+    "input": "text2sql: How many distinct kinds of injuries happened after season 2010?",
+    "target": "SELECT count(DISTINCT T1.injury) FROM injury_accident AS T1 JOIN game AS T2 ON T1.game_id = T2.id WHERE T2.season > 2010"
+  },
+  {
+    "input": "text2sql: What are the names of buildings sorted in descending order of building height?",
+    "target": "SELECT name FROM buildings ORDER BY Height DESC"
+  },
+  {
+    "input": "text2sql: Give the maximum price and score for wines produced in the appelation St. Helena.",
+    "target": "SELECT max(Price) , max(Score) FROM WINE WHERE Appelation = \"St. Helena\""
+  },
+  {
+    "input": "text2sql: Return the phone and email of the customer with the first name Aniyah and last name Feest.",
+    "target": "SELECT customer_phone , customer_email FROM Customers WHERE customer_first_name = \"Aniyah\" AND customer_last_name = \"Feest\""
+  },
+  {
+    "input": "text2sql: How many students, on average, does each college have enrolled?",
+    "target": "SELECT avg(enr) FROM College"
+  },
+  {
+    "input": "text2sql: Find the names of departments that are located in Houston.",
+    "target": "SELECT t1.dname FROM department AS t1 JOIN dept_locations AS t2 ON t1.dnumber = t2.dnumber WHERE t2.dlocation = 'Houston'"
+  },
+  {
+    "input": "text2sql: Count the number of paragraphs in the document named 'Summer Show'.",
+    "target": "SELECT count(*) FROM Paragraphs AS T1 JOIN Documents AS T2 ON T1.document_ID = T2.document_ID WHERE T2.document_name = 'Summer Show'"
+  },
+  {
+    "input": "text2sql: List all channel names ordered by their rating in percent from big to small.",
+    "target": "SELECT name FROM channel ORDER BY rating_in_percent DESC"
+  },
+  {
+    "input": "text2sql: Show names of climbers and the names of mountains they climb.",
+    "target": "SELECT T1.Name , T2.Name FROM climber AS T1 JOIN mountain AS T2 ON T1.Mountain_ID = T2.Mountain_ID"
+  },
+  {
+    "input": "text2sql: List all information about college sorted by enrollment number in the ascending order.",
+    "target": "SELECT * FROM College ORDER BY enr"
+  },
+  {
+    "input": "text2sql: What are the names of representatives in descending order of votes?",
+    "target": "SELECT T2.Name FROM election AS T1 JOIN representative AS T2 ON T1.Representative_ID = T2.Representative_ID ORDER BY votes DESC"
+  },
+  {
+    "input": "text2sql: Find the average and total capacity of dorms for the students with gender X.",
+    "target": "SELECT avg(student_capacity) , sum(student_capacity) FROM dorm WHERE gender = 'X'"
+  },
+  {
+    "input": "text2sql: Find the name and ID of the product whose total order quantity is the largest.",
+    "target": "SELECT t2.product_details , t2.product_id FROM order_items AS t1 JOIN products AS t2 ON t1.product_id = t2.product_id GROUP BY t1.product_id ORDER BY sum(t1.order_quantity) LIMIT 1"
+  },
+  {
+    "input": "text2sql: Find the founder of the company whose name begins with the letter 'S'.",
+    "target": "SELECT founder FROM manufacturers WHERE name LIKE 'S%'"
+  },
+  {
+    "input": "text2sql: What is the name of the project that requires the fewest number of hours, and the names of the scientists assigned to it?",
+    "target": "SELECT T2.name , T3.name FROM assignedto AS T1 JOIN projects AS T2 ON T1.project = T2.code JOIN scientists AS T3 ON T1.scientist = T3.SSN WHERE T2.hours = (SELECT min(hours) FROM projects)"
+  },
+  {
+    "input": "text2sql: Show all dates of transactions whose type code is \"SALE\".",
+    "target": "SELECT date_of_transaction FROM TRANSACTIONS WHERE transaction_type_code = \"SALE\""
+  },
+  {
+    "input": "text2sql: List the names of all distinct wines in alphabetical order.",
+    "target": "SELECT DISTINCT Name FROM WINE ORDER BY Name"
+  },
+  {
+    "input": "text2sql: List the states which have between 2 to 4 staffs living there.",
+    "target": "SELECT T1.state_province_county FROM Addresses AS T1 JOIN Staff AS T2 ON T1.address_id = T2.staff_address_id GROUP BY T1.state_province_county HAVING count(*) BETWEEN 2 AND 4"
+  },
+  {
+    "input": "text2sql: Find the number of members of club \"Pen and Paper Gaming\".",
+    "target": "SELECT count(*) FROM club AS t1 JOIN member_of_club AS t2 ON t1.clubid = t2.clubid JOIN student AS t3 ON t2.stuid = t3.stuid WHERE t1.clubname = \"Pen and Paper Gaming\""
+  },
+  {
+    "input": "text2sql: Show member names without any registered branch.",
+    "target": "SELECT name FROM member WHERE member_id NOT IN (SELECT member_id FROM membership_register_branch)"
+  },
+  {
+    "input": "text2sql: Find the saving balance of the account with the highest checking balance.",
+    "target": "SELECT T3.balance FROM accounts AS T1 JOIN checking AS T2 ON T1.custid = T2.custid JOIN savings AS T3 ON T1.custid = T3.custid ORDER BY T2.balance DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: What are the subject ID, subject name, and the number of available courses for each subject?",
+    "target": "SELECT T1.subject_id , T2.subject_name , COUNT(*) FROM Courses AS T1 JOIN Subjects AS T2 ON T1.subject_id = T2.subject_id GROUP BY T1.subject_id"
+  },
+  {
+    "input": "text2sql: What are the ids, version numbers, and type codes for each template?",
+    "target": "SELECT template_id , version_number , template_type_code FROM Templates"
+  },
+  {
+    "input": "text2sql: Show names, results and bulgarian commanders of the battles with no ships lost in the 'English Channel'.",
+    "target": "SELECT name , RESULT , bulgarian_commander FROM battle EXCEPT SELECT T1.name , T1.result , T1.bulgarian_commander FROM battle AS T1 JOIN ship AS T2 ON T1.id = T2.lost_in_battle WHERE T2.location = 'English Channel'"
+  },
+  {
+    "input": "text2sql: What is the salary and name of the employee who has the most number of certificates on aircrafts with distance more than 5000?",
+    "target": "SELECT T1.name FROM Employee AS T1 JOIN Certificate AS T2 ON T1.eid = T2.eid JOIN Aircraft AS T3 ON T3.aid = T2.aid WHERE T3.distance > 5000 GROUP BY T1.eid ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: How many customers does Steve Johnson support?",
+    "target": "SELECT count(*) FROM employees AS T1 JOIN customers AS T2 ON T2.support_rep_id = T1.id WHERE T1.first_name = \"Steve\" AND T1.last_name = \"Johnson\""
+  },
+  {
+    "input": "text2sql: Show all allergies and their types.",
+    "target": "SELECT allergy , allergytype FROM Allergy_type"
+  },
+  {
+    "input": "text2sql: Find the first name and gender of student who have more than one pet.",
+    "target": "SELECT T1.fname , T1.sex FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid = T2.stuid GROUP BY T1.stuid HAVING count(*) > 1"
+  },
+  {
+    "input": "text2sql: What is all the information about the Marketing department?",
+    "target": "SELECT * FROM departments WHERE department_name = 'Marketing'"
+  },
+  {
+    "input": "text2sql: What are the ids and makers of all car makers that produce at least 2 models and make more than 3 cars?",
+    "target": "SELECT T1.Id , T1.Maker FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id = T2.Maker GROUP BY T1.Id HAVING count(*) >= 2 INTERSECT SELECT T1.Id , T1.Maker FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id = T2.Maker JOIN CAR_NAMES AS T3 ON T2.model = T3.model GROUP BY T1.Id HAVING count(*) > 3"
+  },
+  {
+    "input": "text2sql: Which major has most number of students?",
+    "target": "SELECT major FROM Student GROUP BY major ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Which regions speak Dutch or English?",
+    "target": "SELECT DISTINCT T1.Region FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode WHERE T2.Language = \"English\" OR T2.Language = \"Dutch\""
+  },
+  {
+    "input": "text2sql: List all employees in the circulation history of the document with id 1. List the employee's name.",
+    "target": "SELECT Employees.employee_name FROM Employees JOIN Circulation_History ON Circulation_History.employee_id = Employees.employee_id WHERE Circulation_History.document_id = 1"
+  },
+  {
+    "input": "text2sql: How many students are there?",
+    "target": "SELECT count(*) FROM list"
+  },
+  {
+    "input": "text2sql: What is the name of the entrepreneur with the greatest weight?",
+    "target": "SELECT T2.Name FROM entrepreneur AS T1 JOIN people AS T2 ON T1.People_ID = T2.People_ID ORDER BY T2.Weight DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Which customers have an insurance policy with the type code \"Deputy\" or \"Uniform\"? Return the customer details.",
+    "target": "SELECT DISTINCT t2.customer_details FROM policies AS t1 JOIN customers AS t2 ON t1.customer_id = t2.customer_id WHERE t1.policy_type_code = \"Deputy\" OR t1.policy_type_code = \"Uniform\""
+  },
+  {
+    "input": "text2sql: What are the names of courses without prerequisites?",
+    "target": "SELECT title FROM course WHERE course_id NOT IN (SELECT course_id FROM prereq)"
+  },
+  {
+    "input": "text2sql: What is the most common singer citizenship ?",
+    "target": "select citizenship from singer group by citizenship order by count(*) desc limit 1"
+  },
+  {
+    "input": "text2sql: Find the number of flights landing in the city of Aberdeen or Abilene.",
+    "target": "SELECT count(*) FROM Flights AS T1 JOIN Airports AS T2 ON T1.DestAirport = T2.AirportCode WHERE T2.city = \"Aberdeen\" OR T2.city = \"Abilene\""
+  },
+  {
+    "input": "text2sql: How long does student Linda Smith spend on the restaurant in total?",
+    "target": "SELECT sum(Spent) FROM Student JOIN Visits_Restaurant ON Student.StuID = Visits_Restaurant.StuID WHERE Student.Fname = \"Linda\" AND Student.Lname = \"Smith\""
+  },
+  {
+    "input": "text2sql: How many songs were released for each format?",
+    "target": "SELECT count(*) , formats FROM files GROUP BY formats"
+  },
+  {
+    "input": "text2sql: Show all transaction types.",
+    "target": "SELECT DISTINCT transaction_type FROM Financial_Transactions"
+  },
+  {
+    "input": "text2sql: What is the transaction type that has processed the greatest total amount in transactions?",
+    "target": "SELECT transaction_type FROM Financial_transactions GROUP BY transaction_type ORDER BY sum(transaction_amount) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: display the full name (first and last), hire date, salary, and department number for those employees whose first name does not containing the letter M and make the result set in ascending order by department number.",
+    "target": "SELECT first_name , last_name , hire_date , salary , department_id FROM employees WHERE first_name NOT LIKE '%M%' ORDER BY department_id"
+  },
+  {
+    "input": "text2sql: List the names of all distinct wines ordered by price.",
+    "target": "SELECT DISTINCT Name FROM WINE ORDER BY price"
+  },
+  {
+    "input": "text2sql: List the name, nationality and id of all male architects ordered by their names lexicographically.",
+    "target": "SELECT name , nationality , id FROM architect WHERE gender = 'male' ORDER BY name"
+  },
+  {
+    "input": "text2sql: How many tracks are in the AAC audio file media type?",
+    "target": "SELECT COUNT(*) FROM MEDIATYPE AS T1 JOIN TRACK AS T2 ON T1.MediaTypeId = T2.MediaTypeId WHERE T1.Name = \"AAC audio file\""
+  },
+  {
+    "input": "text2sql: How many problems are there for product voluptatem?",
+    "target": "SELECT count(*) FROM product AS T1 JOIN problems AS T2 ON T1.product_id = T2.product_id WHERE T1.product_name = \"voluptatem\""
+  },
+  {
+    "input": "text2sql: What is the year and semester with the most courses?",
+    "target": "SELECT semester , YEAR FROM SECTION GROUP BY semester , YEAR ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: How much is the track Fast As a Shark?",
+    "target": "SELECT unit_price FROM tracks WHERE name = \"Fast As a Shark\""
+  },
+  {
+    "input": "text2sql: How many technicians are there?",
+    "target": "SELECT count(*) FROM technician"
+  },
+  {
+    "input": "text2sql: What are the three most costly procedures?",
+    "target": "SELECT name FROM procedures ORDER BY cost LIMIT 3"
+  },
+  {
+    "input": "text2sql: Which apartment type code appears the most often?",
+    "target": "SELECT apt_type_code FROM Apartments GROUP BY apt_type_code ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: What are the different police forces of counties that are not located in the East?",
+    "target": "SELECT DISTINCT Police_force FROM county_public_safety WHERE LOCATION != \"East\""
+  },
+  {
+    "input": "text2sql: Show student ids who are female and play football.",
+    "target": "SELECT StuID FROM Student WHERE sex = 'F' INTERSECT SELECT StuID FROM Sportsinfo WHERE sportname = \"Football\""
+  },
+  {
+    "input": "text2sql: Return the completion date for all the tests that have \"Fail\" result.",
+    "target": "SELECT T1.date_of_completion FROM Student_Course_Enrolment AS T1 JOIN Student_Tests_Taken AS T2 ON T1.registration_id = T2.registration_id WHERE T2.test_result = \"Fail\""
+  },
+  {
+    "input": "text2sql: What are the names of the districts that have both mall and village store style shops?",
+    "target": "SELECT t3.District_name FROM store AS t1 JOIN store_district AS t2 ON t1.store_id = t2.store_id JOIN district AS t3 ON t2.district_id = t3.district_id WHERE t1.Type = \"City Mall\" INTERSECT SELECT t3.District_name FROM store AS t1 JOIN store_district AS t2 ON t1.store_id = t2.store_id JOIN district AS t3 ON t2.district_id = t3.district_id WHERE t1.Type = \"Village Store\""
+  },
+  {
+    "input": "text2sql: What are the official names of cities that have hosted more than one competition?",
+    "target": "SELECT T1.Official_Name FROM city AS T1 JOIN farm_competition AS T2 ON T1.City_ID = T2.Host_city_ID GROUP BY T2.Host_city_ID HAVING COUNT(*) > 1"
+  },
+  {
+    "input": "text2sql: Return the order ids and details for orderes with two or more invoices.",
+    "target": "SELECT T2.order_id , T2.order_details FROM Invoices AS T1 JOIN Orders AS T2 ON T1.order_id = T2.order_id GROUP BY T2.order_id HAVING count(*) > 2"
+  },
+  {
+    "input": "text2sql: For each airport name, how many routes start at that airport, ordered from most to least?",
+    "target": "SELECT count(*) , T1.name FROM airports AS T1 JOIN routes AS T2 ON T1.apid = T2.src_apid GROUP BY T1.name ORDER BY count(*) DESC"
+  },
+  {
+    "input": "text2sql: What types of ships have both ships that have Panama Flags and Malta flags?",
+    "target": "SELECT TYPE FROM ship WHERE flag = 'Panama' INTERSECT SELECT TYPE FROM ship WHERE flag = 'Malta'"
+  },
+  {
+    "input": "text2sql: Find how many school locations have the word 'NY'.",
+    "target": "SELECT count(*) FROM university WHERE LOCATION LIKE \"%NY%\""
+  },
+  {
+    "input": "text2sql: What are the ids of the movies that are not reviewed by Brittany Harris.",
+    "target": "SELECT mID FROM Rating EXCEPT SELECT T1.mID FROM Rating AS T1 JOIN Reviewer AS T2 ON T1.rID = T2.rID WHERE T2.name = \"Brittany Harris\""
+  },
+  {
+    "input": "text2sql: What are the top 10 customers' first and last names with the highest gross sales, and also what are the sales?",
+    "target": "SELECT T1.first_name , T1.last_name , SUM(T2.total) FROM customers AS T1 JOIN invoices AS T2 ON T2.customer_id = T1.id GROUP BY T1.id ORDER BY SUM(T2.total) DESC LIMIT 10"
+  },
+  {
+    "input": "text2sql: What are the papers published under the institution \"Indiana University\"?",
+    "target": "SELECT DISTINCT t1.title FROM papers AS t1 JOIN authorship AS t2 ON t1.paperid = t2.paperid JOIN inst AS t3 ON t2.instid = t3.instid WHERE t3.name = \"Indiana University\""
+  },
+  {
+    "input": "text2sql: What is the name of the player with the largest number of votes?",
+    "target": "SELECT Player_name FROM player ORDER BY Votes DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Find the name of the organization that has published the largest number of papers.",
+    "target": "SELECT t1.name FROM inst AS t1 JOIN authorship AS t2 ON t1.instid = t2.instid JOIN papers AS t3 ON t2.paperid = t3.paperid GROUP BY t1.name ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: What is the number of distinct publication dates?",
+    "target": "SELECT COUNT (DISTINCT Publication_Date) FROM publication"
+  },
+  {
+    "input": "text2sql: Find the names of all reviewers who rated Gone with the Wind.",
+    "target": "SELECT DISTINCT T3.name FROM Rating AS T1 JOIN Movie AS T2 ON T1.mID = T2.mID JOIN Reviewer AS T3 ON T1.rID = T3.rID WHERE T2.title = 'Gone with the Wind'"
+  },
+  {
+    "input": "text2sql: How many members have the black membership card?",
+    "target": "SELECT count(*) FROM member WHERE Membership_card = 'Black'"
+  },
+  {
+    "input": "text2sql: What are the types of vocals that the musician with the last name \"Heilo\" played in \"Der Kapitan\"?",
+    "target": "SELECT TYPE FROM vocals AS T1 JOIN songs AS T2 ON T1.songid = T2.songid JOIN band AS T3 ON T1.bandmate = T3.id WHERE T3.lastname = \"Heilo\" AND T2.title = \"Der Kapitan\""
+  },
+  {
+    "input": "text2sql: Find the total saving balance for each account name.",
+    "target": "SELECT sum(T2.balance) , T1.name FROM accounts AS T1 JOIN savings AS T2 ON T1.custid = T2.custid GROUP BY T1.name"
+  },
+  {
+    "input": "text2sql: Show all headquarters without a company in banking industry.",
+    "target": "SELECT headquarters FROM company EXCEPT SELECT headquarters FROM company WHERE main_industry = 'Banking'"
+  },
+  {
+    "input": "text2sql: Which third party companies have at least 2 maintenance engineers or have at least 2 maintenance contracts? List the company id and name.",
+    "target": "SELECT T1.company_id , T1.company_name FROM Third_Party_Companies AS T1 JOIN Maintenance_Engineers AS T2 ON T1.company_id = T2.company_id GROUP BY T1.company_id HAVING count(*) >= 2 UNION SELECT T3.company_id , T3.company_name FROM Third_Party_Companies AS T3 JOIN Maintenance_Contracts AS T4 ON T3.company_id = T4.maintenance_contract_company_id GROUP BY T3.company_id HAVING count(*) >= 2"
+  },
+  {
+    "input": "text2sql: What is the name of the instructor who advises the student with the greatest number of total credits?",
+    "target": "SELECT T2.name FROM advisor AS T1 JOIN instructor AS T2 ON T1.i_id = T2.id JOIN student AS T3 ON T1.s_id = T3.id ORDER BY T3.tot_cred DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: How many students have a food allergy?",
+    "target": "SELECT count(*) FROM Has_allergy AS T1 JOIN Allergy_type AS T2 ON T1.allergy = T2.allergy WHERE T2.allergytype = \"food\""
+  },
+  {
+    "input": "text2sql: What are the names of all wines produced in 2008?",
+    "target": "SELECT Name FROM WINE WHERE YEAR = \"2008\""
+  },
+  {
+    "input": "text2sql: What is the name and job title of the staff who was assigned the latest?",
+    "target": "SELECT T1.staff_name , T2.job_title_code FROM staff AS T1 JOIN staff_department_assignments AS T2 ON T1.staff_id = T2.staff_id ORDER BY T2.date_assigned_to DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: What are the region names affected by the storm with a number of deaths of least 10?",
+    "target": "SELECT T2.region_name FROM affected_region AS T1 JOIN region AS T2 ON T1.region_id = T2.region_id JOIN storm AS T3 ON T1.storm_id = T3.storm_id WHERE T3.number_deaths >= 10"
+  },
+  {
+    "input": "text2sql: List the vehicle flight number, date and pilot of all the flights, ordered by altitude.",
+    "target": "SELECT vehicle_flight_number , date , pilot FROM flight ORDER BY altitude ASC"
+  },
+  {
+    "input": "text2sql: Show the distinct director of films with market estimation in the year of 1995.",
+    "target": "SELECT DISTINCT T1.Director FROM film AS T1 JOIN film_market_estimation AS T2 ON T1.Film_ID = T2.Film_ID WHERE T2.Year = 1995"
+  },
+  {
+    "input": "text2sql: When did customer with first name as Carole and last name as Bernhard became a customer?",
+    "target": "SELECT date_became_customer FROM Customers WHERE first_name = \"Carole\" AND last_name = \"Bernhard\""
+  },
+  {
+    "input": "text2sql: How many car models were produced by the maker with full name American Motor Company?",
+    "target": "SELECT count(*) FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id = T2.Maker WHERE T1.FullName = 'American Motor Company'"
+  },
+  {
+    "input": "text2sql: Show the date and id of the transcript with at least 2 course results.",
+    "target": "SELECT T2.transcript_date , T1.transcript_id FROM Transcript_Contents AS T1 JOIN Transcripts AS T2 ON T1.transcript_id = T2.transcript_id GROUP BY T1.transcript_id HAVING count(*) >= 2"
+  },
+  {
+    "input": "text2sql: List the names of pilots that do not have any record.",
+    "target": "SELECT Pilot_name FROM pilot WHERE Pilot_ID NOT IN (SELECT Pilot_ID FROM pilot_record)"
+  },
+  {
+    "input": "text2sql: What are the last names of customers without invoice totals exceeding 20?",
+    "target": "SELECT LastName FROM CUSTOMER EXCEPT SELECT T1.LastName FROM CUSTOMER AS T1 JOIN Invoice AS T2 ON T1.CustomerId = T2.CustomerId WHERE T2.total > 20"
+  },
+  {
+    "input": "text2sql: List roles that have more than one employee. List the role description and number of employees.",
+    "target": "SELECT Roles.role_description , count(Employees.employee_id) FROM ROLES JOIN Employees ON Employees.role_code = Roles.role_code GROUP BY Employees.role_code HAVING count(Employees.employee_id) > 1"
+  },
+  {
+    "input": "text2sql: List the number of invoices from Chicago, IL.",
+    "target": "SELECT COUNT(*) FROM invoices WHERE billing_city = \"Chicago\" AND billing_state = \"IL\""
+  },
+  {
+    "input": "text2sql: Find the year that has the most number of matches.",
+    "target": "SELECT YEAR FROM matches GROUP BY YEAR ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Find the start and end dates of behavior incidents of students with last name \"Fahey\".",
+    "target": "SELECT T1.date_incident_start , date_incident_end FROM Behavior_Incident AS T1 JOIN Students AS T2 ON T1.student_id = T2.student_id WHERE T2.last_name = \"Fahey\""
+  },
+  {
+    "input": "text2sql: What is the average distance and average price for flights from Los Angeles.",
+    "target": "SELECT avg(distance) , avg(price) FROM Flight WHERE origin = \"Los Angeles\""
+  },
+  {
+    "input": "text2sql: List the name for storms and the number of affected regions for each storm.",
+    "target": "SELECT T1.name , count(*) FROM storm AS T1 JOIN affected_region AS T2 ON T1.storm_id = T2.storm_id GROUP BY T1.storm_id"
+  },
+  {
+    "input": "text2sql: How many universities have a location that contains NY?",
+    "target": "SELECT count(*) FROM university WHERE LOCATION LIKE \"%NY%\""
+  },
+  {
+    "input": "text2sql: Report all majors that have less than 3 students.",
+    "target": "SELECT Major FROM STUDENT GROUP BY Major HAVING COUNT(*) < 3"
+  },
+  {
+    "input": "text2sql: What are the id of students who registered course 301?",
+    "target": "SELECT student_id FROM student_course_attendance WHERE course_id = 301"
+  },
+  {
+    "input": "text2sql: What are the name of pilots aged 25 or older?",
+    "target": "SELECT Name FROM pilot WHERE Age >= 25"
+  },
+  {
+    "input": "text2sql: Return the first name, last name and email of the owners living in a state whose name contains the substring 'North'.",
+    "target": "SELECT first_name , last_name , email_address FROM Owners WHERE state LIKE '%North%'"
+  },
+  {
+    "input": "text2sql: How many students are affected by each allergy type?",
+    "target": "SELECT T2.allergytype , count(*) FROM Has_allergy AS T1 JOIN Allergy_type AS T2 ON T1.allergy = T2.allergy GROUP BY T2.allergytype"
+  },
+  {
+    "input": "text2sql: For each product which has problems, what are the number of problems and the product id?",
+    "target": "SELECT count(*) , T2.product_id FROM problems AS T1 JOIN product AS T2 ON T1.product_id = T2.product_id GROUP BY T2.product_id"
+  },
+  {
+    "input": "text2sql: which course has most number of registered students?",
+    "target": "SELECT T1.course_name FROM courses AS T1 JOIN student_course_registrations AS T2 ON T1.course_id = T2.course_Id GROUP BY T1.course_id ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Find the last name of the student who has a cat that is age 3.",
+    "target": "SELECT T1.lname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid = T2.stuid JOIN pets AS T3 ON T3.petid = T2.petid WHERE T3.pet_age = 3 AND T3.pettype = 'cat'"
+  },
+  {
+    "input": "text2sql: Return the minimum, average and maximum distances traveled across all aircrafts.",
+    "target": "SELECT min(distance) , avg(distance) , max(distance) FROM Aircraft"
+  },
+  {
+    "input": "text2sql: What are the different names and countries of origins for all artists whose song ratings are above 9?",
+    "target": "SELECT DISTINCT T1.artist_name , T1.country FROM artist AS T1 JOIN song AS T2 ON T1.artist_name = T2.artist_name WHERE T2.rating > 9"
+  },
+  {
+    "input": "text2sql: Who are all the directors?",
+    "target": "SELECT DISTINCT directed_by FROM film"
+  },
+  {
+    "input": "text2sql: What is the average horizontal bar points for all gymnasts?",
+    "target": "SELECT avg(Horizontal_Bar_Points) FROM gymnast"
+  },
+  {
+    "input": "text2sql: Which flag is most widely used among all ships?",
+    "target": "SELECT flag FROM ship GROUP BY flag ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: What is the country in which the customer Carole Bernhard lived?",
+    "target": "SELECT T2.country FROM Customers AS T1 JOIN Addresses AS T2 ON T1.customer_address_id = T2.address_id WHERE T1.first_name = \"Carole\" AND T1.last_name = \"Bernhard\""
+  },
+  {
+    "input": "text2sql: How many students does one classroom have?",
+    "target": "SELECT count(*) , classroom FROM list GROUP BY classroom"
+  },
+  {
+    "input": "text2sql: Count the number of different software platforms.",
+    "target": "SELECT count(DISTINCT Software_Platform) FROM device"
+  },
+  {
+    "input": "text2sql: Show all allergies with type food.",
+    "target": "SELECT DISTINCT allergy FROM Allergy_type WHERE allergytype = \"food\""
+  },
+  {
+    "input": "text2sql: Show names for all employees who do not have certificate of Boeing 737-800.",
+    "target": "SELECT name FROM Employee EXCEPT SELECT T1.name FROM Employee AS T1 JOIN Certificate AS T2 ON T1.eid = T2.eid JOIN Aircraft AS T3 ON T3.aid = T2.aid WHERE T3.name = \"Boeing 737-800\""
+  },
+  {
+    "input": "text2sql: List the name and country of origin for all singers who have produced songs with rating above 9.",
+    "target": "SELECT DISTINCT T1.artist_name , T1.country FROM artist AS T1 JOIN song AS T2 ON T1.artist_name = T2.artist_name WHERE T2.rating > 9"
+  },
+  {
+    "input": "text2sql: Find the year and semester when offers the largest number of courses.",
+    "target": "SELECT semester , YEAR FROM SECTION GROUP BY semester , YEAR ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: List the names of all distinct medications, ordered in an alphabetical order.",
+    "target": "SELECT DISTINCT name FROM medication ORDER BY name"
+  },
+  {
+    "input": "text2sql: What are the types of the ships that have both shiips with tonnage more than 6000 and those with tonnage less than 4000?",
+    "target": "SELECT TYPE FROM ship WHERE Tonnage > 6000 INTERSECT SELECT TYPE FROM ship WHERE Tonnage < 4000"
+  },
+  {
+    "input": "text2sql: What are the ids, full names, and phones of each customer?",
+    "target": "SELECT customer_id , customer_first_name , customer_last_name , customer_phone FROM Customers"
+  },
+  {
+    "input": "text2sql: Give the nationality that is most common across all people.",
+    "target": "SELECT Nationality FROM people GROUP BY Nationality ORDER BY COUNT(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Find the average age of members of the club \"Hopkins Student Enterprises\".",
+    "target": "SELECT avg(t3.age) FROM club AS t1 JOIN member_of_club AS t2 ON t1.clubid = t2.clubid JOIN student AS t3 ON t2.stuid = t3.stuid WHERE t1.clubname = \"Hopkins Student Enterprises\""
+  },
+  {
+    "input": "text2sql: How many students attend course English?",
+    "target": "SELECT count(*) FROM courses AS T1 JOIN student_course_attendance AS T2 ON T1.course_id = T2.course_id WHERE T1.course_name = \"English\""
+  },
+  {
+    "input": "text2sql: What are the types of competition and number of competitions for that type?",
+    "target": "SELECT Competition_type , COUNT(*) FROM competition GROUP BY Competition_type"
+  },
+  {
+    "input": "text2sql: What are the dates when customers with ids between 10 and 20 became customers?",
+    "target": "SELECT date_became_customer FROM customers WHERE customer_id BETWEEN 10 AND 20"
+  },
+  {
+    "input": "text2sql: When did the episode \"A Love of a Lifetime\" air?",
+    "target": "SELECT Air_Date FROM TV_series WHERE Episode = \"A Love of a Lifetime\""
+  },
+  {
+    "input": "text2sql: Show the minimum, average, and maximum age of all students.",
+    "target": "SELECT min(age) , avg(age) , max(age) FROM Student"
+  },
+  {
+    "input": "text2sql: How many different departments offer degrees?",
+    "target": "SELECT count(DISTINCT department_id) FROM Degree_Programs"
+  },
+  {
+    "input": "text2sql: How many different product types are there?",
+    "target": "SELECT count(DISTINCT product_type_code) FROM products_for_hire"
+  },
+  {
+    "input": "text2sql: Sort the names of all counties in ascending order of population.",
+    "target": "SELECT County_name FROM county ORDER BY Population ASC"
+  },
+  {
+    "input": "text2sql: How many captains are in each rank?",
+    "target": "SELECT count(*) , rank FROM captain GROUP BY rank"
+  },
+  {
+    "input": "text2sql: What are the Package Options of the TV Channels whose series names are Sky Radio?",
+    "target": "SELECT Package_Option FROM TV_Channel WHERE series_name = \"Sky Radio\""
+  },
+  {
+    "input": "text2sql: What are the duration of the longest and shortest pop tracks in milliseconds?",
+    "target": "SELECT max(Milliseconds) , min(Milliseconds) FROM GENRE AS T1 JOIN TRACK AS T2 ON T1.GenreId = T2.GenreId WHERE T1.Name = \"Pop\""
+  },
+  {
+    "input": "text2sql: Count the number of distinct names associated with the photos.",
+    "target": "SELECT count(DISTINCT Name) FROM PHOTOS"
+  },
+  {
+    "input": "text2sql: Count the number of schools.",
+    "target": "SELECT count(*) FROM school"
+  },
+  {
+    "input": "text2sql: How is the math course described?",
+    "target": "SELECT course_description FROM Courses WHERE course_name = 'math'"
+  },
+  {
+    "input": "text2sql: display those departments where more than ten employees work who got a commission percentage.",
+    "target": "SELECT department_id FROM employees GROUP BY department_id HAVING COUNT(commission_pct) > 10"
+  },
+  {
+    "input": "text2sql: What are the last names of female students, ordered by age descending?",
+    "target": "SELECT LName FROM STUDENT WHERE Sex = \"F\" ORDER BY Age DESC"
+  },
+  {
+    "input": "text2sql: What are the African countries that have a population less than any country in Asia?",
+    "target": "SELECT Name FROM country WHERE Continent = \"Africa\" AND population < (SELECT max(population) FROM country WHERE Continent = \"Asia\")"
+  },
+  {
+    "input": "text2sql: What campus had more than 400 total enrollment but more than 200 full time enrollment in year 1956?",
+    "target": "SELECT T1.campus FROM campuses AS t1 JOIN enrollments AS t2 ON t1.id = t2.campus WHERE t2.year = 1956 AND totalenrollment_ay > 400 AND FTE_AY > 200"
+  },
+  {
+    "input": "text2sql: Find the number of different cities which banks are located at.",
+    "target": "SELECT count(DISTINCT city) FROM bank"
+  },
+  {
+    "input": "text2sql: Find the names of customers who have bought by at least three distinct products.",
+    "target": "SELECT DISTINCT T1.customer_name FROM customers AS T1 JOIN customer_orders AS T2 ON T1.customer_id = T2.customer_id JOIN order_items AS T3 ON T2.order_id = T3.order_id GROUP BY T1.customer_id HAVING COUNT (DISTINCT T3.product_id) >= 3"
+  },
+  {
+    "input": "text2sql: Find the number of classes in each school.",
+    "target": "SELECT count(*) , T3.school_code FROM CLASS AS T1 JOIN course AS T2 ON T1.crs_code = T2.crs_code JOIN department AS T3 ON T2.dept_code = T3.dept_code GROUP BY T3.school_code"
+  },
+  {
+    "input": "text2sql: What are the ids of stations that have latitude above 37.4 and never had bike availability below 7?",
+    "target": "SELECT id FROM station WHERE lat > 37.4 EXCEPT SELECT station_id FROM status GROUP BY station_id HAVING min(bikes_available) < 7"
+  },
+  {
+    "input": "text2sql: Find the name of organizations whose names contain \"Party\".",
+    "target": "SELECT organization_name FROM organizations WHERE organization_name LIKE \"%Party%\""
+  },
+  {
+    "input": "text2sql: List name of all tracks in Balls to the Wall.",
+    "target": "SELECT T2.name FROM albums AS T1 JOIN tracks AS T2 ON T1.id = T2.genre_id WHERE T1.title = \"Balls to the Wall\""
+  },
+  {
+    "input": "text2sql: What is the level name of the cheapest catalog (in USD)?",
+    "target": "SELECT t2.catalog_level_name FROM catalog_contents AS t1 JOIN catalog_structure AS t2 ON t1.catalog_level_number = t2.catalog_level_number ORDER BY t1.price_in_dollars LIMIT 1"
+  },
+  {
+    "input": "text2sql: Show the names of members and the dates of performances they attended in descending order of attendance of the performances.",
+    "target": "SELECT T2.Name , T3.Date FROM member_attendance AS T1 JOIN member AS T2 ON T1.Member_ID = T2.Member_ID JOIN performance AS T3 ON T1.Performance_ID = T3.Performance_ID ORDER BY T3.Attendance DESC"
+  },
+  {
+    "input": "text2sql: Show all storm names affecting region \"Denmark\".",
+    "target": "SELECT T3.name FROM affected_region AS T1 JOIN region AS T2 ON T1.region_id = T2.region_id JOIN storm AS T3 ON T1.storm_id = T3.storm_id WHERE T2.region_name = 'Denmark'"
+  },
+  {
+    "input": "text2sql: Return the names and typical buying and selling prices for products that have 'yellow' as their color description.",
+    "target": "SELECT t1.product_name , t1.typical_buying_price , t1.typical_selling_price FROM products AS t1 JOIN ref_colors AS t2 ON t1.color_code = t2.color_code WHERE t2.color_description = \"yellow\""
+  },
+  {
+    "input": "text2sql: Find the name of the instructors who taught C Programming course before.",
+    "target": "SELECT T1.name FROM instructor AS T1 JOIN teaches AS T2 ON T1.id = T2.id JOIN course AS T3 ON T2.course_id = T3.course_id WHERE T3.title = 'C Programming'"
+  },
+  {
+    "input": "text2sql: Find the id of the order made most recently.",
+    "target": "SELECT order_id FROM orders ORDER BY date_order_placed DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: What information do you have on colleges sorted by increasing enrollment numbers?",
+    "target": "SELECT * FROM College ORDER BY enr"
+  },
+  {
+    "input": "text2sql: What is average salary of the players in the team named 'Boston Red Stockings' ?",
+    "target": "SELECT avg(T1.salary) FROM salary AS T1 JOIN team AS T2 ON T1.team_id = T2.team_id_br WHERE T2.name = 'Boston Red Stockings'"
+  },
+  {
+    "input": "text2sql: When did the first staff member start working?",
+    "target": "SELECT date_from FROM Project_Staff ORDER BY date_from ASC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Show the number of documents with document type code CV or BK.",
+    "target": "SELECT count(*) FROM All_documents WHERE document_type_code = \"CV\" OR document_type_code = \"BK\""
+  },
+  {
+    "input": "text2sql: Find the number of users in each role.",
+    "target": "SELECT count(*) , role_code FROM users GROUP BY role_code"
+  },
+  {
+    "input": "text2sql: What are the descriptions of the categories that products with product descriptions that contain the letter t are in?",
+    "target": "SELECT T1.product_category_description FROM ref_product_categories AS T1 JOIN products AS T2 ON T1.product_category_code = T2.product_category_code WHERE T2.product_description LIKE '%t%'"
+  },
+  {
+    "input": "text2sql: What is the total time for all lessons taught by Janessa Sawayn?",
+    "target": "SELECT sum(lesson_time) FROM Lessons AS T1 JOIN Staff AS T2 ON T1.staff_id = T2.staff_id WHERE T2.first_name = \"Janessa\" AND T2.last_name = \"Sawayn\""
+  },
+  {
+    "input": "text2sql: When did the staff member with first name as Janessa and last name as Sawayn leave the company?",
+    "target": "SELECT date_left_staff FROM Staff WHERE first_name = \"Janessa\" AND last_name = \"Sawayn\""
+  },
+  {
+    "input": "text2sql: Show the product type codes which have at least two products.",
+    "target": "SELECT product_type_code FROM products GROUP BY product_type_code HAVING count(*) >= 2"
+  },
+  {
+    "input": "text2sql: Show the enrollment and primary_conference of the oldest college.",
+    "target": "SELECT enrollment , primary_conference FROM university ORDER BY founded LIMIT 1"
+  },
+  {
+    "input": "text2sql: What are the names of organizations that contain the word \"Party\"?",
+    "target": "SELECT organization_name FROM organizations WHERE organization_name LIKE \"%Party%\""
+  },
+  {
+    "input": "text2sql: Find the name of the ship that is steered by the youngest captain.",
+    "target": "SELECT t1.name FROM ship AS t1 JOIN captain AS t2 ON t1.ship_id = t2.ship_id ORDER BY t2.age LIMIT 1"
+  },
+  {
+    "input": "text2sql: What are the types of film market estimations in year 1995?",
+    "target": "SELECT TYPE FROM film_market_estimation WHERE YEAR = 1995"
+  },
+  {
+    "input": "text2sql: What are the names of the different bank branches, and what are their total loan amounts?",
+    "target": "SELECT sum(amount) , T1.bname FROM bank AS T1 JOIN loan AS T2 ON T1.branch_id = T2.branch_id GROUP BY T1.bname"
+  },
+  {
+    "input": "text2sql: Find the states of the colleges that have students in the tryout who played in striker position.",
+    "target": "SELECT T1.state FROM college AS T1 JOIN tryout AS T2 ON T1.cName = T2.cName WHERE T2.pPos = 'striker'"
+  },
+  {
+    "input": "text2sql: What is the id of the instructor who advises of all students from History department?",
+    "target": "SELECT i_id FROM advisor AS T1 JOIN student AS T2 ON T1.s_id = T2.id WHERE T2.dept_name = 'History'"
+  },
+  {
+    "input": "text2sql: What are the names of all the players who received a yes during tryouts, and also what are the names of their colleges?",
+    "target": "SELECT T1.pName , T2.cName FROM player AS T1 JOIN tryout AS T2 ON T1.pID = T2.pID WHERE T2.decision = 'yes'"
+  },
+  {
+    "input": "text2sql: What are the names of all stadiums that did not have a concert in 2014?",
+    "target": "SELECT name FROM stadium EXCEPT SELECT T2.name FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id = T2.stadium_id WHERE T1.year = 2014"
+  },
+  {
+    "input": "text2sql: What are the ids of the students who registered for course 301?",
+    "target": "SELECT student_id FROM student_course_attendance WHERE course_id = 301"
+  },
+  {
+    "input": "text2sql: Which paper has the most authors? Give me the paper title.",
+    "target": "SELECT t2.title FROM authorship AS t1 JOIN papers AS t2 ON t1.paperid = t2.paperid WHERE t1.authorder = (SELECT max(authorder) FROM authorship)"
+  },
+  {
+    "input": "text2sql: What are the ids of the problems which are reported before 1978-06-26?",
+    "target": "SELECT problem_id FROM problems WHERE date_problem_reported < \"1978-06-26\""
+  },
+  {
+    "input": "text2sql: How many distinct artists do the volumes associate to?",
+    "target": "SELECT COUNT(DISTINCT Artist_ID) FROM volume"
+  },
+  {
+    "input": "text2sql: Find the id of the order which is shipped most recently.",
+    "target": "SELECT order_id FROM shipments WHERE shipment_date = (SELECT max(shipment_date) FROM shipments)"
+  },
+  {
+    "input": "text2sql: What is the id and first name of all the drivers who participated in the Australian Grand Prix and the Chinese Grand Prix?",
+    "target": "SELECT T2.driverid , T3.forename FROM races AS T1 JOIN results AS T2 ON T1.raceid = T2.raceid JOIN drivers AS T3 ON T2.driverid = T3.driverid WHERE T1.name = \"Australian Grand Prix\" INTERSECT SELECT T2.driverid , T3.forename FROM races AS T1 JOIN results AS T2 ON T1.raceid = T2.raceid JOIN drivers AS T3 ON T2.driverid = T3.driverid WHERE T1.name = \"Chinese Grand Prix\""
+  },
+  {
+    "input": "text2sql: Return the minimum, maximum, and average seating across all tracks.",
+    "target": "SELECT min(seating) , max(seating) , avg(seating) FROM track"
+  },
+  {
+    "input": "text2sql: How many addresses have zip code 197?",
+    "target": "SELECT count(*) FROM ADDRESSES WHERE zip_postcode = \"197\""
+  },
+  {
+    "input": "text2sql: Which club has the most female students as their members? Give me the name of the club.",
+    "target": "SELECT t1.clubname FROM club AS t1 JOIN member_of_club AS t2 ON t1.clubid = t2.clubid JOIN student AS t3 ON t2.stuid = t3.stuid WHERE t3.sex = \"F\" GROUP BY t1.clubname ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Show minimum and maximum amount of memberships for all branches opened in 2011 or located at city London.",
+    "target": "SELECT min(membership_amount) , max(membership_amount) FROM branch WHERE open_year = 2011 OR city = 'London'"
+  },
+  {
+    "input": "text2sql: List the id, genre and artist name of English songs ordered by rating.",
+    "target": "SELECT f_id , genre_is , artist_name FROM song WHERE languages = \"english\" ORDER BY rating"
+  },
+  {
+    "input": "text2sql: What are the names and buying prices of all the products?",
+    "target": "SELECT product_name , typical_buying_price FROM products"
+  },
+  {
+    "input": "text2sql: What is the first name and the last name of the customer who made the earliest rental?",
+    "target": "SELECT T1.first_name , T1.last_name FROM customer AS T1 JOIN rental AS T2 ON T1.customer_id = T2.customer_id ORDER BY T2.rental_date ASC LIMIT 1"
+  },
+  {
+    "input": "text2sql: What are the SSN and names of scientists working on the project with the most hours?",
+    "target": "SELECT T3.ssn , T3.name FROM assignedto AS T1 JOIN projects AS T2 ON T1.project = T2.code JOIN scientists AS T3 ON T1.scientist = T3.SSN WHERE T2.hours = (SELECT max(hours) FROM projects)"
+  },
+  {
+    "input": "text2sql: How many medicines were not approved by the FDA?",
+    "target": "SELECT count(*) FROM medicine WHERE FDA_approved = 'No'"
+  },
+  {
+    "input": "text2sql: Return the cell phone number and email address for all students.",
+    "target": "SELECT cell_mobile_number , email_address FROM STUDENTS"
+  },
+  {
+    "input": "text2sql: List the names of editors that are not on any journal committee.",
+    "target": "SELECT Name FROM editor WHERE editor_id NOT IN (SELECT editor_id FROM journal_committee)"
+  },
+  {
+    "input": "text2sql: List the name of artworks that are not nominated.",
+    "target": "SELECT Name FROM Artwork WHERE Artwork_ID NOT IN (SELECT Artwork_ID FROM nomination)"
+  },
+  {
+    "input": "text2sql: What are the names and locations of tracks that have had exactly 1 race?",
+    "target": "SELECT T2.name , T2.location FROM race AS T1 JOIN track AS T2 ON T1.track_id = T2.track_id GROUP BY T1.track_id HAVING count(*) = 1"
+  },
+  {
+    "input": "text2sql: Find all the instruments ever used by the musician with last name \"Heilo\"?",
+    "target": "SELECT instrument FROM instruments AS T1 JOIN Band AS T2 ON T1.bandmateid = T2.id WHERE T2.lastname = \"Heilo\""
+  },
+  {
+    "input": "text2sql: find the name and age of the pilot who has won the most number of times among the pilots who are younger than 30.",
+    "target": "SELECT t1.name , t1.age FROM pilot AS t1 JOIN MATCH AS t2 ON t1.pilot_id = t2.winning_pilot WHERE t1.age < 30 GROUP BY t2.winning_pilot ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Find the name of the shops that do not hire any employee.",
+    "target": "SELECT name FROM shop WHERE shop_id NOT IN (SELECT shop_id FROM hiring)"
+  },
+  {
+    "input": "text2sql: What are all the employees without a department number?",
+    "target": "SELECT * FROM employees WHERE department_id = \"null\""
+  },
+  {
+    "input": "text2sql: What is the name of the department that has the largest number of students enrolled?",
+    "target": "SELECT T4.dept_name FROM CLASS AS T1 JOIN enroll AS T2 ON T1.class_code = T2.class_code JOIN course AS T3 ON T1.crs_code = T3.crs_code JOIN department AS T4 ON T3.dept_code = T4.dept_code GROUP BY T3.dept_code ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Give the songs included in volumes that have more than 1 week on top.",
+    "target": "SELECT Song FROM volume WHERE Weeks_on_Top > 1"
+  },
+  {
+    "input": "text2sql: Give me the name and description of the document type code RV.",
+    "target": "SELECT document_type_name , document_type_description FROM Ref_document_types WHERE document_type_code = \"RV\""
+  },
+  {
+    "input": "text2sql: What are the different film Directors?",
+    "target": "SELECT DISTINCT Director FROM film"
+  },
+  {
+    "input": "text2sql: Find the total budgets of the Marketing or Finance department.",
+    "target": "SELECT sum(budget) FROM department WHERE dept_name = 'Marketing' OR dept_name = 'Finance'"
+  },
+  {
+    "input": "text2sql: Which major has between 2 and 30 number of students? List major and the number of students.",
+    "target": "SELECT Major , count(*) FROM Student GROUP BY Major HAVING count(Major) BETWEEN 2 AND 30"
+  },
+  {
+    "input": "text2sql: Show all the locations where some cinemas were opened in both year 2010 and year 2011.",
+    "target": "SELECT LOCATION FROM cinema WHERE openning_year = 2010 INTERSECT SELECT LOCATION FROM cinema WHERE openning_year = 2011"
+  },
+  {
+    "input": "text2sql: How many workshops did each author submit to? Return the author name and the number of workshops.",
+    "target": "SELECT T2.Author , COUNT(DISTINCT T1.workshop_id) FROM acceptance AS T1 JOIN submission AS T2 ON T1.Submission_ID = T2.Submission_ID GROUP BY T2.Author"
+  },
+  {
+    "input": "text2sql: Find the ship type that are used by both ships with Panama and Malta flags.",
+    "target": "SELECT TYPE FROM ship WHERE flag = 'Panama' INTERSECT SELECT TYPE FROM ship WHERE flag = 'Malta'"
+  },
+  {
+    "input": "text2sql: What are the heights of perpetrators in descending order of the number of people they injured?",
+    "target": "SELECT T1.Height FROM people AS T1 JOIN perpetrator AS T2 ON T1.People_ID = T2.People_ID ORDER BY T2.Injured DESC"
+  },
+  {
+    "input": "text2sql: What are the numbers of wines for different grapes?",
+    "target": "SELECT count(*) , Grape FROM WINE GROUP BY Grape"
+  },
+  {
+    "input": "text2sql: Show the 3 counties with the smallest population.",
+    "target": "SELECT County_name FROM county ORDER BY Population ASC LIMIT 3"
+  },
+  {
+    "input": "text2sql: Find the names of the tourist attractions that is either accessible by walk or at address 660 Shea Crescent.",
+    "target": "SELECT T2.Name FROM Locations AS T1 JOIN Tourist_Attractions AS T2 ON T1.Location_ID = T2.Location_ID WHERE T1.Address = \"660 Shea Crescent\" OR T2.How_to_Get_There = \"walk\""
+  },
+  {
+    "input": "text2sql: What is the location of the perpetrator with the largest kills.",
+    "target": "SELECT LOCATION FROM perpetrator ORDER BY Killed DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: What are the names of instructors who have taught C Programming courses?",
+    "target": "SELECT T1.name FROM instructor AS T1 JOIN teaches AS T2 ON T1.id = T2.id JOIN course AS T3 ON T2.course_id = T3.course_id WHERE T3.title = 'C Programming'"
+  },
+  {
+    "input": "text2sql: How many different store locations are there?",
+    "target": "SELECT count(DISTINCT LOCATION) FROM shop"
+  },
+  {
+    "input": "text2sql: Find the name of customers who did not pay with Cash.",
+    "target": "SELECT customer_name FROM customers WHERE payment_method != 'Cash'"
+  },
+  {
+    "input": "text2sql: What is the last date of the staff leaving the projects?",
+    "target": "SELECT date_to FROM Project_Staff ORDER BY date_to DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: What is the average number of hosts for parties?",
+    "target": "SELECT avg(Number_of_hosts) FROM party"
+  },
+  {
+    "input": "text2sql: What is the name of each teacher and what course they teach?",
+    "target": "SELECT T3.Name , T2.Course FROM course_arrange AS T1 JOIN course AS T2 ON T1.Course_ID = T2.Course_ID JOIN teacher AS T3 ON T1.Teacher_ID = T3.Teacher_ID"
+  },
+  {
+    "input": "text2sql: What is the name of the institution that \"Matthias Blume\" belongs to?",
+    "target": "SELECT DISTINCT t3.name FROM authors AS t1 JOIN authorship AS t2 ON t1.authid = t2.authid JOIN inst AS t3 ON t2.instid = t3.instid WHERE t1.fname = \"Matthias\" AND t1.lname = \"Blume\""
+  },
+  {
+    "input": "text2sql: What are the ids of documents which don't have expense budgets?",
+    "target": "SELECT document_id FROM Documents EXCEPT SELECT document_id FROM Documents_with_expenses"
+  },
+  {
+    "input": "text2sql: Find the name of physicians whose position title contains the word 'senior'.",
+    "target": "SELECT name FROM physician WHERE POSITION LIKE '%senior%'"
+  },
+  {
+    "input": "text2sql: What are the dates in which the mean sea level pressure was between 30.3 and 31?",
+    "target": "SELECT date FROM weather WHERE mean_sea_level_pressure_inches BETWEEN 30.3 AND 31"
+  },
+  {
+    "input": "text2sql: List every individual's first name, middle name and last name in alphabetical order by last name.",
+    "target": "SELECT individual_first_name , individual_middle_name , individual_last_name FROM individuals ORDER BY individual_last_name"
+  },
+  {
+    "input": "text2sql: What are the names of all friends who are from New York?",
+    "target": "SELECT T2.name FROM Person AS T1 JOIN PersonFriend AS T2 ON T1.name = T2.friend WHERE T1.city = 'new york city'"
+  },
+  {
+    "input": "text2sql: Find the total number of instructors who teach a course in the Spring 2010 semester.",
+    "target": "SELECT COUNT (DISTINCT ID) FROM teaches WHERE semester = 'Spring' AND YEAR = 2010"
+  },
+  {
+    "input": "text2sql: What are the ids of all trips that had a duration as long as the average trip duration in the zip code 94103?",
+    "target": "SELECT id FROM trip WHERE duration >= (SELECT avg(duration) FROM trip WHERE zip_code = 94103)"
+  },
+  {
+    "input": "text2sql: How many museums were opened after 2013 or before 2008?",
+    "target": "SELECT count(*) FROM museum WHERE open_year > 2013 OR open_year < 2008"
+  },
+  {
+    "input": "text2sql: What are the names of all stations that have more than 10 bikes available and are not located in San Jose?",
+    "target": "SELECT T1.name FROM station AS T1 JOIN status AS T2 ON T1.id = T2.station_id GROUP BY T2.station_id HAVING avg(bikes_available) > 10 EXCEPT SELECT name FROM station WHERE city = \"San Jose\""
+  },
+  {
+    "input": "text2sql: What is the document type name for the document with name \"How to read a book\"?",
+    "target": "SELECT T2.document_type_name FROM All_documents AS T1 JOIN Ref_document_types AS T2 ON T1.document_type_code = T2.document_type_code WHERE T1.document_name = \"How to read a book\""
+  },
+  {
+    "input": "text2sql: Find the ids of the departments where any manager is managing 4 or more employees.",
+    "target": "SELECT DISTINCT department_id FROM employees GROUP BY department_id , manager_id HAVING COUNT(employee_id) >= 4"
+  },
+  {
+    "input": "text2sql: List the year in which there are more than one festivals.",
+    "target": "SELECT YEAR FROM festival_detail GROUP BY YEAR HAVING COUNT(*) > 1"
+  },
+  {
+    "input": "text2sql: Return the names and ids of all products whose price is between 600 and 700.",
+    "target": "SELECT product_name , product_id FROM products WHERE product_price BETWEEN 600 AND 700"
+  },
+  {
+    "input": "text2sql: What are the carriers of devices that are not in stock anywhere?",
+    "target": "SELECT Carrier FROM device WHERE Device_ID NOT IN (SELECT Device_ID FROM stock)"
+  },
+  {
+    "input": "text2sql: What are the names of the directors who made exactly one movie?",
+    "target": "SELECT director FROM Movie GROUP BY director HAVING count(*) = 1"
+  },
+  {
+    "input": "text2sql: How many male students (sex is 'M') are allergic to any type of food?",
+    "target": "SELECT count(*) FROM Student WHERE sex = \"M\" AND StuID IN (SELECT StuID FROM Has_allergy AS T1 JOIN Allergy_Type AS T2 ON T1.Allergy = T2.Allergy WHERE T2.allergytype = \"food\")"
+  },
+  {
+    "input": "text2sql: Find number of tracks in each genre?",
+    "target": "SELECT count(*) , T1.name FROM genres AS T1 JOIN tracks AS T2 ON T1.id = T2.genre_id GROUP BY T1.name"
+  },
+  {
+    "input": "text2sql: List the names of 5 users followed by the largest number of other users.",
+    "target": "SELECT name FROM user_profiles ORDER BY followers DESC LIMIT 5"
+  },
+  {
+    "input": "text2sql: What is all the information about employees hired before June 21, 2002?",
+    "target": "SELECT * FROM employees WHERE hire_date < '2002-06-21'"
+  },
+  {
+    "input": "text2sql: What are the titles of all the albums alphabetically ascending?",
+    "target": "SELECT title FROM albums ORDER BY title"
+  },
+  {
+    "input": "text2sql: What is the name of the tourist attraction that is associated with the photo \"game1\"?",
+    "target": "SELECT T2.Name FROM PHOTOS AS T1 JOIN TOURIST_ATTRACTIONS AS T2 ON T1.Tourist_Attraction_ID = T2.Tourist_Attraction_ID WHERE T1.Name = \"game1\""
+  },
+  {
+    "input": "text2sql: Return the name of the category to which the film 'HUNGER ROOF' belongs.",
+    "target": "SELECT T1.name FROM category AS T1 JOIN film_category AS T2 ON T1.category_id = T2.category_id JOIN film AS T3 ON T2.film_id = T3.film_id WHERE T3.title = 'HUNGER ROOF'"
+  },
+  {
+    "input": "text2sql: What are the the full names and ids for all customers, and how many accounts does each have?",
+    "target": "SELECT T1.customer_id , T2.customer_first_name , T2.customer_last_name , count(*) FROM Accounts AS T1 JOIN Customers AS T2 ON T1.customer_id = T2.customer_id GROUP BY T1.customer_id"
+  },
+  {
+    "input": "text2sql: What are the different ranges of the 3 mountains with the highest prominence?",
+    "target": "SELECT DISTINCT Range FROM mountain ORDER BY Prominence DESC LIMIT 3"
+  },
+  {
+    "input": "text2sql: What is the name of each continent and how many car makers are there in each one?",
+    "target": "SELECT T1.Continent , count(*) FROM CONTINENTS AS T1 JOIN COUNTRIES AS T2 ON T1.ContId = T2.continent JOIN car_makers AS T3 ON T2.CountryId = T3.Country GROUP BY T1.Continent"
+  },
+  {
+    "input": "text2sql: What are the account details with the largest value or with value having char '5' in it?",
+    "target": "SELECT max(Account_details) FROM Accounts UNION SELECT Account_details FROM Accounts WHERE Account_details LIKE \"%5%\""
+  },
+  {
+    "input": "text2sql: How many international and domestic passengers are there in the airport London Heathrow?",
+    "target": "SELECT International_Passengers , Domestic_Passengers FROM airport WHERE Airport_Name = \"London Heathrow\""
+  },
+  {
+    "input": "text2sql: Return the names of musicals who have the nominee Bob Fosse.",
+    "target": "SELECT Name FROM musical WHERE Nominee = \"Bob Fosse\""
+  },
+  {
+    "input": "text2sql: What are the maximum price and score of wines produced by St. Helena appelation?",
+    "target": "SELECT max(Price) , max(Score) FROM WINE WHERE Appelation = \"St. Helena\""
+  },
+  {
+    "input": "text2sql: How many official languages are spoken in Afghanistan?",
+    "target": "SELECT COUNT(*) FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode WHERE T1.Name = \"Afghanistan\" AND IsOfficial = \"T\""
+  },
+  {
+    "input": "text2sql: Find the entry name of the catalog with the highest price (in USD).",
+    "target": "SELECT catalog_entry_name FROM catalog_contents ORDER BY price_in_dollars DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Show the total number of rooms of the apartments in the building with short name \"Columbus Square\".",
+    "target": "SELECT sum(T2.room_count) FROM Apartment_Buildings AS T1 JOIN Apartments AS T2 ON T1.building_id = T2.building_id WHERE T1.building_short_name = \"Columbus Square\""
+  },
+  {
+    "input": "text2sql: Find the average age and number of male students (with sex M) from each city.",
+    "target": "SELECT count(*) , avg(age) , city_code FROM student WHERE sex = 'M' GROUP BY city_code"
+  },
+  {
+    "input": "text2sql: In what years did a movie receive a 4 or 5 star rating, and list the years from oldest to most recently?",
+    "target": "SELECT DISTINCT YEAR FROM Movie AS T1 JOIN Rating AS T2 ON T1.mID = T2.mID WHERE T2.stars >= 4 ORDER BY T1.year"
+  },
+  {
+    "input": "text2sql: What are the maximum, minimum and average home games each stadium held?",
+    "target": "SELECT max(home_games) , min(home_games) , avg(home_games) FROM stadium"
+  },
+  {
+    "input": "text2sql: List the names of courses in alphabetical order?",
+    "target": "SELECT course_name FROM courses ORDER BY course_name"
+  },
+  {
+    "input": "text2sql: What are the names of actors and the musicals that they are in?",
+    "target": "SELECT T1.Name , T2.Name FROM actor AS T1 JOIN musical AS T2 ON T1.Musical_ID = T2.Musical_ID"
+  },
+  {
+    "input": "text2sql: Find the organisation ids and details of the organisations which are involved in",
+    "target": "SELECT T2.organisation_id , T2.organisation_details FROM Grants AS T1 JOIN Organisations AS T2 ON T1.organisation_id = T2.organisation_id GROUP BY T2.organisation_id HAVING sum(T1.grant_amount) > 6000"
+  },
+  {
+    "input": "text2sql: How many conductors are there?",
+    "target": "SELECT count(*) FROM conductor"
+  },
+  {
+    "input": "text2sql: How many gymnasts are from each hometown?",
+    "target": "SELECT T2.Hometown , COUNT(*) FROM gymnast AS T1 JOIN people AS T2 ON T1.Gymnast_ID = T2.People_ID GROUP BY T2.Hometown"
+  },
+  {
+    "input": "text2sql: How many different locations does the school with code BUS has?",
+    "target": "SELECT count(DISTINCT dept_address) FROM department WHERE school_code = 'BUS'"
+  },
+  {
+    "input": "text2sql: Show the account name and other account detail for all accounts by the customer with first name Meaghan and last name Keeling.",
+    "target": "SELECT T1.account_name , T1.other_account_details FROM Accounts AS T1 JOIN Customers AS T2 ON T1.customer_id = T2.customer_id WHERE T2.customer_first_name = \"Meaghan\" AND T2.customer_last_name = \"Keeling\""
+  },
+  {
+    "input": "text2sql: What are the open and close dates of all the policies used by the customer who have \"Diana\" in part of their names?",
+    "target": "SELECT t2.date_opened , t2.date_closed FROM customers AS t1 JOIN customers_policies AS t2 ON t1.customer_id = t2.customer_id WHERE t1.customer_name LIKE \"%Diana%\""
+  },
+  {
+    "input": "text2sql: Return the id of the store with the most customers.",
+    "target": "SELECT store_id FROM customer GROUP BY store_id ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: How long is the total lesson time took by the customer named Rylan Goodwin?",
+    "target": "SELECT sum(T1.lesson_time) FROM Lessons AS T1 JOIN Customers AS T2 ON T1.customer_id = T2.customer_id WHERE T2.first_name = \"Rylan\" AND T2.last_name = \"Goodwin\""
+  },
+  {
+    "input": "text2sql: Show all school names in alphabetical order.",
+    "target": "SELECT school_name FROM school ORDER BY school_name"
+  },
+  {
+    "input": "text2sql: Show the names of people, and dates and venues of debates they are on the negative side, ordered in ascending alphabetical order of name.",
+    "target": "SELECT T3.Name , T2.Date , T2.Venue FROM debate_people AS T1 JOIN debate AS T2 ON T1.Debate_ID = T2.Debate_ID JOIN people AS T3 ON T1.Negative = T3.People_ID ORDER BY T3.Name ASC"
+  },
+  {
+    "input": "text2sql: What is the average and maximum number of total passengers for train stations in London or Glasgow?",
+    "target": "SELECT avg(total_passengers) , max(total_passengers) FROM station WHERE LOCATION = 'London' OR LOCATION = 'Glasgow'"
+  },
+  {
+    "input": "text2sql: What is the name, city, and country of the airport with the highest elevation?",
+    "target": "SELECT name , city , country FROM airports ORDER BY elevation DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Return all the committees that have delegates from Democratic party.",
+    "target": "SELECT T1.Committee FROM election AS T1 JOIN party AS T2 ON T1.Party = T2.Party_ID WHERE T2.Party = \"Democratic\""
+  },
+  {
+    "input": "text2sql: Show all majors.",
+    "target": "SELECT DISTINCT Major FROM Student"
+  },
+  {
+    "input": "text2sql: Show names for all regions except for Denmark.",
+    "target": "SELECT region_name FROM region WHERE region_name != 'Denmark'"
+  },
+  {
+    "input": "text2sql: Find the full names of faculties who are members of department with department number 520.",
+    "target": "SELECT T1.Fname , T1.Lname FROM FACULTY AS T1 JOIN MEMBER_OF AS T2 ON T1.FacID = T2.FacID WHERE T2.DNO = 520"
+  },
+  {
+    "input": "text2sql: What are the maximum duration and resolution of all songs, for each language, ordered alphabetically by language?",
+    "target": "SELECT max(T1.duration) , max(T2.resolution) , T2.languages FROM files AS T1 JOIN song AS T2 ON T1.f_id = T2.f_id GROUP BY T2.languages ORDER BY T2.languages"
+  },
+  {
+    "input": "text2sql: How many students whose are playing the role of goalie?",
+    "target": "SELECT count(*) FROM tryout WHERE pPos = 'goalie'"
+  },
+  {
+    "input": "text2sql: Return the average number of weeks on top for volumes by artists that are at most 25 years old.",
+    "target": "SELECT avg(T2.Weeks_on_Top) FROM artist AS T1 JOIN volume AS T2 ON T1.Artist_ID = T2.Artist_ID WHERE T1.age <= 25"
+  },
+  {
+    "input": "text2sql: Find the first names that are used for professionals or owners but are not used as dog names.",
+    "target": "SELECT first_name FROM Professionals UNION SELECT first_name FROM Owners EXCEPT SELECT name FROM Dogs"
+  },
+  {
+    "input": "text2sql: What are the country codes of countries where people use languages other than English?",
+    "target": "SELECT DISTINCT CountryCode FROM countrylanguage WHERE LANGUAGE != \"English\""
+  },
+  {
+    "input": "text2sql: What are the names of ships that were involved in a mission launched after 1928?",
+    "target": "SELECT T2.Name FROM mission AS T1 JOIN ship AS T2 ON T1.Ship_ID = T2.Ship_ID WHERE T1.Launched_Year > 1928"
+  },
+  {
+    "input": "text2sql: What is the name of the district with the most residents?",
+    "target": "SELECT district_name FROM district ORDER BY city_population DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: List all every engineer's first name, last name, details and coresponding skill description.",
+    "target": "SELECT T1.first_name , T1.last_name , T1.other_details , T3.skill_description FROM Maintenance_Engineers AS T1 JOIN Engineer_Skills AS T2 ON T1.engineer_id = T2.engineer_id JOIN Skills AS T3 ON T2.skill_id = T3.skill_id"
+  },
+  {
+    "input": "text2sql: How many students are age 18?",
+    "target": "SELECT count(*) FROM Student WHERE age = 18"
+  },
+  {
+    "input": "text2sql: Count the number of chip model that do not have wifi.",
+    "target": "SELECT count(*) FROM chip_model WHERE wifi = 'No'"
+  },
+  {
+    "input": "text2sql: List the names and the locations that the enzymes can make an effect.",
+    "target": "SELECT name , LOCATION FROM enzyme"
+  },
+  {
+    "input": "text2sql: What are the first names of all students who got a grade C in a class?",
+    "target": "SELECT DISTINCT stu_fname FROM student AS T1 JOIN enroll AS T2 ON T1.stu_num = T2.stu_num WHERE enroll_grade = 'C'"
+  },
+  {
+    "input": "text2sql: What are the distinct nominees of the musicals with the award that is not \"Tony Award\"?",
+    "target": "SELECT DISTINCT Nominee FROM musical WHERE Award != \"Tony Award\""
+  },
+  {
+    "input": "text2sql: Give the names of poker players who have earnings above 300000.",
+    "target": "SELECT T1.Name FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Earnings > 300000"
+  },
+  {
+    "input": "text2sql: What are the name of rooms that cost more than the average.",
+    "target": "SELECT roomName FROM Rooms WHERE basePrice > ( SELECT avg(basePrice) FROM Rooms )"
+  },
+  {
+    "input": "text2sql: Show statement id, statement detail, account detail for accounts.",
+    "target": "SELECT T1.statement_id , T2.statement_details , T1.account_details FROM Accounts AS T1 JOIN Statements AS T2 ON T1.statement_id = T2.statement_id"
+  },
+  {
+    "input": "text2sql: Of all players with an overall rating greater than 80, how many are right-footed and left-footed?",
+    "target": "SELECT preferred_foot , count(*) FROM Player_Attributes WHERE overall_rating > 80 GROUP BY preferred_foot"
+  },
+  {
+    "input": "text2sql: What is the total horses record for each farm, sorted ascending?",
+    "target": "SELECT Total_Horses FROM farm ORDER BY Total_Horses ASC"
+  },
+  {
+    "input": "text2sql: List the names of members who did not attend any performance.",
+    "target": "SELECT Name FROM member WHERE Member_ID NOT IN (SELECT Member_ID FROM member_attendance)"
+  },
+  {
+    "input": "text2sql: Return the total number of deaths and total damange in millions for storms that had a max speed greater than the average.",
+    "target": "SELECT sum(number_deaths) , sum(damage_millions_USD) FROM storm WHERE max_speed > (SELECT avg(max_speed) FROM storm)"
+  },
+  {
+    "input": "text2sql: report the total number of degrees granted between 1998 and 2002.",
+    "target": "SELECT T1.campus , sum(T2.degrees) FROM campuses AS T1 JOIN degrees AS T2 ON T1.id = T2.campus WHERE T2.year >= 1998 AND T2.year <= 2002 GROUP BY T1.campus"
+  },
+  {
+    "input": "text2sql: find the code of the country where has the greatest number of players.",
+    "target": "SELECT country_code FROM players GROUP BY country_code ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Count the number of games taken place in park \"Columbia Park\" in 1907.",
+    "target": "SELECT count(*) FROM home_game AS T1 JOIN park AS T2 ON T1.park_id = T2.park_id WHERE T1.year = 1907 AND T2.park_name = 'Columbia Park'"
+  },
+  {
+    "input": "text2sql: Give the product id for the product that was ordered most frequently.",
+    "target": "SELECT product_id FROM order_items GROUP BY product_id ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Show names for artists without any exhibition.",
+    "target": "SELECT name FROM artist WHERE artist_id NOT IN (SELECT artist_id FROM exhibition)"
+  },
+  {
+    "input": "text2sql: What is the id of the reviewer named Daniel Lewis?",
+    "target": "SELECT rID FROM Reviewer WHERE name = \"Daniel Lewis\""
+  },
+  {
+    "input": "text2sql: How many assessment notes are there in total?",
+    "target": "SELECT count(*) FROM ASSESSMENT_NOTES"
+  },
+  {
+    "input": "text2sql: Return the most common full name among all actors.",
+    "target": "SELECT first_name , last_name FROM actor GROUP BY first_name , last_name ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Count the number of different templates used for documents.",
+    "target": "SELECT count(DISTINCT template_id) FROM Documents"
+  },
+  {
+    "input": "text2sql: What instruments does the the song \"Le Pop\" use?",
+    "target": "SELECT instrument FROM instruments AS T1 JOIN songs AS T2 ON T1.songid = T2.songid WHERE title = \"Le Pop\""
+  },
+  {
+    "input": "text2sql: Find the first names and degree of all professors who are teaching some class in Computer Info. Systems department.",
+    "target": "SELECT DISTINCT T2.emp_fname , T3.prof_high_degree FROM CLASS AS T1 JOIN employee AS T2 ON T1.prof_num = T2.emp_num JOIN professor AS T3 ON T2.emp_num = T3.emp_num JOIN department AS T4 ON T4.dept_code = T3.dept_code WHERE T4.dept_name = 'Computer Info. Systems'"
+  },
+  {
+    "input": "text2sql: Count the number of tourists who did not visit any place.",
+    "target": "SELECT count(*) FROM Visitors WHERE Tourist_ID NOT IN ( SELECT Tourist_ID FROM Visits )"
+  },
+  {
+    "input": "text2sql: Show the average amount of transactions for different lots, ordered by average amount of transactions.",
+    "target": "SELECT T2.lot_id , avg(amount_of_transaction) FROM TRANSACTIONS AS T1 JOIN Transactions_Lots AS T2 ON T1.transaction_id = T2.transaction_id GROUP BY T2.lot_id ORDER BY avg(amount_of_transaction)"
+  },
+  {
+    "input": "text2sql: What is the average price for a lesson taught by Janessa Sawayn?",
+    "target": "SELECT avg(price) FROM Lessons AS T1 JOIN Staff AS T2 ON T1.staff_id = T2.staff_id WHERE T2.first_name = \"Janessa\" AND T2.last_name = \"Sawayn\""
+  },
+  {
+    "input": "text2sql: Give me a list of cities whose temperature in Mar is lower than that in July and which have also served as host cities?",
+    "target": "SELECT T1.city FROM city AS T1 JOIN temperature AS T2 ON T1.city_id = T2.city_id WHERE T2.Mar < T2.Jul INTERSECT SELECT T3.city FROM city AS T3 JOIN hosting_city AS T4 ON T3.city_id = T4.host_city"
+  },
+  {
+    "input": "text2sql: What are the languages used by the least number of TV Channels and how many channels use it?",
+    "target": "SELECT LANGUAGE , count(*) FROM TV_Channel GROUP BY LANGUAGE ORDER BY count(*) ASC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Return the names of people, ordered by weight ascending.",
+    "target": "SELECT Name FROM People ORDER BY Weight ASC"
+  },
+  {
+    "input": "text2sql: What is the theme, date, and attendance for the exhibition in year 2004?",
+    "target": "SELECT T2.theme , T1.date , T1.attendance FROM exhibition_record AS T1 JOIN exhibition AS T2 ON T1.exhibition_id = T2.exhibition_id WHERE T2.year = 2004"
+  },
+  {
+    "input": "text2sql: How many rooms cost more than 120, for each different decor?",
+    "target": "SELECT decor , count(*) FROM Rooms WHERE basePrice > 120 GROUP BY decor"
+  },
+  {
+    "input": "text2sql: What are the product ids for the problems reported by Christop Berge with closure authorised by Ashley Medhurst?",
+    "target": "SELECT product_id FROM problems AS T1 JOIN staff AS T2 ON T1.reported_by_staff_id = T2.staff_id WHERE T2.staff_first_name = \"Christop\" AND T2.staff_last_name = \"Berge\" INTERSECT SELECT product_id FROM problems AS T1 JOIN staff AS T2 ON T1.closure_authorised_by_staff_id = T2.staff_id WHERE T2.staff_first_name = \"Ashley\" AND T2.staff_last_name = \"Medhurst\""
+  },
+  {
+    "input": "text2sql: Which grades have 4 or more high schoolers?",
+    "target": "SELECT grade FROM Highschooler GROUP BY grade HAVING count(*) >= 4"
+  },
+  {
+    "input": "text2sql: What is the total number of people who has no friend living in the city of Austin.",
+    "target": "SELECT count(DISTINCT name) FROM PersonFriend WHERE friend NOT IN (SELECT name FROM person WHERE city = 'Austin')"
+  },
+  {
+    "input": "text2sql: How many dogs have an age below the average?",
+    "target": "SELECT count(*) FROM Dogs WHERE age < ( SELECT avg(age) FROM Dogs )"
+  },
+  {
+    "input": "text2sql: What is the age and hometown of every teacher?",
+    "target": "SELECT Age , Hometown FROM teacher"
+  },
+  {
+    "input": "text2sql: Which country is the airport that has the highest altitude located in?",
+    "target": "SELECT country FROM airports ORDER BY elevation DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: List all media types.",
+    "target": "SELECT name FROM media_types"
+  },
+  {
+    "input": "text2sql: For each submission, find its author and acceptance result.",
+    "target": "SELECT T2.Author , T1.Result FROM acceptance AS T1 JOIN submission AS T2 ON T1.Submission_ID = T2.Submission_ID"
+  },
+  {
+    "input": "text2sql: What are the last names of staff with email addressed containing the substring \"wrau\"?",
+    "target": "SELECT last_name FROM staff WHERE email_address LIKE \"%wrau%\""
+  },
+  {
+    "input": "text2sql: Find the state, account type, and credit score of the customer whose number of loan is 0.",
+    "target": "SELECT state , acc_type , credit_score FROM customer WHERE no_of_loans = 0"
+  },
+  {
+    "input": "text2sql: Find the name of the patient who made the appointment with the most recent start date.",
+    "target": "SELECT T1.name FROM patient AS T1 JOIN appointment AS T2 ON T1.ssn = T2.patient ORDER BY T2.start DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Which apartment type code is the most common among apartments with more than one bathroom?",
+    "target": "SELECT apt_type_code FROM Apartments WHERE bathroom_count > 1 GROUP BY apt_type_code ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: List the dates and vote percents of elections.",
+    "target": "SELECT Date , Vote_Percent FROM election"
+  },
+  {
+    "input": "text2sql: find id of the tv channels that from the countries where have more than two tv channels.",
+    "target": "SELECT id FROM tv_channel GROUP BY country HAVING count(*) > 2"
+  },
+  {
+    "input": "text2sql: How many assets can each parts be used in? List the part name and the number.",
+    "target": "SELECT T1.part_name , count(*) FROM Parts AS T1 JOIN Asset_Parts AS T2 ON T1.part_id = T2.part_id GROUP BY T1.part_name"
+  },
+  {
+    "input": "text2sql: Find the type code of the most frequently used policy.",
+    "target": "SELECT policy_type_code FROM policies GROUP BY policy_type_code ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Find all the order items whose product id is 11. What are the order item ids?",
+    "target": "SELECT order_item_id FROM order_items WHERE product_id = 11"
+  },
+  {
+    "input": "text2sql: What are the ids of all reviewers who have not given 4 stars at least once?",
+    "target": "SELECT rID FROM Rating WHERE stars != 4"
+  },
+  {
+    "input": "text2sql: Find the name of the project for which a scientist whose name contains \u2018Smith\u2019 is assigned to.",
+    "target": "SELECT T2.name FROM assignedto AS T1 JOIN projects AS T2 ON T1.project = T2.code JOIN scientists AS T3 ON T1.scientist = T3.SSN WHERE T3.name LIKE '%Smith%'"
+  },
+  {
+    "input": "text2sql: What are the names of all songs that are approximately 4 minutes long or are in English?",
+    "target": "SELECT T2.song_name FROM files AS T1 JOIN song AS T2 ON T1.f_id = T2.f_id WHERE T1.duration LIKE \"4:%\" UNION SELECT song_name FROM song WHERE languages = \"english\""
+  },
+  {
+    "input": "text2sql: What are the first names of all students who took ACCT-211 and received a C?",
+    "target": "SELECT T3.stu_fname FROM CLASS AS T1 JOIN enroll AS T2 ON T1.class_code = T2.class_code JOIN student AS T3 ON T2.stu_num = T3.stu_num WHERE T1.crs_code = 'ACCT-211' AND T2.enroll_grade = 'C'"
+  },
+  {
+    "input": "text2sql: What are the names for tracks without a race in class 'GT'.",
+    "target": "SELECT name FROM track EXCEPT SELECT T2.name FROM race AS T1 JOIN track AS T2 ON T1.track_id = T2.track_id WHERE T1.class = 'GT'"
+  },
+  {
+    "input": "text2sql: Find the policy type the most customers choose.",
+    "target": "SELECT Policy_Type_Code FROM Customer_Policies GROUP BY Policy_Type_Code ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Show the date and venue of each workshop in ascending alphabetical order of the venue.",
+    "target": "SELECT Date , Venue FROM workshop ORDER BY Venue"
+  },
+  {
+    "input": "text2sql: Find the name, enrollment of the colleges whose size is bigger than 10000 and location is in state LA.",
+    "target": "SELECT cName , enr FROM College WHERE enr > 10000 AND state = \"LA\""
+  },
+  {
+    "input": "text2sql: What are the names of patients who are staying in room 111 and have an undergoing treatment?",
+    "target": "SELECT DISTINCT T2.name FROM undergoes AS T1 JOIN patient AS T2 ON T1.patient = T2.SSN JOIN stay AS T3 ON T1.Stay = T3.StayID WHERE T3.room = 111"
+  },
+  {
+    "input": "text2sql: What is the name and distance for aircraft with id 12?",
+    "target": "SELECT name , distance FROM Aircraft WHERE aid = 12"
+  },
+  {
+    "input": "text2sql: Find id of the candidate whose email is stanley.monahan@example.org?",
+    "target": "SELECT T2.candidate_id FROM people AS T1 JOIN candidates AS T2 ON T1.person_id = T2.candidate_id WHERE T1.email_address = \"stanley.monahan@example.org\""
+  },
+  {
+    "input": "text2sql: List the distinct positions of pilots older than 30.",
+    "target": "SELECT DISTINCT POSITION FROM pilot WHERE Age > 30"
+  },
+  {
+    "input": "text2sql: Who are the players from Indonesia?",
+    "target": "SELECT T2.Player FROM country AS T1 JOIN match_season AS T2 ON T1.Country_id = T2.Country WHERE T1.Country_name = \"Indonesia\""
+  },
+  {
+    "input": "text2sql: How many 'United Airlines' flights depart from Airport 'AHD'?",
+    "target": "SELECT count(*) FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T2.Airline = T1.uid WHERE T1.Airline = \"United Airlines\" AND T2.SourceAirport = \"AHD\""
+  },
+  {
+    "input": "text2sql: What are the name and level of catalog structure with level number between 5 and 10",
+    "target": "SELECT catalog_level_name , catalog_level_number FROM Catalog_Structure WHERE catalog_level_number BETWEEN 5 AND 10"
+  },
+  {
+    "input": "text2sql: How many flights do we have?",
+    "target": "SELECT count(*) FROM Flight"
+  },
+  {
+    "input": "text2sql: What is the type and id of the organization that has the most research staff?",
+    "target": "SELECT T1.organisation_type , T1.organisation_id FROM Organisations AS T1 JOIN Research_Staff AS T2 ON T1.organisation_id = T2.employer_organisation_id GROUP BY T1.organisation_id ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Find the ids and names of stations from which at least 200 trips started.",
+    "target": "SELECT start_station_id , start_station_name FROM trip GROUP BY start_station_name HAVING COUNT(*) >= 200"
+  },
+  {
+    "input": "text2sql: How many different colleges are there?",
+    "target": "SELECT count(*) FROM College"
+  },
+  {
+    "input": "text2sql: Which professionals live in the state of Indiana or have done treatment on more than 2 treatments? List his or her id, last name and cell phone.",
+    "target": "SELECT professional_id , last_name , cell_number FROM Professionals WHERE state = 'Indiana' UNION SELECT T1.professional_id , T1.last_name , T1.cell_number FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id = T2.professional_id GROUP BY T1.professional_id HAVING count(*) > 2"
+  },
+  {
+    "input": "text2sql: What instrument did the musician with last name \"Heilo\" use in the song \"Badlands\"?",
+    "target": "SELECT T4.instrument FROM Performance AS T1 JOIN Band AS T2 ON T1.bandmate = T2.id JOIN Songs AS T3 ON T3.SongId = T1.SongId JOIN Instruments AS T4 ON T4.songid = T3.songid AND T4.bandmateid = T2.id WHERE T2.lastname = \"Heilo\" AND T3.title = \"Badlands\""
+  },
+  {
+    "input": "text2sql: Find names of all students who took some course and the course description.",
+    "target": "SELECT T1.stu_fname , T1.stu_lname , T4.crs_description FROM student AS T1 JOIN enroll AS T2 ON T1.stu_num = T2.stu_num JOIN CLASS AS T3 ON T2.class_code = T3.class_code JOIN course AS T4 ON T3.crs_code = T4.crs_code"
+  },
+  {
+    "input": "text2sql: What are the distinct Famous release dates?",
+    "target": "SELECT distinct(Famous_Release_date) FROM artist"
+  },
+  {
+    "input": "text2sql: What is the number of airports per country, ordered from most to least?",
+    "target": "SELECT count(*) , country FROM airports GROUP BY country ORDER BY count(*) DESC"
+  },
+  {
+    "input": "text2sql: Among all the claims, what is the settlement amount of the claim with the largest claim amount? List both the settlement amount and claim amount.",
+    "target": "SELECT Amount_Settled , Amount_Claimed FROM Claims ORDER BY Amount_Claimed DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: What are the product names with average product price smaller than 1000000?",
+    "target": "SELECT Product_Name FROM PRODUCTS GROUP BY Product_Name HAVING avg(Product_Price) < 1000000"
+  },
+  {
+    "input": "text2sql: Show all member names and registered branch names sorted by register year.",
+    "target": "SELECT T3.name , T2.name FROM membership_register_branch AS T1 JOIN branch AS T2 ON T1.branch_id = T2.branch_id JOIN member AS T3 ON T1.member_id = T3.member_id ORDER BY T1.register_year"
+  },
+  {
+    "input": "text2sql: What is the country that has the most perpetrators?",
+    "target": "SELECT Country , COUNT(*) FROM perpetrator GROUP BY Country ORDER BY COUNT(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: How many stadiums are not in country \"Russia\"?",
+    "target": "SELECT count(*) FROM stadium WHERE country != 'Russia'"
+  },
+  {
+    "input": "text2sql: How many customers did not have any event?",
+    "target": "SELECT count(*) FROM customers WHERE customer_id NOT IN ( SELECT customer_id FROM customer_events )"
+  },
+  {
+    "input": "text2sql: Find the make and production time of the cars that were produced in the earliest year?",
+    "target": "SELECT T2.Make , T1.Year FROM CARS_DATA AS T1 JOIN CAR_NAMES AS T2 ON T1.Id = T2.MakeId WHERE T1.Year = (SELECT min(YEAR) FROM CARS_DATA)"
+  },
+  {
+    "input": "text2sql: List all names of courses with 1 credit?",
+    "target": "SELECT CName FROM COURSE WHERE Credits = 1"
+  },
+  {
+    "input": "text2sql: What are the different grant amounts for documents sent before '1986-08-26 20:49:27' and after the grant ended on '1989-03-16 18:27:16'?",
+    "target": "SELECT T1.grant_amount FROM Grants AS T1 JOIN Documents AS T2 ON T1.grant_id = T2.grant_id WHERE T2.sent_date < '1986-08-26 20:49:27' INTERSECT SELECT grant_amount FROM grants WHERE grant_end_date > '1989-03-16 18:27:16'"
+  },
+  {
+    "input": "text2sql: What are the different customer ids, and how many cards does each one hold?",
+    "target": "SELECT customer_id , count(*) FROM Customers_cards GROUP BY customer_id"
+  },
+  {
+    "input": "text2sql: What are the state and country of all the cities that have post codes starting with 4.\\",
+    "target": "SELECT state_province_county , country FROM addresses WHERE zip_postcode LIKE \"4%\""
+  },
+  {
+    "input": "text2sql: Find the name of the youngest organization.",
+    "target": "SELECT organization_name FROM organizations ORDER BY date_formed DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: What is the name of the product with the color description 'yellow'?",
+    "target": "SELECT T1.product_name FROM products AS T1 JOIN ref_colors AS T2 ON T1.color_code = T2.color_code WHERE T2.color_description = 'yellow'"
+  },
+  {
+    "input": "text2sql: Return the maximum and minimum shares for performances that do not have the type \"Live final\".",
+    "target": "SELECT max(SHARE) , min(SHARE) FROM performance WHERE TYPE != \"Live final\""
+  },
+  {
+    "input": "text2sql: How many rooms have a king bed?",
+    "target": "SELECT count(*) FROM Rooms WHERE bedType = \"King\""
+  },
+  {
+    "input": "text2sql: What is the average price range of hotels for each each star rating code?",
+    "target": "SELECT star_rating_code , avg(price_range) FROM HOTELS GROUP BY star_rating_code"
+  },
+  {
+    "input": "text2sql: How many services has each resident requested? List the resident id, details, and the count in descending order of the count.",
+    "target": "SELECT T1.resident_id , T1.other_details , count(*) FROM Residents AS T1 JOIN Residents_Services AS T2 ON T1.resident_id = T2.resident_id GROUP BY T1.resident_id ORDER BY count(*) DESC"
+  },
+  {
+    "input": "text2sql: List the details of the customers who do not have any policies.",
+    "target": "SELECT customer_details FROM Customers EXCEPT SELECT T1.customer_details FROM Customers AS T1 JOIN Customer_Policies AS T2 ON T1.customer_id = T2.customer_id"
+  },
+  {
+    "input": "text2sql: Count the total number of policies used by the customer named \"Dayana Robel\".",
+    "target": "SELECT count(*) FROM customers AS t1 JOIN customers_policies AS t2 ON t1.customer_id = t2.customer_id WHERE t1.customer_name = \"Dayana Robel\""
+  },
+  {
+    "input": "text2sql: What are the names of people in ascending order of height?",
+    "target": "SELECT Name FROM People ORDER BY Height ASC"
+  },
+  {
+    "input": "text2sql: How many distinct countries do players come from?",
+    "target": "SELECT count(DISTINCT country_code) FROM players"
+  },
+  {
+    "input": "text2sql: List the names of people that are not entrepreneurs.",
+    "target": "SELECT Name FROM people WHERE People_ID NOT IN (SELECT People_ID FROM entrepreneur)"
+  },
+  {
+    "input": "text2sql: What are the maximum and average height of the mountains?",
+    "target": "SELECT max(height) , avg(height) FROM mountain"
+  },
+  {
+    "input": "text2sql: What are the ids of all students who have attended at least one course?",
+    "target": "SELECT student_id FROM student_course_attendance"
+  },
+  {
+    "input": "text2sql: What are the id of each employee and the number of document destroyed by that employee?",
+    "target": "SELECT Destroyed_by_Employee_ID , count(*) FROM Documents_to_be_destroyed GROUP BY Destroyed_by_Employee_ID"
+  },
+  {
+    "input": "text2sql: What is the largest and smallest customer codes?",
+    "target": "SELECT max(customer_code) , min(customer_code) FROM Customers"
+  },
+  {
+    "input": "text2sql: Find all the songs produced by artists with first name \"Marianne\".",
+    "target": "SELECT T3.Title FROM Performance AS T1 JOIN Band AS T2 ON T1.bandmate = T2.id JOIN Songs AS T3 ON T3.SongId = T1.SongId WHERE T2.firstname = \"Marianne\""
+  },
+  {
+    "input": "text2sql: What are the life spans of representatives from New York state or Indiana state?",
+    "target": "SELECT Lifespan FROM representative WHERE State = \"New York\" OR State = \"Indiana\""
+  },
+  {
+    "input": "text2sql: Provide the last name of the youngest student.",
+    "target": "SELECT LName FROM Student WHERE age = (SELECT min(age) FROM Student)"
+  },
+  {
+    "input": "text2sql: List the cities which have more than one airport and number of airports.",
+    "target": "SELECT city , count(*) FROM airports GROUP BY city HAVING count(*) > 1"
+  },
+  {
+    "input": "text2sql: What are the student ids for students over 20 years old?",
+    "target": "SELECT StuID FROM Student WHERE age > 20"
+  },
+  {
+    "input": "text2sql: Count the number of cards the customer with the first name Art and last name Turcotte has.",
+    "target": "SELECT count(*) FROM Customers_cards AS T1 JOIN Customers AS T2 ON T1.customer_id = T2.customer_id WHERE T2.customer_first_name = \"Art\" AND T2.customer_last_name = \"Turcotte\""
+  },
+  {
+    "input": "text2sql: What is the winery at which the wine with the highest score was made?",
+    "target": "SELECT Winery FROM WINE ORDER BY SCORE LIMIT 1"
+  },
+  {
+    "input": "text2sql: Give the names and scores of wines made from white grapes.",
+    "target": "SELECT T2.Name , T2.Score FROM GRAPES AS T1 JOIN WINE AS T2 ON T1.Grape = T2.Grape WHERE T1.Color = \"White\""
+  },
+  {
+    "input": "text2sql: How many languages are spoken in Aruba?",
+    "target": "SELECT COUNT(T2.Language) FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode WHERE T1.Name = \"Aruba\""
+  },
+  {
+    "input": "text2sql: Which country has both stadiums with capacity greater than 60000 and stadiums with capacity less than 50000?",
+    "target": "SELECT country FROM stadium WHERE capacity > 60000 INTERSECT SELECT country FROM stadium WHERE capacity < 50000"
+  },
+  {
+    "input": "text2sql: List the campus that have between 600 and 1000 faculty lines in year 2004.",
+    "target": "SELECT T1.campus FROM campuses AS t1 JOIN faculty AS t2 ON t1.id = t2.campus WHERE t2.faculty >= 600 AND t2.faculty <= 1000 AND T1.year = 2004"
+  },
+  {
+    "input": "text2sql: What are the names of customers who have not taken a Mortage loan?",
+    "target": "SELECT cust_name FROM customer EXCEPT SELECT T1.cust_name FROM customer AS T1 JOIN loan AS T2 ON T1.cust_id = T2.cust_id WHERE T2.loan_type = 'Mortgages'"
+  },
+  {
+    "input": "text2sql: What is the role code with the largest number of employees?",
+    "target": "SELECT role_code FROM Employees GROUP BY role_code ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: What are the names of rooms that have either king or queen bed?",
+    "target": "SELECT roomName FROM Rooms WHERE bedType = \"King\" OR bedType = \"Queen\""
+  },
+  {
+    "input": "text2sql: List email address and birthday of customer whose first name as Carole.",
+    "target": "SELECT email_address , date_of_birth FROM Customers WHERE first_name = \"Carole\""
+  },
+  {
+    "input": "text2sql: Find the name of companies that do not make DVD drive.",
+    "target": "SELECT name FROM manufacturers EXCEPT SELECT T2.name FROM products AS T1 JOIN manufacturers AS T2 ON T1.Manufacturer = T2.code WHERE T1.name = 'DVD drive'"
+  },
+  {
+    "input": "text2sql: List the names and origins of people who are not body builders.",
+    "target": "SELECT Name , birth_place FROM people EXCEPT SELECT T1.Name , T1.birth_place FROM people AS T1 JOIN body_builder AS T2 ON T1.people_id = T2.people_id"
+  },
+  {
+    "input": "text2sql: Find the name of persons who are friends with Bob.",
+    "target": "SELECT T1.name FROM Person AS T1 JOIN PersonFriend AS T2 ON T1.name = T2.name WHERE T2.friend = 'Bob'"
+  },
+  {
+    "input": "text2sql: What is the first name of the student whose last name starts with the letter S and is taking ACCT-211?",
+    "target": "SELECT T1.stu_fname FROM student AS T1 JOIN enroll AS T2 ON T1.stu_num = T2.stu_num JOIN CLASS AS T3 ON T2.class_code = T3.class_code WHERE T3.crs_code = 'ACCT-211' AND T1.stu_lname LIKE 'S%'"
+  },
+  {
+    "input": "text2sql: What are the store names of drama workshop groups?",
+    "target": "SELECT Store_Name FROM Drama_Workshop_Groups"
+  },
+  {
+    "input": "text2sql: Find the first name and major of the students who are not allegry to soy.",
+    "target": "SELECT fname , major FROM Student WHERE StuID NOT IN (SELECT StuID FROM Has_allergy WHERE Allergy = \"Soy\")"
+  },
+  {
+    "input": "text2sql: Count the number of addressed in the California district.",
+    "target": "SELECT count(*) FROM address WHERE district = 'California'"
+  },
+  {
+    "input": "text2sql: Which address holds the most number of students currently? List the address id and all lines.",
+    "target": "SELECT T1.address_id , T1.line_1 , T1.line_2 FROM Addresses AS T1 JOIN Students AS T2 ON T1.address_id = T2.current_address_id GROUP BY T1.address_id ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Which patient is undergoing the most recent treatment?",
+    "target": "SELECT patient FROM undergoes ORDER BY dateundergoes LIMIT 1"
+  },
+  {
+    "input": "text2sql: Sort the each workshop in alphabetical order of the venue. Return the date and venue of each workshop.",
+    "target": "SELECT Date , Venue FROM workshop ORDER BY Venue"
+  },
+  {
+    "input": "text2sql: How many milliseconds long is Fast As a Shark?",
+    "target": "SELECT milliseconds FROM tracks WHERE name = \"Fast As a Shark\""
+  },
+  {
+    "input": "text2sql: Show the minimum amount of transactions whose type code is \"PUR\" and whose share count is bigger than 50.",
+    "target": "SELECT min(amount_of_transaction) FROM TRANSACTIONS WHERE transaction_type_code = \"PUR\" AND share_count > 50"
+  },
+  {
+    "input": "text2sql: How many movie reviews does each director get?",
+    "target": "SELECT count(*) , T1.director FROM Movie AS T1 JOIN Rating AS T2 ON T1.mID = T2.mID GROUP BY T1.director"
+  },
+  {
+    "input": "text2sql: What are the distinct ids of customers who made an order after any order that was Cancelled?",
+    "target": "SELECT DISTINCT customer_id FROM Customer_Orders WHERE order_date > (SELECT min(order_date) FROM Customer_Orders WHERE order_status_code = \"Cancelled\")"
+  },
+  {
+    "input": "text2sql: How many clubs have total medals less than 10?",
+    "target": "SELECT count(*) FROM club_rank WHERE Total < 10"
+  },
+  {
+    "input": "text2sql: What is the description of the marketing region China?",
+    "target": "SELECT Marketing_Region_Descriptrion FROM Marketing_Regions WHERE Marketing_Region_Name = \"China\""
+  },
+  {
+    "input": "text2sql: How many weddings are there in year 2016?",
+    "target": "SELECT count(*) FROM wedding WHERE YEAR = 2016"
+  },
+  {
+    "input": "text2sql: What are the names of banks in the state of New York?",
+    "target": "SELECT bname FROM bank WHERE state = 'New York'"
+  },
+  {
+    "input": "text2sql: What is all the customer information for customers in NY state?",
+    "target": "SELECT * FROM CUSTOMER WHERE State = \"NY\""
+  },
+  {
+    "input": "text2sql: What are the title, id, and description of the movie with the greatest number of actors?",
+    "target": "SELECT T2.title , T2.film_id , T2.description FROM film_actor AS T1 JOIN film AS T2 ON T1.film_id = T2.film_id GROUP BY T2.film_id ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: What is the average account balance of customers with credit score below 50 for the different account types?",
+    "target": "SELECT avg(acc_bal) , acc_type FROM customer WHERE credit_score < 50 GROUP BY acc_type"
+  },
+  {
+    "input": "text2sql: Which address do not have any member with the black membership card?",
+    "target": "SELECT address FROM member EXCEPT SELECT address FROM member WHERE Membership_card = 'Black'"
+  },
+  {
+    "input": "text2sql: What is the most popular first name of the actors?",
+    "target": "SELECT first_name FROM actor GROUP BY first_name ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Return the average price of products that have each category code.",
+    "target": "SELECT avg(product_price) , product_category_code FROM products GROUP BY product_category_code"
+  },
+  {
+    "input": "text2sql: How many elections are there?",
+    "target": "SELECT count(*) FROM election"
+  },
+  {
+    "input": "text2sql: What are the names, ages, and countries of artists, sorted by the year they joined?",
+    "target": "SELECT name , age , country FROM artist ORDER BY Year_Join"
+  },
+  {
+    "input": "text2sql: What are the names of products with price at most 200?",
+    "target": "SELECT name FROM products WHERE price <= 200"
+  },
+  {
+    "input": "text2sql: Find the start and end dates of detentions of teachers with last name \"Schultz\".",
+    "target": "SELECT T1.datetime_detention_start , datetime_detention_end FROM Detention AS T1 JOIN Teachers AS T2 ON T1.teacher_id = T2.teacher_id WHERE T2.last_name = \"Schultz\""
+  },
+  {
+    "input": "text2sql: For each zip code, return how many times max wind speed reached 25?",
+    "target": "SELECT zip_code , count(*) FROM weather WHERE max_wind_Speed_mph >= 25 GROUP BY zip_code"
+  },
+  {
+    "input": "text2sql: What is the id, genre, and name of the artist for every English song ordered by ascending rating?",
+    "target": "SELECT f_id , genre_is , artist_name FROM song WHERE languages = \"english\" ORDER BY rating"
+  },
+  {
+    "input": "text2sql: Return the average horizontal bar points across all gymnasts.",
+    "target": "SELECT avg(Horizontal_Bar_Points) FROM gymnast"
+  },
+  {
+    "input": "text2sql: What are the names of conductors who have conducted orchestras founded after the year 2008?",
+    "target": "SELECT T1.Name FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID = T2.Conductor_ID WHERE Year_of_Founded > 2008"
+  },
+  {
+    "input": "text2sql: How many events had participants whose details had the substring 'Dr.'",
+    "target": "SELECT count(*) FROM participants AS T1 JOIN Participants_in_Events AS T2 ON T1.Participant_ID = T2.Participant_ID WHERE T1.participant_details LIKE '%Dr.%'"
+  },
+  {
+    "input": "text2sql: List all cartoon directed by \"Ben Jones\".",
+    "target": "SELECT Title FROM Cartoon WHERE Directed_by = \"Ben Jones\""
+  },
+  {
+    "input": "text2sql: How many routes does American Airlines operate?",
+    "target": "SELECT count(*) FROM airlines AS T1 JOIN routes AS T2 ON T1.alid = T2.alid WHERE T1.name = 'American Airlines'"
+  },
+  {
+    "input": "text2sql: Find the first names of teachers whose email address contains the word \"man\".",
+    "target": "SELECT first_name FROM Teachers WHERE email_address LIKE '%man%'"
+  },
+  {
+    "input": "text2sql: Given the titles of all courses, in order of titles and credits.",
+    "target": "SELECT title FROM course ORDER BY title , credits"
+  },
+  {
+    "input": "text2sql: Which city has hosted the most events?",
+    "target": "SELECT T1.city FROM city AS T1 JOIN hosting_city AS T2 ON T1.city_id = T2.host_city GROUP BY T2.host_city ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Find the first and last name of students who are living in the dorms that have amenity TV Lounge.",
+    "target": "SELECT T1.fname , T1.lname FROM student AS T1 JOIN lives_in AS T2 ON T1.stuid = T2.stuid WHERE T2.dormid IN (SELECT T3.dormid FROM has_amenity AS T3 JOIN dorm_amenity AS T4 ON T3.amenid = T4.amenid WHERE T4.amenity_name = 'TV Lounge')"
+  },
+  {
+    "input": "text2sql: Show the name of the building that has the most company offices.",
+    "target": "SELECT T2.name FROM Office_locations AS T1 JOIN buildings AS T2 ON T1.building_id = T2.id JOIN Companies AS T3 ON T1.company_id = T3.id GROUP BY T1.building_id ORDER BY COUNT(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: List all song names by singers above the average age.",
+    "target": "SELECT song_name FROM singer WHERE age > (SELECT avg(age) FROM singer)"
+  },
+  {
+    "input": "text2sql: What are the different transaction types, and how many transactions of each have taken place?",
+    "target": "SELECT transaction_type , count(*) FROM Financial_transactions GROUP BY transaction_type"
+  },
+  {
+    "input": "text2sql: Show the id and name of the employee with maximum salary.",
+    "target": "SELECT eid , name FROM Employee ORDER BY salary DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: How long is the people\u2019s average life expectancy in Central Africa?",
+    "target": "SELECT avg(LifeExpectancy) FROM country WHERE Region = \"Central Africa\""
+  },
+  {
+    "input": "text2sql: How many products are never booked with amount higher than 200?",
+    "target": "SELECT count(*) FROM Products_for_hire WHERE product_id NOT IN ( SELECT product_id FROM products_booked WHERE booked_amount > 200 )"
+  },
+  {
+    "input": "text2sql: What are the names and birth dates of people, ordered by their names in alphabetical order?",
+    "target": "SELECT Name , Birth_Date FROM people ORDER BY Name ASC"
+  },
+  {
+    "input": "text2sql: Find the number of rooms located on each block floor.",
+    "target": "SELECT count(*) , T1.blockfloor FROM BLOCK AS T1 JOIN room AS T2 ON T1.blockfloor = T2.blockfloor AND T1.blockcode = T2.blockcode GROUP BY T1.blockfloor"
+  },
+  {
+    "input": "text2sql: Which template type code has most number of templates?",
+    "target": "SELECT template_type_code FROM Templates GROUP BY template_type_code ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: What is the maximum mpg of the cars that had 8 cylinders or that were produced before 1980 ?",
+    "target": "select max(mpg) from cars_data where cylinders = 8 or year < 1980"
+  },
+  {
+    "input": "text2sql: What ranks do we have for faculty?",
+    "target": "SELECT DISTINCT rank FROM Faculty"
+  },
+  {
+    "input": "text2sql: What is the average age of the members of the club \"Bootup Baltimore\"?",
+    "target": "SELECT avg(t3.age) FROM club AS t1 JOIN member_of_club AS t2 ON t1.clubid = t2.clubid JOIN student AS t3 ON t2.stuid = t3.stuid WHERE t1.clubname = \"Bootup Baltimore\""
+  },
+  {
+    "input": "text2sql: What is the id and last name of the driver who participated in the most races after 2010?",
+    "target": "SELECT T1.driverid , T1.surname FROM drivers AS T1 JOIN results AS T2 ON T1.driverid = T2.driverid JOIN races AS T3 ON T2.raceid = T3.raceid WHERE T3.year > 2010 GROUP BY T1.driverid ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Find all the cities that have 2 to 4 parks.",
+    "target": "SELECT city FROM park GROUP BY city HAVING count(*) BETWEEN 2 AND 4"
+  },
+  {
+    "input": "text2sql: What is the average number of points for players from the \"AIB\" club?",
+    "target": "SELECT avg(T2.Points) FROM club AS T1 JOIN player AS T2 ON T1.Club_ID = T2.Club_ID WHERE T1.name = \"AIB\""
+  },
+  {
+    "input": "text2sql: What is the headquarter of the company with the largest sales?",
+    "target": "SELECT Headquarters FROM company ORDER BY Sales_in_Billion DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: What is the name of the manager with the most gas stations that opened after 2000?",
+    "target": "SELECT manager_name FROM gas_station WHERE open_year > 2000 GROUP BY manager_name ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: What is the product with the highest height? Give me the catalog entry name.",
+    "target": "SELECT catalog_entry_name FROM catalog_contents ORDER BY height DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Show all advisors who have at least two students.",
+    "target": "SELECT advisor FROM Student GROUP BY advisor HAVING count(*) >= 2"
+  },
+  {
+    "input": "text2sql: What are the names of the courses in alphabetical order?",
+    "target": "SELECT course_name FROM courses ORDER BY course_name"
+  },
+  {
+    "input": "text2sql: Count the number of colors that are not used in any products.",
+    "target": "SELECT count(*) FROM Ref_colors WHERE color_code NOT IN ( SELECT color_code FROM products )"
+  },
+  {
+    "input": "text2sql: What is the title of the prerequisite class of International Finance course?",
+    "target": "SELECT title FROM course WHERE course_id IN (SELECT T1.prereq_id FROM prereq AS T1 JOIN course AS T2 ON T1.course_id = T2.course_id WHERE T2.title = 'International Finance')"
+  },
+  {
+    "input": "text2sql: What is the total count of teachers?",
+    "target": "SELECT count(*) FROM teacher"
+  },
+  {
+    "input": "text2sql: Give the name of the student with the most likes.",
+    "target": "SELECT T2.name FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.student_id = T2.id GROUP BY T1.student_id ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: List the names of customers who have once canceled the purchase of the product \"food\" (the item status is \"Cancel\").",
+    "target": "SELECT T1.customer_name FROM customers AS T1 JOIN orders AS T2 JOIN order_items AS T3 JOIN products AS T4 ON T1.customer_id = T2.customer_id AND T2.order_id = T3.order_id AND T3.product_id = T4.product_id WHERE T3.order_item_status = \"Cancel\" AND T4.product_name = \"food\" GROUP BY T1.customer_id HAVING count(*) >= 1"
+  },
+  {
+    "input": "text2sql: List all ship names in the order of built year and class.",
+    "target": "SELECT name FROM ship ORDER BY built_year , CLASS"
+  },
+  {
+    "input": "text2sql: What are the date and the operating professional's first name of each treatment?",
+    "target": "SELECT T1.date_of_treatment , T2.first_name FROM Treatments AS T1 JOIN Professionals AS T2 ON T1.professional_id = T2.professional_id"
+  },
+  {
+    "input": "text2sql: How many distinct payment methods are used by parties?",
+    "target": "SELECT count(DISTINCT payment_method_code) FROM parties"
+  },
+  {
+    "input": "text2sql: What are the names of reviewers who had rated 3 star and 4 star?",
+    "target": "SELECT T2.name FROM Rating AS T1 JOIN Reviewer AS T2 ON T1.rID = T2.rID WHERE T1.stars = 3 INTERSECT SELECT T2.name FROM Rating AS T1 JOIN Reviewer AS T2 ON T1.rID = T2.rID WHERE T1.stars = 4"
+  },
+  {
+    "input": "text2sql: Find the first name of students who have both cat and dog pets .",
+    "target": "select t1.fname from student as t1 join has_pet as t2 on t1.stuid = t2.stuid join pets as t3 on t3.petid = t2.petid where t3.pettype = 'cat' intersect select t1.fname from student as t1 join has_pet as t2 on t1.stuid = t2.stuid join pets as t3 on t3.petid = t2.petid where t3.pettype = 'dog'"
+  },
+  {
+    "input": "text2sql: List the grape, appelation and name of wines whose score is higher than 93 ordered by Name.",
+    "target": "SELECT Grape , Appelation , Name FROM WINE WHERE Score > 93 ORDER BY Name"
+  },
+  {
+    "input": "text2sql: What is the campus fee for San Jose State University in 1996?",
+    "target": "SELECT campusfee FROM campuses AS T1 JOIN csu_fees AS T2 ON T1.id = t2.campus WHERE t1.campus = \"San Jose State University\" AND T2.year = 1996"
+  },
+  {
+    "input": "text2sql: Find the first name and last name of the instructor of course that has course name",
+    "target": "SELECT T2.Fname , T2.Lname FROM COURSE AS T1 JOIN FACULTY AS T2 ON T1.Instructor = T2.FacID WHERE T1.CName = \"COMPUTER LITERACY\""
+  },
+  {
+    "input": "text2sql: How many different instruments are used in the song \"Le Pop\"?",
+    "target": "SELECT count(DISTINCT instrument) FROM instruments AS T1 JOIN songs AS T2 ON T1.songid = T2.songid WHERE title = \"Le Pop\""
+  },
+  {
+    "input": "text2sql: What are all the distinct participant ids who attended any events?",
+    "target": "SELECT count(DISTINCT participant_id) FROM participants_in_Events"
+  },
+  {
+    "input": "text2sql: What are the distinct first names and cities of the students who have allergy either to milk or to cat?",
+    "target": "SELECT DISTINCT T1.fname , T1.city_code FROM Student AS T1 JOIN Has_Allergy AS T2 ON T1.stuid = T2.stuid WHERE T2.Allergy = \"Milk\" OR T2.Allergy = \"Cat\""
+  },
+  {
+    "input": "text2sql: show the train name and station name for each train.",
+    "target": "SELECT T2.name , T3.name FROM train_station AS T1 JOIN station AS T2 ON T1.station_id = T2.station_id JOIN train AS T3 ON T3.train_id = T1.train_id"
+  },
+  {
+    "input": "text2sql: Which model has the least amount of RAM? List the model name and the amount of RAM.",
+    "target": "SELECT Model_name , RAM_MiB FROM chip_model ORDER BY RAM_MiB ASC LIMIT 1"
+  },
+  {
+    "input": "text2sql: What are the maximum and minimum resolution of songs whose duration is 3 minutes?",
+    "target": "SELECT max(T2.resolution) , min(T2.resolution) FROM files AS T1 JOIN song AS T2 ON T1.f_id = T2.f_id WHERE T1.duration LIKE \"3:%\""
+  },
+  {
+    "input": "text2sql: What are the distinct id and type of the thing that has the status 'Close' or has a status record before the date '2017-06-19 02:59:21'",
+    "target": "SELECT DISTINCT T2.thing_id , T2.Type_of_Thing_Code FROM Timed_Status_of_Things AS T1 JOIN Things AS T2 ON T1.thing_id = T2.thing_id WHERE T1.Status_of_Thing_Code = 'Close' OR T1.Date_and_Date < '2017-06-19 02:59:21'"
+  },
+  {
+    "input": "text2sql: Return the code of the city that has the most students.",
+    "target": "SELECT city_code FROM STUDENT GROUP BY city_code ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: List all customers\u2019 names in the alphabetical order.",
+    "target": "SELECT name FROM accounts ORDER BY name"
+  },
+  {
+    "input": "text2sql: Return the names of entrepreneurs do no not have the investor Rachel Elnaugh.",
+    "target": "SELECT T2.Name FROM entrepreneur AS T1 JOIN people AS T2 ON T1.People_ID = T2.People_ID WHERE T1.Investor != \"Rachel Elnaugh\""
+  },
+  {
+    "input": "text2sql: What is the first name and last name of the student who have most number of sports?",
+    "target": "SELECT T2.Fname , T2.Lname FROM Sportsinfo AS T1 JOIN Student AS T2 ON T1.StuID = T2.StuID GROUP BY T1.StuID ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "input": "text2sql: Return the names of the gymnasts.",
+    "target": "SELECT T2.Name FROM gymnast AS T1 JOIN people AS T2 ON T1.Gymnast_ID = T2.People_ID"
+  },
+  {
+    "input": "text2sql: What are the famous titles of the artist \"Triumfall\"?",
+    "target": "SELECT Famous_Title FROM artist WHERE Artist = \"Triumfall\""
+  },
+  {
+    "input": "text2sql: What are the names of all students taking a course who received an A or C?",
+    "target": "SELECT T1.stu_fname , T1.stu_lname FROM student AS T1 JOIN enroll AS T2 ON T1.stu_num = T2.stu_num WHERE T2.enroll_grade = 'C' OR T2.enroll_grade = 'A'"
+  }
+]
